@@ -52,7 +52,7 @@ class BoxSeeder extends Seeder
             [
                 'id' => 6,
                 'shelf_row_id' => '2',
-                'name' => 'Box 2 - Baris Rak 2',
+                'name' => 'Box 3 - Baris Rak 2',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

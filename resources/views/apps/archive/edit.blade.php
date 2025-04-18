@@ -7,7 +7,7 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Tambah Data Arsip</h5>
+                            <h5 class="card-title">Edit Data Arsip</h5>
 
                             @if ($errors->any())
                                 <div class="alert alert-danger">
@@ -28,8 +28,9 @@
                             @endif
 
                             <!-- Vertical Form -->
-                            <form method="POST" action="{{ route('archive-create-submit') }}">
+                            <form method="POST" action="{{ route('archive-edit-submit', $archive->id) }}">
                                 @csrf
+                                @method('PUT')
                                 <div class="row">
                                     <input type="hidden" value="1" class="form-control" for="user_id" name="user_id"
                                         id="user_id">
@@ -39,8 +40,13 @@
                                             class="form-select @error('work_unit_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Unit Kerja</option>
                                             @foreach ($workUnits as $workUnit)
-                                                <option value="{{ $workUnit->id }}" @selected(old('work_unit_id') == $workUnit->id)>
-                                                    {{ $workUnit->name }}</option>
+                                                @if (old('work_unit_id', $archive->work_unit_id) == $workUnit->id)
+                                                    <option value="{{ $workUnit->id }}" selected>
+                                                        {{ $workUnit->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $workUnit->id }}">{{ $workUnit->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('work_unit_id')
@@ -55,8 +61,13 @@
                                             class="form-select @error('work_group_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Kelompok Kerja</option>
                                             @foreach ($workGroups as $workGroup)
-                                                <option value="{{ $workGroup->id }}" @selected(old('work_group_id') == $workGroup->id)>
-                                                    {{ $workGroup->name }}</option>
+                                                @if (old('work_group_id', $archive->work_group_id) == $workGroup->id)
+                                                    <option value="{{ $workGroup->id }}" selected>
+                                                        {{ $workGroup->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $workGroup->id }}">{{ $workGroup->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('work_group_id')
@@ -71,8 +82,13 @@
                                             class="form-select @error('work_team_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Tim Kerja</option>
                                             @foreach ($workTeams as $workTeam)
-                                                <option value="{{ $workTeam->id }}" @selected(old('work_team_id') == $workTeam->id)>
-                                                    {{ $workTeam->name }}</option>
+                                                @if (old('work_team_id', $archive->work_team_id) == $workTeam->id)
+                                                    <option value="{{ $workTeam->id }}" selected>
+                                                        {{ $workTeam->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $workTeam->id }}">{{ $workTeam->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('work_team_id')
@@ -87,8 +103,13 @@
                                             class="form-select @error('work_team_classification_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Klasifikasi Tim Kerja</option>
                                             @foreach ($workTeamClassifications as $workTeamClassification)
-                                                <option value="{{ $workTeamClassification->id }}" @selected(old('work_team_classification_id') == $workTeamClassification->id)>
-                                                    {{ $workTeamClassification->name }}</option>
+                                                @if (old('work_team_classification_id', $archive->work_team_classification_id) == $workTeamClassification->id)
+                                                    <option value="{{ $workTeamClassification->id }}" selected>
+                                                        {{ $workTeamClassification->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $workTeamClassification->id }}">{{ $workTeamClassification->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('work_team_classification_id')
@@ -102,7 +123,7 @@
                                         <textarea class="form-control @error('archive_description') is-invalid @enderror"
                                         id="archive_description"
                                         name="archive_description"
-                                        placeholder="Isi Keterangan Klasifikasi">{{ old('archive_description') ?: '' }}</textarea>
+                                        placeholder="Isi Keterangan Klasifikasi">{{ $archive->archive_description ?:old('archive_description') }}</textarea>
                                         @error('archive_description')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -115,8 +136,13 @@
                                             class="form-select @error('archive_retention_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Retensi Arsip</option>
                                             @foreach ($archiveRetentions as $archiveRetention)
-                                                <option value="{{ $archiveRetention->id }}" @selected(old('archive_retention_id') == $archiveRetention->id)>
-                                                    {{ $archiveRetention->range }} Tahun</option>
+                                                @if (old('archive_retention_id', $archive->archive_retention_id ) == $archiveRetention->id)
+                                                    <option value="{{ $archiveRetention->id }}"  selected>
+                                                        {{ $archiveRetention->range }} Tahun
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $archiveRetention->id }}">{{ $archiveRetention->range }} Tahun</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('archive_retention_id')
@@ -131,9 +157,14 @@
                                             class="form-select @error('archive_type_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Tipe Arsip</option>
                                             @foreach ($archiveTypes as $archiveType)
-                                                <option value="{{ $archiveType->id }}" @selected(old('archive_type_id') == $archiveType->id)>
-                                                    {{ $archiveType->name }}</option>
-                                            @endforeach
+                                            @if (old('archive_type_id', $archive->archive_type_id) == $archiveType->id)
+                                                <option value="{{ $archiveType->id }}" selected>
+                                                    {{ $archiveType->name }}
+                                                </option>
+                                            @else
+                                                <option value="{{ $archiveType->id }}">{{ $archiveType->name }}</option>
+                                            @endif
+                                        @endforeach
                                         </select>
                                         @error('archive_type_id')
                                             <div class="invalid-feedback">
@@ -147,8 +178,13 @@
                                             class="form-select @error('archive_status_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Status Arsip</option>
                                             @foreach ($archiveStatuses as $archiveStatus)
-                                                <option value="{{ $archiveStatus->id }}" @selected(old('archive_status_id') == $archiveStatus->id)>
-                                                    {{ $archiveStatus->name }}</option>
+                                                @if (old('archive_status_id', $archive->archive_status_id) == $archiveStatus->id)
+                                                    <option value="{{ $archiveStatus->id }}" selected>
+                                                        {{ $archiveStatus->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $archiveStatus->id }}">{{ $archiveStatus->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('archive_status_id')
@@ -160,7 +196,8 @@
                                     <div class="col-12 mb-3">
                                         <label for="archive_letter_origin_number" class="form-label">Nomor Asal Surat</label>
                                         <input type="text" class="form-control @error('archive_letter_origin_number') is-invalid @enderror"
-                                            id="archive_letter_origin_number" name="archive_letter_origin_number" value="{{ old('archive_letter_origin_number') ?: '' }}">
+                                            id="archive_letter_origin_number" name="archive_letter_origin_number"
+                                            value="{{ $archive->archive_letter_origin_number ?: old('archive_letter_origin_number')}}">
                                         @error('archive_letter_origin_number')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -170,7 +207,8 @@
                                     <div class="col-12 mb-3">
                                         <label for="archive_description" class="form-label">Uraian Arsip</label>
                                         <input type="text" class="form-control @error('archive_description') is-invalid @enderror"
-                                            id="archive_description" name="archive_description" value="{{ old('archive_description') ?: '' }}">
+                                            id="archive_description" name="archive_description"
+                                            value="{{ $archive->archive_description ?:old('archive_description') }}">
                                         @error('archive_description')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -180,7 +218,8 @@
                                     <div class="col-12 mb-3">
                                         <label for="archive_lifespan" class="form-label">Kurun Waktu Arsip</label>
                                         <input type="text" class="form-control @error('archive_lifespan') is-invalid @enderror"
-                                            id="archive_lifespan" name="archive_lifespan" value="{{ old('archive_lifespan') ?: '' }}">
+                                            id="archive_lifespan" name="archive_lifespan"
+                                            value="{{ $archive->archive_lifespan ?:old('archive_lifespan') }}">
                                         @error('archive_lifespan')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -193,8 +232,13 @@
                                             class="form-select @error('archive_development_level_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Tingkat Perkembangan Arsip</option>
                                             @foreach ($archiveDevelopmentLevels as $archiveDevelopmentLevel)
-                                                <option value="{{ $archiveDevelopmentLevel->id }}" @selected(old('archive_development_level_id') == $archiveDevelopmentLevel->id)>
-                                                    {{ $archiveDevelopmentLevel->name }}</option>
+                                                @if (old('archive_development_level_id', $archive->archive_development_level_id) == $archiveDevelopmentLevel->id)
+                                                    <option value="{{ $archiveDevelopmentLevel->id }}" selected>
+                                                        {{ $archiveDevelopmentLevel->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $archiveDevelopmentLevel->id }}">{{ $archiveDevelopmentLevel->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('archive_development_level_id')
@@ -209,8 +253,13 @@
                                             class="form-select @error('archive_media_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Media Arsip</option>
                                             @foreach ($archiveMedias as $archiveMedia)
-                                                <option value="{{ $archiveMedia->id }}" @selected(old('archive_media_id') == $archiveMedia->id)>
-                                                    {{ $archiveMedia->name }}</option>
+                                                @if (old('archive_media_id', $archive->archive_media_id) == $archiveMedia->id)
+                                                    <option value="{{ $archiveMedia->id }}" selected>
+                                                        {{ $archiveMedia->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $archiveMedia->id }}">{{ $archiveMedia->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('archive_media_id')
@@ -225,8 +274,13 @@
                                             class="form-select @error('archive_condition_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Kondisi Arsip</option>
                                             @foreach ($archiveConditions as $archiveCondition)
-                                                <option value="{{ $archiveCondition->id }}" @selected(old('archive_condition_id') == $archiveCondition->id)>
-                                                    {{ $archiveCondition->name }}</option>
+                                                @if (old('archive_condition_id', $archive->archive_condition_id) == $archiveCondition->id)
+                                                    <option value="{{ $archiveCondition->id }}" selected>
+                                                        {{ $archiveCondition->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $archiveCondition->id }}">{{ $archiveCondition->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('archive_condition_id')
@@ -240,7 +294,8 @@
                                         <div class="row">
                                             <div class="col-md-2 mb-2 mb-md-0">
                                                 <input type="text" class="form-control @error('archive_number') is-invalid @enderror"
-                                                id="archive_number" name="archive_number" value="{{ old('archive_number') ?: '' }}">
+                                                id="archive_number" name="archive_number"
+                                                value="{{ $archive->archive_number ?: old('archive_number') }}">
                                                 @error('archive_number')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -252,8 +307,13 @@
                                                     class="form-select @error('archive_quantity_unit_id') is-invalid @enderror">
                                                     <option selected disabled>Pilih Unit Kuantitas</option>
                                                     @foreach ($archiveQuantityUnits as $archiveQuantityUnit)
-                                                        <option value="{{ $archiveQuantityUnit->id }}" @selected(old('archive_quantity_unit_id') == $archiveQuantityUnit->id)>
-                                                            {{ $archiveQuantityUnit->name }}</option>
+                                                        @if (old('archive_quantity_unit_id', $archive->archive_quantity_unit_id) == $archiveQuantityUnit->id)
+                                                            <option value="{{ $archiveQuantityUnit->id }}" selected>
+                                                                {{ $archiveQuantityUnit->name }}
+                                                            </option>
+                                                        @else
+                                                            <option value="{{ $archiveQuantityUnit->id }}">{{ $archiveQuantityUnit->name }}</option>
+                                                        @endif
                                                     @endforeach
                                                 </select>
                                                 @error('archive_quantity_unit_id')
@@ -270,8 +330,13 @@
                                             class="form-select @error('archive_final_depreciation_action_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Tindakan Penyusutan Akhir Arsip</option>
                                             @foreach ($archiveFinalDepreciationActions as $archiveFinalDepreciationAction)
-                                                <option value="{{ $archiveFinalDepreciationAction->id }}" @selected(old('archive_final_depreciation_action_id') == $archiveFinalDepreciationAction->id)>
-                                                    {{ $archiveFinalDepreciationAction->name }}</option>
+                                                @if (old('archive_final_depreciation_action_id', $archive->archive_final_depreciation_action_id) == $archiveFinalDepreciationAction->id)
+                                                    <option value="{{ $archiveFinalDepreciationAction->id }}" selected>
+                                                        {{ $archiveFinalDepreciationAction->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $archiveFinalDepreciationAction->id }}">{{ $archiveFinalDepreciationAction->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('archive_final_depreciation_action_id')
@@ -286,8 +351,13 @@
                                             class="form-select @error('archive_security_classification_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Klasifikasi Keamanan Arsip</option>
                                             @foreach ($archiveSecurityClassifications as $archiveSecurityClassification)
-                                                <option value="{{ $archiveSecurityClassification->id }}" @selected(old('archive_security_classification_id') == $archiveSecurityClassification->id)>
-                                                    {{ $archiveSecurityClassification->name }}</option>
+                                                @if (old('archive_security_classification_id', $archive->archive_security_classification_id) == $archiveSecurityClassification->id)
+                                                    <option value="{{ $archiveSecurityClassification->id }}" selected>
+                                                        {{ $archiveSecurityClassification->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $archiveSecurityClassification->id }}">{{ $archiveSecurityClassification->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('archive_security_classification_id')
@@ -302,8 +372,13 @@
                                             class="form-select @error('archive_public_access_level_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Tingkat Akses Publik Arsip</option>
                                             @foreach ($archivePublicAccessLevels as $archivePublicAccessLevel)
-                                                <option value="{{ $archivePublicAccessLevel->id }}" @selected(old('archive_public_access_level_id') == $archivePublicAccessLevel->id)>
-                                                    {{ $archivePublicAccessLevel->name }}</option>
+                                                @if (old('archive_public_access_level_id', $archive->archive_public_access_level_id) == $archivePublicAccessLevel->id)
+                                                    <option value="{{ $archivePublicAccessLevel->id }}" selected>
+                                                        {{ $archivePublicAccessLevel->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $archivePublicAccessLevel->id }}">{{ $archivePublicAccessLevel->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('archive_public_access_level_id')
@@ -318,8 +393,13 @@
                                             class="form-select @error('archive_access_level_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Akses Level Arsip</option>
                                             @foreach ($archiveAccessLevels as $archiveAccessLevel)
-                                                <option value="{{ $archiveAccessLevel->id }}" @selected(old('archive_access_level_id') == $archiveAccessLevel->id)>
-                                                    {{ $archiveAccessLevel->name }}</option>
+                                                @if (old('archive_access_level_id', $archive->archive_access_level_id) == $archiveAccessLevel->id)
+                                                    <option value="{{ $archiveAccessLevel->id }}" selected>
+                                                        {{ $archiveAccessLevel->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $archiveAccessLevel->id }}">{{ $archiveAccessLevel->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('archive_access_level_id')
@@ -331,7 +411,8 @@
                                     <div class="col-12 mb-3">
                                         <label for="archive_input_date" class="form-label">Tanggal Input Arsip</label>
                                         <input type="date" class="form-control @error('archive_input_date') is-invalid @enderror"
-                                            id="archive_input_date" name="archive_input_date" value="{{ old('archive_input_date') ?: '' }}">
+                                            id="archive_input_date" name="archive_input_date"
+                                            value="{{ $archive->archive_input_date ?: old('archive_input_date') }}">
                                         @error('archive_input_date')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -347,8 +428,13 @@
                                             class="form-select @error('building_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Gedung Arsip</option>
                                             @foreach ($buildings as $building)
-                                                <option value="{{ $building->id }}" @selected(old('building_id') == $building->id)>
-                                                    {{ $building->name }}</option>
+                                                @if (old('building_id', $archive->building_id) == $building->id)
+                                                    <option value="{{ $building->id }}" selected>
+                                                        {{ $building->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $building->id }}">{{ $building->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('building_id')
@@ -363,8 +449,13 @@
                                             class="form-select @error('cabinet_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Lemari Arsip</option>
                                             @foreach ($cabinets as $cabinet)
-                                                <option value="{{ $cabinet->id }}" @selected(old('cabinet_id') == $cabinet->id)>
-                                                    {{ $cabinet->name }}</option>
+                                                @if (old('cabinet_id', $archive->cabinet_id) == $cabinet->id)
+                                                    <option value="{{ $cabinet->id }}" selected>
+                                                        {{ $cabinet->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $cabinet->id }}">{{ $cabinet->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('cabinet_id')
@@ -379,8 +470,13 @@
                                             class="form-select @error('shelf_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Rak Arsip</option>
                                             @foreach ($shelves as $shelf)
-                                                <option value="{{ $shelf->id }}" @selected(old('shelf_id') == $shelf->id)>
-                                                    {{ $shelf->name }}</option>
+                                                @if (old('shelf_id', $archive->shelf_id) == $shelf->id)
+                                                    <option value="{{ $shelf->id }}" selected>
+                                                        {{ $shelf->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $shelf->id }}">{{ $shelf->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('shelf_id')
@@ -395,9 +491,14 @@
                                             class="form-select @error('shelf_row_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Baris Rak Arsip</option>
                                             @foreach ($shelfRows as $shelfRow)
-                                                <option value="{{ $shelfRow->id }}" @selected(old('shelfRow_row_id') == $shelfRow->id)>
-                                                    {{ $shelfRow->name }}</option>
-                                            @endforeach
+                                            @if (old('shelf_row_id', $archive->shelf_row_id) == $shelfRow->id)
+                                                <option value="{{ $shelfRow->id }}" selected>
+                                                    {{ $shelfRow->name }}
+                                                </option>
+                                            @else
+                                                <option value="{{ $shelfRow->id }}">{{ $shelfRow->name }}</option>
+                                            @endif
+                                        @endforeach
                                         </select>
                                         @error('shelf_row_id')
                                             <div class="invalid-feedback">
@@ -411,8 +512,13 @@
                                             class="form-select @error('box_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Box Arsip</option>
                                             @foreach ($boxes as $box)
-                                                <option value="{{ $box->id }}" @selected(old('box_id') == $box->id)>
-                                                    {{ $box->name }}</option>
+                                                @if (old('box_id', $archive->box_id) == $box->id)
+                                                    <option value="{{ $box->id }}" selected>
+                                                        {{ $box->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $box->id }}">{{ $box->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('box_id')
@@ -427,8 +533,13 @@
                                             class="form-select @error('folder_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Folder Arsip</option>
                                             @foreach ($folders as $folder)
-                                                <option value="{{ $folder->id }}" @selected(old('folder_id') == $folder->id)>
-                                                    {{ $folder->name }}</option>
+                                                @if (old('folder_id', $archive->folder_id) == $folder->id)
+                                                    <option value="{{ $folder->id }}" selected>
+                                                        {{ $folder->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $folder->id }}">{{ $folder->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('folder_id')

@@ -10,8 +10,7 @@ class Archive extends Model
 {
     use HasFactory;
 
-    
-    protected $fillables =[
+    protected $fillable = [
         'user_id',
         'work_unit_id',
         'work_group_id',
@@ -27,6 +26,7 @@ class Archive extends Model
         'archive_access_level_id',
         'archive_public_access_level_id',
         'archive_status_id',
+        'archive_quantity_unit_id',
         'archive_letter_origin_number',
         'archive_description',
         'archive_lifespan',
