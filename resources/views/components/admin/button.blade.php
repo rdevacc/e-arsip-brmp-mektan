@@ -1,8 +1,8 @@
 <div class="d-flex">
-    <a class="btn btn-info" href="{{ route('archive-show', $archive->id) }}" data-bs-toggle="tooltip" data-bs-placement="top"
+    {{-- <a class="btn btn-info" href="{{ route('archive-show', $archive->id) }}" data-bs-toggle="tooltip" data-bs-placement="top"
         data-bs-custom-class="custom-tooltip" data-bs-title="Lihat Detail">
         <i class="bi bi-eye"></i>
-    </a>
+    </a> --}}
     {{-- @canany(['update-kegiatan'], $archive) --}}
     <a class="btn btn-warning mx-1" href="{{ route('archive-edit', $archive->id) }}" data-bs-toggle="tooltip"
         data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Edit Arsip">
