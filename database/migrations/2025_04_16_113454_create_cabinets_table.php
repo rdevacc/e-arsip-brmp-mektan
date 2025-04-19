@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cabinets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('building_id');
+            $table->foreignId('building_id')->nullable(true);
             $table->string('name');
             $table->timestamps();
         });

@@ -22,13 +22,13 @@ class ArchiveQuantityUnitSeeder extends Seeder
             ],
             [
                 'id' => 2,
-                'name' => 'Dokumen',
+                'name' => 'Buku / Berkas',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'id' => 3,
-                'name' => 'Dus',
+                'name' => 'Laporan',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

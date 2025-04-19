@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('boxes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('shelf_row_id');
+            $table->foreignId('shelf_row_id')->nullable(true);
             $table->string('name');
             $table->timestamps();
         });

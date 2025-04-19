@@ -12,11 +12,11 @@
               </a>
           </li> --}}
 
-          {{-- <li class="nav-item">
-              <a class="nav-link collapsed" href="{{route('kegiatan-index')}}">
-                  <i class="bi bi-menu-button-wide"></i><span>Kegiatan</span></i>
+          <li class="nav-item">
+              <a class="nav-link collapsed" href="{{route('archive-index')}}">
+                  <i class="bi bi-menu-button-wide"></i><span>Data Arsip</span></i>
               </a>
-          </li> --}}
+          </li>
 
           {{-- @canany(['isSuperAdmin', 'isAdmin']) --}}
           {{-- <li class="nav-heading">Super Admin</li>

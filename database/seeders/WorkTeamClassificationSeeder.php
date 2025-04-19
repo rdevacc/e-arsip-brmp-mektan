@@ -203,6 +203,27 @@ class WorkTeamClassificationSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'id' => 28,
+                'work_team_id' => 1,
+                'name' => 'KU',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 29,
+                'work_team_id' => 1,
+                'name' => 'RC',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 30,
+                'work_team_id' => 1,
+                'name' => 'KP',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

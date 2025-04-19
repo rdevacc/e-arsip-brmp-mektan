@@ -16,7 +16,7 @@ class ArchiveMediaSeeder extends Seeder
         DB::table('archive_media')->insert([
             [
                 'id' => 1,
-                'name' => 'Arsip Tekstual',
+                'name' => 'Kertas',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -41,6 +41,12 @@ class ArchiveMediaSeeder extends Seeder
             [
                 'id' => 5,
                 'name' => 'Arsip Rekaman Suara',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 6,
+                'name' => 'Arsip Tekstual',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('folders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('box_id');
+            $table->foreignId('box_id')->nullable(true);
             $table->string('name');
             $table->timestamps();
         });

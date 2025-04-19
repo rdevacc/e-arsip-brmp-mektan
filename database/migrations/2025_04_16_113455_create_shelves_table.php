@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('shelves', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cabinet_id');
+            $table->foreignId('cabinet_id')->nullable(true);
             $table->string('name');
             $table->timestamps();
         });
