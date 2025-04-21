@@ -35,30 +35,72 @@ class ArchiveController extends Controller
         if ($request->ajax()) {
             $archives = Archive::with([
                 // 'user',
-                'work_unit',
+                // 'work_unit',
                 // 'work_group',
                 // 'work_team',
-                'work_team_classification',
+                // 'work_team_classification',
                 // 'archive_retention',
                 // 'archive_type',
-                'archive_development_level',
-                'archive_media',
-                'archive_condition',
-                'archive_quantity_unit',
+                // 'archive_development_level',
+                // 'archive_media',
+                // 'archive_condition',
+                // 'archive_quantity_unit',
                 // 'archive_final_depreciation_action',
                 // 'archive_security_classification',
                 // 'archive_access_level',
                 // 'archive_public_access_level',
                 // 'archive_status',
-                'building',
+                // 'building',
                 // 'cabinet',
                 // 'shelf',
                 // 'shelfRow',
                 // 'box',
                 // 'folder'
-            ])->get();         
+                'work_unit:id,name',
+                'work_team_classification:id,name',
+                'archive_development_level:id,name',
+                'archive_media:id,name',
+                'archive_condition:id,name',
+                'archive_quantity_unit:id,name',
+                'building:id,name',
+                'cabinet:id,name',
+                'shelf:id,name',
+                'shelf_row:id,name',
+                'box:id,name',
+                'folder:id,name'
+            ])->select([
+                'id',
+                'work_unit_id',
+                'work_team_classification_id',
+                'archive_description',
+                'archive_lifespan',
+                'archive_development_level_id',
+                'archive_media_id',
+                'archive_condition_id',
+                'archive_quantity_unit_id',
+                'archive_number',
+                'building_id',
+                'cabinet_id',
+                'shelf_id',
+                'shelf_row_id',
+                'box_id',
+                'folder_id',
+            ])
+            ->orderBy('created_at', 'desc');  
 
-            return DataTables::of($archives)
+           if ($request->work_team_classification) {
+                $archives->whereHas('work_team_classification', function ($q) use ($request) {
+                    $q->where('name', $request->work_team_classification);
+                });
+            }
+
+           if ($request->media_arsip) {
+                $archives->whereHas('archive_media', function ($q) use ($request) {
+                    $q->where('name', $request->media_arsip);
+                });
+            }
+
+            return DataTables::eloquent($archives)
                 ->addIndexColumn()
                 ->addColumn('work_unit', fn($archive) => $archive->work_unit->name ?? '-')
                 // ->addColumn('work_group', fn($archive) => $archive->work_group->name ?? '-')
@@ -90,7 +132,15 @@ class ArchiveController extends Controller
                 ->rawColumns(['action']) // agar HTML tombol tidak di-escape
                 ->make(true);
         }
-        return view('apps.archive.index');
+        
+        
+        $workTeamClassificationList = WorkTeamClassification::select('name')->distinct()->get();
+        $mediaList = ArchiveMedia::select('name')->distinct()->get();
+
+        return view('apps.archive.index', compact([
+            'mediaList',
+            'workTeamClassificationList'
+        ]));
     }
 
     public function create(){

@@ -38,9 +38,10 @@
                             <!-- Card Body -->
                             <h4 class="card-title">Data Seluruh Arsip</h4>
 
-                            <div class="row">
+                            <div class="row d-flex flex-wrap align-items-end">
                                 <!-- Button Section -->
                                 <div class="col mb-2 d-flex">
+                                    <!-- Tombol Tambah -->
                                     <div>
                                         <a href="{{ route('archive-create') }}" class="btn btn-primary me-1">Tambah</a>
                                     </div>
@@ -88,6 +89,24 @@
                                     </div>
 
                                 </div> --}}
+                                <div class="col-auto mb-2">
+                                    <select id="filterWorkTeamClassification" class="form-control" style="width: 200px;">
+                                        <option value="">Semua Kode Klasifikasi</option>
+                                        @foreach($workTeamClassificationList as $workTeamClassification)
+                                            <option value="{{ $workTeamClassification->name }}">{{ $workTeamClassification->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    
+                                </div>
+                                <div class="col-auto mb-2">
+                                    <select id="filterMediaArsip" class="form-control" style="width: 200px;">
+                                        <option value="">Semua Media</option>
+                                        @foreach($mediaList as $media)
+                                            <option value="{{ $media->name }}">{{ $media->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    
+                                </div>
                             </div>
 
                             <!-- Table with stripped rows -->
@@ -162,10 +181,16 @@
     
     <script>
         $(function () {
-            $('#archives-table').DataTable({
+            var table = $('#archives-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('archive-index') }}",
+                ajax: {
+                    url: "{{ route('archive-index') }}",
+                    data: function (d) {
+                        d.work_team_classification = $('#filterWorkTeamClassification').val();
+                        d.media_arsip = $('#filterMediaArsip').val();
+                    }
+                },
                 columns: [
                     {
                         data: 'DT_RowIndex',
@@ -192,6 +217,15 @@
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ]
             });
+
+            $('#filterWorkTeamClassification').change(function () {
+                table.draw(); // refresh DataTables saat filter berubah
+            });
+
+            $('#filterMediaArsip').change(function () {
+                table.draw(); // refresh DataTables saat filter berubah
+            });
+
         });
     </script>
 @endpush
