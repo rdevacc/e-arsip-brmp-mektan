@@ -51,6 +51,12 @@ class ArchiveController extends Controller
                 });
             }
 
+           if ($request->archive_status) {
+                $archives->whereHas('archive_status', function ($q) use ($request) {
+                    $q->where('name', $request->archive_status);
+                });
+            }
+
             if ($request->archive_lifespan) {
                 $archives->where('archive_lifespan', $request->archive_lifespan)
                          ->orderByRaw('CAST(archive_lifespan AS UNSIGNED) DESC');
@@ -94,6 +100,8 @@ class ArchiveController extends Controller
         
         
         $workTeamClassificationList = WorkTeamClassification::select('name')->distinct()->get();
+       
+        $archiveStatusList = ArchiveStatus::select('name')->distinct()->get();
 
         $lifespanList = Archive::select('archive_lifespan')
                         ->whereNotNull('archive_lifespan')
@@ -103,6 +111,7 @@ class ArchiveController extends Controller
 
         return view('apps.archive.index', compact([
             'workTeamClassificationList',
+            'archiveStatusList',
             'lifespanList'
         ]));
     }

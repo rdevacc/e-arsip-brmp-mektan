@@ -105,6 +105,14 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                <div class="col-auto mb-2">
+                                    <select id="filterArchiveStatus" class="form-control" style="width: 200px;">
+                                        <option value="">Semua Status Arsip</option>
+                                        @foreach($archiveStatusList as $archiveStatus)
+                                            <option value="{{ $archiveStatus->name }}">{{ $archiveStatus->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
 
                             <!-- Table with stripped rows -->
@@ -163,6 +171,7 @@
                     url: "{{ route('archive-index') }}",
                     data: function (d) {
                         d.work_team_classification = $('#filterWorkTeamClassification').val();
+                        d.archive_status= $('#filterArchiveStatus').val();
                         d.archive_lifespan = $('#filterLifespan').val();
                     }
                 },
@@ -184,6 +193,10 @@
             });
 
             $('#filterWorkTeamClassification').change(function () {
+                table.draw(); // refresh DataTables saat filter berubah
+            });
+
+            $('#filterArchiveStatus').change(function () {
                 table.draw(); // refresh DataTables saat filter berubah
             });
 
