@@ -34,59 +34,16 @@ class ArchiveController extends Controller
     {
         if ($request->ajax()) {
             $archives = Archive::with([
-                // 'user',
-                // 'work_unit',
-                // 'work_group',
-                // 'work_team',
-                // 'work_team_classification',
-                // 'archive_retention',
-                // 'archive_type',
-                // 'archive_development_level',
-                // 'archive_media',
-                // 'archive_condition',
-                // 'archive_quantity_unit',
-                // 'archive_final_depreciation_action',
-                // 'archive_security_classification',
-                // 'archive_access_level',
-                // 'archive_public_access_level',
-                // 'archive_status',
-                // 'building',
-                // 'cabinet',
-                // 'shelf',
-                // 'shelfRow',
-                // 'box',
-                // 'folder'
-                'work_unit:id,name',
                 'work_team_classification:id,name',
-                'archive_development_level:id,name',
-                'archive_media:id,name',
-                'archive_condition:id,name',
-                'archive_quantity_unit:id,name',
-                'building:id,name',
-                'cabinet:id,name',
-                'shelf:id,name',
-                'shelf_row:id,name',
-                'box:id,name',
-                'folder:id,name'
+                'archive_status:id,name'
             ])->select([
                 'id',
-                'work_unit_id',
                 'work_team_classification_id',
+                'archive_status_id',
                 'archive_description',
                 'archive_lifespan',
-                'archive_development_level_id',
-                'archive_media_id',
-                'archive_condition_id',
-                'archive_quantity_unit_id',
-                'archive_number',
-                'building_id',
-                'cabinet_id',
-                'shelf_id',
-                'shelf_row_id',
-                'box_id',
-                'folder_id',
-            ])
-            ->orderBy('created_at', 'desc');  
+            ]);
+
 
            if ($request->work_team_classification) {
                 $archives->whereHas('work_team_classification', function ($q) use ($request) {
@@ -94,40 +51,42 @@ class ArchiveController extends Controller
                 });
             }
 
-           if ($request->media_arsip) {
-                $archives->whereHas('archive_media', function ($q) use ($request) {
-                    $q->where('name', $request->media_arsip);
-                });
+            if ($request->archive_lifespan) {
+                $archives->where('archive_lifespan', $request->archive_lifespan)
+                         ->orderByRaw('CAST(archive_lifespan AS UNSIGNED) DESC');
+            } else {
+                // Default urut berdasarkan id terbaru
+                $archives->orderByDesc('id');
             }
 
             return DataTables::eloquent($archives)
                 ->addIndexColumn()
-                ->addColumn('work_unit', fn($archive) => $archive->work_unit->name ?? '-')
-                // ->addColumn('work_group', fn($archive) => $archive->work_group->name ?? '-')
-                // ->addColumn('work_team', fn($archive) => $archive->work_team->name ?? '-')
                 ->addColumn('work_team_classification', fn($archive) => $archive->work_team_classification->name ?? '-')
                 ->addColumn('archive_description', fn($archive) => $archive->archive_description ?? '-')
                 ->addColumn('archive_lifespan', fn($archive) => $archive->archive_lifespan ?? '-')
-                ->addColumn('archive_development_level', fn($archive) => $archive->archive_development_level->name ?? '-')
-                ->addColumn('archive_media', fn($archive) => $archive->archive_media->name ?? '-')
-                ->addColumn('archive_condition', fn($archive) => $archive->archive_condition->name ?? '-')
-                ->addColumn('archive_number', fn($archive) => $archive->archive_number . ' ' . $archive->archive_quantity_unit->name ?? '-')
-                ->addColumn('building', fn($archive) => $archive->building->name ?? '-')
-                ->addColumn('cabinet', fn($archive) => $archive->cabinet->name ?? '-')
-                ->addColumn('shelf', fn($archive) => $archive->shelf->name ?? '-')
-                ->addColumn('shelf_row', fn($archive) => $archive->shelf_row->name ?? '-')
-                ->addColumn('box', fn($archive) => $archive->box->name ?? '-')
-                ->addColumn('folder', fn($archive) => $archive->folder->name ?? '-')
-                // ->addColumn('archive_retention', fn($archive) => $archive->archive_retention->name ?? '-')
-                // ->addColumn('archive_type', fn($archive) => $archive->archive_type->name ?? '-')
-                // ->addColumn('archive_final_depreciation_action', fn($archive) => $archive->archive_final_depreciation_action->name ?? '-')
-                // ->addColumn('archive_security_classification', fn($archive) => $archive->archive_security_classification->name ?? '-')
-                // ->addColumn('archive_access_level', fn($archive) => $archive->archive_access_level->name ?? '-')
-                // ->addColumn('archive_public_access_level', fn($archive) => $archive->archive_public_access_level->name ?? '-')
-                // ->addColumn('archive_status', fn($archive) => $archive->archive_status->name ?? '-')
-                // ->addColumn('user', fn($archive) => $archive->user->name ?? '-')
+                ->addColumn('archive_status', fn($archive) => $archive->archive_status->name ?? '-')
                 ->addColumn('action', function ($archive) {
                     return view('components.admin.button', compact('archive'))->render();
+                })
+                ->filter(function ($query) use ($request) {
+                    if ($request->has('search') && $request->search['value'] != '') {
+                        $search = $request->search['value'];
+
+                        $query->where('archive_description', 'like', "%{$search}%");
+    
+                        // $query->where(function ($q) use ($search) {
+                        //     $q->where('archive_description', 'like', "%{$search}%")
+                        //       ->orWhere('archive_lifespan', 'like', "%{$search}%")
+                        //       ->orWhereHas('work_team_classification', function ($subQuery) use ($search) {
+                        //           $subQuery->where('name', 'like', "%{$search}%");
+                        //       })
+                        //       ->orWhereHas('archive_status', function ($subQuery) use ($search) {
+                        //           $subQuery->where('name', 'like', "%{$search}%");
+                        //       });
+                        // });
+                    }
+
+                    
                 })
                 ->rawColumns(['action']) // agar HTML tombol tidak di-escape
                 ->make(true);
@@ -135,11 +94,16 @@ class ArchiveController extends Controller
         
         
         $workTeamClassificationList = WorkTeamClassification::select('name')->distinct()->get();
-        $mediaList = ArchiveMedia::select('name')->distinct()->get();
+
+        $lifespanList = Archive::select('archive_lifespan')
+                        ->whereNotNull('archive_lifespan')
+                        ->distinct()
+                        ->orderByRaw('CAST(archive_lifespan AS UNSIGNED) DESC')
+                        ->pluck('archive_lifespan');
 
         return view('apps.archive.index', compact([
-            'mediaList',
-            'workTeamClassificationList'
+            'workTeamClassificationList',
+            'lifespanList'
         ]));
     }
 

@@ -90,20 +90,22 @@
 
                                 </div> --}}
                                 <div class="col-auto mb-2">
-                                    <select id="filterLifespan" class="form-control" style="width: 200px;">
-                                        <option value="">Semua Kurun Waktu</option>
-                                        @foreach ($lifespanList as $lifespan)
-                                            <option value="{{ $lifespan }}">{{ $lifespan }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-auto mb-2">
                                     <select id="filterWorkTeamClassification" class="form-control" style="width: 200px;">
                                         <option value="">Semua Kode Klasifikasi</option>
                                         @foreach($workTeamClassificationList as $workTeamClassification)
                                             <option value="{{ $workTeamClassification->name }}">{{ $workTeamClassification->name }}</option>
                                         @endforeach
                                     </select>
+                                    
+                                </div>
+                                <div class="col-auto mb-2">
+                                    <select id="filterMediaArsip" class="form-control" style="width: 200px;">
+                                        <option value="">Semua Media</option>
+                                        @foreach($mediaList as $media)
+                                            <option value="{{ $media->name }}">{{ $media->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    
                                 </div>
                             </div>
 
@@ -112,24 +114,47 @@
                                 <table id="archives-table" class="table table-striped" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th class="text-center align-middle">
+                                            <th  rowspan="2" class="text-center align-middle">
                                                 #
                                             </th>
-                                            <th class="text-center align-middle">
+                                            <th  rowspan="2" class="text-center align-middle">
+                                                Unit Kerja
+                                            </th>
+                                            <th  rowspan="2" class="text-center align-middle">
                                                 Kode Klasifikasi
                                             </th>
-                                            <th class="text-center align-middle">
+                                            <th  rowspan="2" class="text-center align-middle">
                                                 Uraian
                                             </th>
-                                           <th class="text-center align-middle">
+                                           <th  rowspan="2" class="text-center align-middle">
                                                 Kurun Waktu
                                             </th>
-                                            <th class="text-center align-middle">
-                                                Status Arsip
+                                            <th  rowspan="2" class="text-center align-middle">
+                                                Tingkat Perkembangan
                                             </th>
-                                            <th class="text-center align-middle">
+                                            <th  rowspan="2" class="text-center align-middle">
+                                                Media Arsip
+                                            </th>
+                                            <th  rowspan="2" class="text-center align-middle">
+                                                Kondisi Arsip
+                                            </th>
+                                            <th  rowspan="2" class="text-center align-middle">
+                                                Jumlah Arsip
+                                            </th>
+                                            <th rowspan="1" colspan="6" class="text-center align-middle">Lokasi Penyimpanan  
+                                            </th>                                            
+                                            <th rowspan="2"class="text-center align-middle">
                                                 Action
                                             </th>
+
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center align-middle">Gedung</th>
+                                            <th class="text-center align-middle">Lemari</th>
+                                            <th class="text-center align-middle">Rak</th>
+                                            <th class="text-center align-middle">Baris</th>
+                                            <th class="text-center align-middle">Boks</th>
+                                            <th class="text-center align-middle">Folder</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -163,7 +188,7 @@
                     url: "{{ route('archive-index') }}",
                     data: function (d) {
                         d.work_team_classification = $('#filterWorkTeamClassification').val();
-                        d.archive_lifespan = $('#filterLifespan').val();
+                        d.media_arsip = $('#filterMediaArsip').val();
                     }
                 },
                 columns: [
@@ -175,10 +200,20 @@
                         width: '10px',
                         targets: 0,
                     },
+                    { data: 'work_unit', name: 'work_unit' },
                     { data: 'work_team_classification', name: 'work_team_classification' },
                     { data: 'archive_description', name: 'archive_description' },
                     { data: 'archive_lifespan', name: 'archive_lifespan' },
-                    { data: 'archive_status', name: 'archive_status' },
+                    { data: 'archive_development_level', name: 'archive_development_level' },
+                    { data: 'archive_media', name: 'archive_media' },
+                    { data: 'archive_condition', name: 'archive_condition' },
+                    { data: 'archive_number', name: 'archive_number' },
+                    { data: 'building', name: 'building' },
+                    { data: 'cabinet', name: 'cabinet' },
+                    { data: 'shelf', name: 'shelf' },
+                    { data: 'shelf_row', name: 'shelf_row' },
+                    { data: 'box', name: 'box' },
+                    { data: 'folder', name: 'folder' },
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ]
             });
@@ -187,9 +222,10 @@
                 table.draw(); // refresh DataTables saat filter berubah
             });
 
-            $('#filterLifespan').on('change', function() {
-                table.draw();
+            $('#filterMediaArsip').change(function () {
+                table.draw(); // refresh DataTables saat filter berubah
             });
+
         });
     </script>
 @endpush
