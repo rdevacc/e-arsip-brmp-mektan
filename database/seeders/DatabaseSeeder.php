@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             FolderSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
-            ArchiveSeeder::class,
+            // ArchiveSeeder::class,
            ]);
 
         // \App\Models\User::factory(10)->create();

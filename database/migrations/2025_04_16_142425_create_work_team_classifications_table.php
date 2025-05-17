@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('work_team_classifications', function (Blueprint $table) {
             $table->id();
             $table->foreignId('work_team_id');
+            $table->string('code');
             $table->string('name');
             $table->timestamps();
         });

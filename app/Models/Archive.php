@@ -28,6 +28,7 @@ class Archive extends Model
         'archive_status_id',
         'archive_quantity_unit_id',
         'archive_letter_origin_number',
+        'archive_classification_description',
         'archive_description',
         'archive_lifespan',
         'archive_number',

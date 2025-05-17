@@ -101,7 +101,7 @@
                                     <select id="filterWorkTeamClassification" class="form-control" style="width: 200px;">
                                         <option value="">Semua Kode Klasifikasi</option>
                                         @foreach($workTeamClassificationList as $workTeamClassification)
-                                            <option value="{{ $workTeamClassification->name }}">{{ $workTeamClassification->name }}</option>
+                                            <option value="{{ $workTeamClassification->id }}">{{ $workTeamClassification->code }}</option>
                                         @endforeach
                                     </select>
                                 </div>

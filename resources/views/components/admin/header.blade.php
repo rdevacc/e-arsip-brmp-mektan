@@ -4,7 +4,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="#" class="logo d-flex align-items-center">
         <img src="{{ asset('admin/assets/img/logo-kementan.png') }}" alt="">
-        <span class="d-none d-lg-block">E-Arsip Mektan</span>
+        <span class="d-none d-lg-block" style="white-space: nowrap;">Digital Arsip Mektan</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->

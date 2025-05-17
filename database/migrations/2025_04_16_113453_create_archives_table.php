@@ -36,6 +36,7 @@ return new class extends Migration
             $table->foreignId('box_id')->nullable(true);
             $table->foreignId('folder_id')->nullable(true);
             // $table->string('a_regnumber');
+            $table->string('archive_classification_description')->nullable(true);
             $table->string('archive_letter_origin_number')->nullable(true);
             $table->text('archive_description')->nullable(true);
             $table->string('archive_lifespan')->nullable(true);

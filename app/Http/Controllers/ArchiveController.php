@@ -26,15 +26,23 @@ use App\Models\WorkTeam;
 use App\Models\WorkTeamClassification;
 use App\Models\WorkUnit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
 
 class ArchiveController extends Controller
 {
+    public function getWorkTeams($work_group_id)
+    {
+        $teams = WorkTeam::where('work_group_id', $work_group_id)->get(['id', 'name']);
+        return response()->json($teams);
+    }
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
             $archives = Archive::with([
-                'work_team_classification:id,name',
+                'work_team_classification:id,name,code',
                 'archive_status:id,name'
             ])->select([
                 'id',
@@ -47,7 +55,7 @@ class ArchiveController extends Controller
 
            if ($request->work_team_classification) {
                 $archives->whereHas('work_team_classification', function ($q) use ($request) {
-                    $q->where('name', $request->work_team_classification);
+                    $q->where('id', $request->work_team_classification);
                 });
             }
 
@@ -67,7 +75,7 @@ class ArchiveController extends Controller
 
             return DataTables::eloquent($archives)
                 ->addIndexColumn()
-                ->addColumn('work_team_classification', fn($archive) => $archive->work_team_classification->name ?? '-')
+                ->addColumn('work_team_classification', fn($archive) => $archive->work_team_classification->code ?? '-')
                 ->addColumn('archive_description', fn($archive) => $archive->archive_description ?? '-')
                 ->addColumn('archive_lifespan', fn($archive) => $archive->archive_lifespan ?? '-')
                 ->addColumn('archive_status', fn($archive) => $archive->archive_status->name ?? '-')
@@ -99,9 +107,21 @@ class ArchiveController extends Controller
         }
         
         
-        $workTeamClassificationList = WorkTeamClassification::select('name')->distinct()->get();
+        $workTeamClassificationList = Archive::with('work_team_classification')
+                                    ->whereNotNull('work_team_classification_id')
+                                    ->get()
+                                    ->pluck('work_team_classification')
+                                    ->unique('id')
+                                    ->sortByDesc('id')
+                                    ->values();
        
-        $archiveStatusList = ArchiveStatus::select('name')->distinct()->get();
+        $archiveStatusList = Archive::with('archive_status')
+                                    ->whereNotNull('archive_status_id')
+                                    ->get()
+                                    ->pluck('archive_status')
+                                    ->unique('id')
+                                    ->sortByDesc('id')
+                                    ->values();
 
         $lifespanList = Archive::select('archive_lifespan')
                         ->whereNotNull('archive_lifespan')
@@ -121,8 +141,8 @@ class ArchiveController extends Controller
         // Initiate Data
         $workUnits = WorkUnit::get(['id', 'name']);
         $workGroups = WorkGroup::get(['id', 'name']);
-        $workTeams = WorkTeam::get(['id', 'name']);
-        $workTeamClassifications = WorkTeamClassification::get(['id', 'name']);
+        // $workTeams = WorkTeam::get(['id', 'name']);
+        $workTeamClassifications = WorkTeamClassification::get(['id', 'name', 'code']);
         $archiveRetentions = ArchiveRetention::get(['id', 'range']);
         $archiveTypes = ArchiveType::get(['id', 'name']);
         $archiveStatuses = ArchiveStatus::get(['id', 'name']);
@@ -145,7 +165,7 @@ class ArchiveController extends Controller
         return view('apps.archive.create', compact([
             'workUnits',
             'workGroups',
-            'workTeams',
+            // 'workTeams',
             'workTeamClassifications',
             "archiveRetentions",
             "archiveTypes",
@@ -172,8 +192,11 @@ class ArchiveController extends Controller
         $validated = $request->validate([
             'user_id' => 'required',
             'work_unit_id' => 'required',
-            'work_group_id' => 'required',
-            'work_team_id' => 'required',
+            'work_group_id' => 'required|exists:work_groups,id',
+            'work_team_id' => [
+                'required',
+                Rule::exists('work_teams', 'id')->where('work_group_id', $request->work_group_id)
+            ],
             'work_team_classification_id' => 'required',
             'archive_retention_id' => 'required',
             'archive_type_id' => 'required',
@@ -197,7 +220,6 @@ class ArchiveController extends Controller
             'shelf_row_id' => 'required',
             'box_id' => 'required',
             'folder_id' => 'required',
-
         ],[
             'user_id.required' => 'User ID field is required!',
             'work_unit_id.required' => 'Unit Kerja field is required!',
@@ -239,7 +261,7 @@ class ArchiveController extends Controller
         $workUnits = WorkUnit::get(['id', 'name']);
         $workGroups = WorkGroup::get(['id', 'name']);
         $workTeams = WorkTeam::get(['id', 'name']);
-        $workTeamClassifications = WorkTeamClassification::get(['id', 'name']);
+        $workTeamClassifications = WorkTeamClassification::get(['id', 'name', 'code']);
         $archiveRetentions = ArchiveRetention::get(['id', 'range']);
         $archiveTypes = ArchiveType::get(['id', 'name']);
         $archiveStatuses = ArchiveStatus::get(['id', 'name']);
@@ -290,8 +312,11 @@ class ArchiveController extends Controller
          $validated = $request->validate([
             'user_id' => 'required',
             'work_unit_id' => 'required',
-            'work_group_id' => 'required',
-            'work_team_id' => 'required',
+            'work_group_id' => 'required|exists:work_groups,id',
+            'work_team_id' => [
+                'required',
+                Rule::exists('work_teams', 'id')->where('work_group_id', $request->work_group_id)
+            ],
             'work_team_classification_id' => 'required',
             'archive_retention_id' => 'required',
             'archive_type_id' => 'required',

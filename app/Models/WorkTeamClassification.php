@@ -13,6 +13,7 @@ class WorkTeamClassification extends Model
         
     protected $fillable = [
         'work_team_id',
+        'code',
         'name'
     ];
 
