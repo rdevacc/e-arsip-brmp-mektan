@@ -153,15 +153,11 @@
 @endsection
 
 @push('scripts')
-    {{-- {{ $dataTable->scripts() }} --}}
-
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- DataTables -->
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
-    
+    <!-- Load Data -->
     <script>
         $(function () {
             var table = $('#archives-table').DataTable({
@@ -192,6 +188,11 @@
                 ]
             });
 
+            // Inisialisasi tooltip setiap kali tabel di-render ulang
+            table.on('draw.dt', function () {
+            $('[data-bs-toggle="tooltip"]').tooltip(); // Bootstrap 5
+            });
+
             $('#filterWorkTeamClassification').change(function () {
                 table.draw(); // refresh DataTables saat filter berubah
             });
@@ -205,4 +206,41 @@
             });
         });
     </script>
+
+    <!-- Tooltip -->
+    <script>
+        $(function () {
+            $('[data-bs-toggle="tooltip"]').tooltip();
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Delegate click event ke tombol dengan class .btn-delete
+            document.querySelectorAll('.btn-delete').forEach(function (btn) {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const url = btn.getAttribute('data-url');
+                    const form = btn.closest('form');
+
+                    Swal.fire({
+                        title: 'Yakin ingin menghapus?',
+                        text: "Data arsip tidak dapat dikembalikan!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Ya, hapus!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
 @endpush
