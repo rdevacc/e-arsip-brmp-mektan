@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\DashboardController;
 use App\Models\WorkTeamClassification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,7 +24,7 @@ Route::get('/', function () {
 
 Route::prefix('/app')->group(function (){
     /**
-     * * Archive Route *
+     * * Archive Routes *
      */
     Route::resource('/archive', ArchiveController::class)->names([
         'index' => 'archive-index',
@@ -48,4 +49,9 @@ Route::prefix('/app')->group(function (){
         return response()->json($results);
 
     })->name('work_team_classifications.search');
+
+    /**
+     * * Dashboard Routes *
+     */
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });

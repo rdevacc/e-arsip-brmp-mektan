@@ -17,6 +17,15 @@
 @section('content')
     <main id="main" class="main">
         <section class="section">
+            <div class="pagetitle">
+                <h1>Data Arsip</h1>
+                {{-- <nav>
+                    <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active">Arsip</li>
+                    </ol>
+                </nav> --}}
+            </div>
 
             <!-- Session Alert -->
             @if (session('success'))
@@ -36,7 +45,7 @@
                         <div class="card-body">
 
                             <!-- Card Body -->
-                            <h4 class="card-title">Data Seluruh Arsip</h4>
+                            {{-- <h4 class="card-title">Data Seluruh Arsip</h4> --}}
 
                             <div class="row d-flex flex-wrap align-items-end">
                                 <!-- Button Section -->

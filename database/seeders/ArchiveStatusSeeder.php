@@ -63,6 +63,20 @@ class ArchiveStatusSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'id' => 8,
+                'type_id' => 2,
+                'name' => 'Musnah',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 9,
+                'type_id' => 2,
+                'name' => 'Terjaga',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

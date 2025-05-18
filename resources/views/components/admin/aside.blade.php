@@ -5,12 +5,12 @@
 
         <li class="nav-heading">Utama</li>
 
-          {{-- <li class="nav-item">
+          <li class="nav-item">
               <a class="nav-link collapsed" href="{{route('dashboard')}}">
                   <i class="bi bi-grid"></i>
                   <span>Dashboard</span>
               </a>
-          </li> --}}
+          </li>
 
           <li class="nav-item">
               <a class="nav-link collapsed" href="{{route('archive-index')}}">
