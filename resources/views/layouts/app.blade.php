@@ -109,7 +109,13 @@
 
     <!-- Custom Delete Button -->
     <script src="{{ asset('js/delete-confirmation.js') }}"></script>
-
+    
+    <!-- Chart.js JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Plugin: Chart.js Data Labels -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    
     @stack('scripts')
 
 </body>

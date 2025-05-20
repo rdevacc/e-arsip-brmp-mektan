@@ -252,4 +252,35 @@
         });
     </script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const statusParam = urlParams.get('status');
+
+            console.log(statusParam)
+
+            if (statusParam) {
+                const select = document.getElementById('filterArchiveStatus');
+                select.value = statusParam;
+
+                // Trigger change event
+                const event = new Event('change');
+                select.dispatchEvent(event);
+            }
+
+            // Inisialisasi DataTable
+            const table = $('#yourDataTableId').DataTable({
+                // ... konfigurasi lainnya ...
+            });
+
+            // Event listener untuk filter status
+            $('#filterArchiveStatus').on('change', function () {
+                const selected = $(this).val();
+                table.column(1) // Ganti dengan indeks kolom status di tabel kamu
+                    .search(selected)
+                    .draw();
+            });
+        });
+    </script>
+
 @endpush

@@ -20,6 +20,17 @@ class DashboardController extends Controller
         $proposedForDestructionArchive = Archive::where('archive_status_id', 7)->count();
         $destructionArchive = Archive::where('archive_status_id', 8)->count();
 
+
+        $chartLabels = ['Aktif', 'Inaktif', 'Vital', 'Terjaga', 'Usul Musnah', 'Musnah'];
+        $chartData = [
+            $activeArchive,
+            $inactiveArchive,
+            $vitalArchive,
+            $preservedArchive,
+            $proposedForDestructionArchive,
+            $destructionArchive
+        ];
+
         return view('apps.dashboard.index', compact([
             'totalArchive',
             'activeArchive',
@@ -29,6 +40,8 @@ class DashboardController extends Controller
             'staticArchive',
             'proposedForDestructionArchive',
             'destructionArchive',
+            'chartLabels',
+            'chartData'
         ]));
     }
 }
