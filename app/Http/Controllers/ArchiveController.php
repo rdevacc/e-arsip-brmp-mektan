@@ -144,8 +144,7 @@ class ArchiveController extends Controller
         // $workTeams = WorkTeam::get(['id', 'name']);
         $workTeamClassifications = WorkTeamClassification::get(['id', 'name', 'code']);
         $archiveRetentions = ArchiveRetention::get(['id', 'range']);
-        $archiveTypes = ArchiveType::get(['id', 'name']);
-        $archiveStatuses = ArchiveStatus::get(['id', 'name']);
+        $archiveStatuses = ArchiveStatus::orderBy('name')->get(['id', 'name']);
         $archiveDevelopmentLevels = ArchiveDevelopmentLevel::get(['id', 'name']);
         $archiveMedias = ArchiveMedia::get(['id', 'name']);
         $archiveConditions = ArchiveCondition::get(['id', 'name']);
@@ -175,7 +174,6 @@ class ArchiveController extends Controller
             // 'workTeams',
             'workTeamClassifications',
             "archiveRetentions",
-            "archiveTypes",
             "archiveStatuses",
             "archiveDevelopmentLevels",
             "archiveMedias",
@@ -206,7 +204,6 @@ class ArchiveController extends Controller
             ],
             'work_team_classification_id' => 'required',
             'archive_retention_id' => 'required',
-            'archive_type_id' => 'required',
             'archive_development_level_id' => 'required',
             'archive_media_id' => 'required',
             'archive_condition_id' => 'required',
@@ -234,7 +231,6 @@ class ArchiveController extends Controller
             'work_team_id.required' => 'Tim Kerja field is required!',
             'work_team_classification_id.required' => 'Klasifikasi field is required!',
             'archive_retention_id.required' => 'Retensi Arsip field is required!',
-            'archive_type_id.required' => 'Tipe Arsip field is required!',
             'archive_development_level_id.required' => 'Tingkat Perkembangan Arsip field is required!',
             'archive_media_id.required' => 'Media Arsip field is required!',
             'archive_condition_id.required' => 'Kondisi Arsip field is required!',
@@ -270,8 +266,7 @@ class ArchiveController extends Controller
         $workTeams = WorkTeam::get(['id', 'name']);
         $workTeamClassifications = WorkTeamClassification::get(['id', 'name', 'code']);
         $archiveRetentions = ArchiveRetention::get(['id', 'range']);
-        $archiveTypes = ArchiveType::get(['id', 'name']);
-        $archiveStatuses = ArchiveStatus::get(['id', 'name']);
+        $archiveStatuses = ArchiveStatus::orderBy('name')->get(['id', 'name']);
         $archiveDevelopmentLevels = ArchiveDevelopmentLevel::get(['id', 'name']);
         $archiveMedias = ArchiveMedia::get(['id', 'name']);
         $archiveConditions = ArchiveCondition::get(['id', 'name']);
@@ -295,7 +290,6 @@ class ArchiveController extends Controller
             'workTeams',
             'workTeamClassifications',
             "archiveRetentions",
-            "archiveTypes",
             "archiveStatuses",
             "archiveDevelopmentLevels",
             "archiveMedias",
@@ -326,7 +320,6 @@ class ArchiveController extends Controller
             ],
             'work_team_classification_id' => 'required',
             'archive_retention_id' => 'required',
-            'archive_type_id' => 'required',
             'archive_development_level_id' => 'required',
             'archive_media_id' => 'required',
             'archive_condition_id' => 'required',
@@ -355,7 +348,6 @@ class ArchiveController extends Controller
             'work_team_id.required' => 'Tim Kerja field is required!',
             'work_team_classification_id.required' => 'Klasifikasi field is required!',
             'archive_retention_id.required' => 'Retensi Arsip field is required!',
-            'archive_type_id.required' => 'Tipe Arsip field is required!',
             'archive_development_level_id.required' => 'Tingkat Perkembangan Arsip field is required!',
             'archive_media_id.required' => 'Media Arsip field is required!',
             'archive_condition_id.required' => 'Kondisi Arsip field is required!',

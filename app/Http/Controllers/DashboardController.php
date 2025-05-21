@@ -14,9 +14,8 @@ class DashboardController extends Controller
         $inactiveArchive = Archive::where('archive_status_id', 5)->count();
         $vitalArchive = Archive::where('archive_status_id', 1)->count();
         $preservedArchive = Archive::where('archive_status_id', 9)->count();
-        $staticArchive = Archive::whereHas('archive_status', function($query){
-            $query->where('type_id', 2);
-        })->count();
+        $staticArchive = Archive::where('archive_status_id',2)->count();
+        $dynamicArchive = Archive::where('archive_status_id',3)->count();
         $proposedForDestructionArchive = Archive::where('archive_status_id', 7)->count();
         $destructionArchive = Archive::where('archive_status_id', 8)->count();
 
@@ -35,9 +34,10 @@ class DashboardController extends Controller
             'totalArchive',
             'activeArchive',
             'inactiveArchive',
+            'staticArchive',
+            'dynamicArchive',
             'vitalArchive',
             'preservedArchive',
-            'staticArchive',
             'proposedForDestructionArchive',
             'destructionArchive',
             'chartLabels',

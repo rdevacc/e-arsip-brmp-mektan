@@ -19,14 +19,13 @@ return new class extends Migration
             $table->foreignId('work_team_id')->nullable(true);
             $table->foreignId('work_team_classification_id')->nullable(true);
             $table->foreignId('archive_retention_id')->nullable(true);
-            $table->foreignId('archive_type_id')->nullable(true);
             $table->foreignId('archive_development_level_id')->nullable(true);
             $table->foreignId('archive_media_id')->nullable(true);
             $table->foreignId('archive_condition_id')->nullable(true);
             $table->foreignId('archive_final_depreciation_action_id')->nullable(true);
-            $table->foreignId('archive_security_classification_id')->nullable(true);
             $table->foreignId('archive_access_level_id')->nullable(true);
             $table->foreignId('archive_public_access_level_id')->nullable(true);
+            $table->foreignId('archive_security_classification_id')->nullable(true);
             $table->foreignId('archive_status_id')->nullable(true);
             $table->foreignId('archive_quantity_unit_id')->nullable(true);
             $table->foreignId('building_id')->nullable(true);

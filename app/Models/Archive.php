@@ -17,7 +17,6 @@ class Archive extends Model
         'work_team_id',
         'work_team_classification_id',
         'archive_retention_id',
-        'archive_type_id',
         'archive_development_level_id',
         'archive_media_id',
         'archive_condition_id',
@@ -89,13 +88,6 @@ class Archive extends Model
         return $this->belongsTo(ArchiveRetention::class);
     }
 
-    /**
-     * * Relationship from Archive to Archive Type*
-     */
-    public function archive_type(): BelongsTo
-    {
-        return $this->belongsTo(ArchiveType::class);
-    }
 
     /**
      * * Relationship from Archive to Archive Development Level*

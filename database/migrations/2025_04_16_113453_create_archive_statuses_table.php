@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('archive_statuses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('type_id');
             $table->string('name');
             $table->timestamps();
         });

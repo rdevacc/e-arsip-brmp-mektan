@@ -35,7 +35,7 @@
                                     <input type="hidden" value="1" class="form-control" for="user_id" name="user_id"
                                         id="user_id">
                                     <div class="col-12 mb-3">
-                                        <label for="work_unit_id" class="form-label">Unit Kerja</label>
+                                        <label for="work_unit_id" class="form-label">Unit Kerja <span class="text-danger">*</span></label>
                                         <select name="work_unit_id" id="work_unit_id"
                                             class="form-select @error('work_unit_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Unit Kerja</option>
@@ -56,7 +56,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="work_group_id" class="form-label">Kelompok Kerja</label>
+                                        <label for="work_group_id" class="form-label">Kelompok Kerja <span class="text-danger">*</span></label>
                                         <select name="work_group_id" id="work_group_id"
                                             class="form-select @error('work_group_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Kelompok Kerja</option>
@@ -72,7 +72,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="work_team_id" class="form-label">Tim Kerja</label>
+                                        <label for="work_team_id" class="form-label">Tim Kerja <span class="text-danger">*</span></label>
                                         <select disabled name="work_team_id" id="work_team_id"
                                             class="form-select @error('work_team_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Tim Kerja</option>
@@ -90,7 +90,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="work_team_classification_id" class="form-label">Klasifikasi Tim Kerja</label>
+                                        <label for="work_team_classification_id" class="form-label">Klasifikasi Tim Kerja <span class="text-danger">*</span></label>
                                         <select name="work_team_classification_id" id="work_team_classification_id"
                                             class="form-select @error('work_team_classification_id') is-invalid @enderror" style="width: 100%;">
                                             <option selected disabled>Pilih Klasifikasi Tim Kerja</option>
@@ -123,7 +123,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="archive_retention_id" class="form-label">Retensi Arsip</label>
+                                        <label for="archive_retention_id" class="form-label">Retensi Arsip <span class="text-danger">*</span></label>
                                         <select name="archive_retention_id" id="archive_retention_id"
                                             class="form-select @error('archive_retention_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Retensi Arsip</option>
@@ -144,28 +144,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="archive_type_id" class="form-label">Tipe Arsip</label>
-                                        <select name="archive_type_id" id="archive_type_id"
-                                            class="form-select @error('archive_type_id') is-invalid @enderror">
-                                            <option selected disabled>Pilih Tipe Arsip</option>
-                                            @foreach ($archiveTypes as $archiveType)
-                                            @if (old('archive_type_id', $archive->archive_type_id) == $archiveType->id)
-                                                <option value="{{ $archiveType->id }}" selected>
-                                                    {{ $archiveType->name }}
-                                                </option>
-                                            @else
-                                                <option value="{{ $archiveType->id }}">{{ $archiveType->name }}</option>
-                                            @endif
-                                        @endforeach
-                                        </select>
-                                        @error('archive_type_id')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-12 mb-3">
-                                        <label for="archive_status_id" class="form-label">Status Arsip</label>
+                                        <label for="archive_status_id" class="form-label">Status Arsip <span class="text-danger">*</span></label>
                                         <select name="archive_status_id" id="archive_status_id"
                                             class="form-select @error('archive_status_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Status Arsip</option>
@@ -186,7 +165,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="archive_letter_origin_number" class="form-label">Nomor Asal Surat</label>
+                                        <label for="archive_letter_origin_number" class="form-label">Nomor Asal Surat <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control @error('archive_letter_origin_number') is-invalid @enderror"
                                             id="archive_letter_origin_number" name="archive_letter_origin_number"
                                             value="{{ $archive->archive_letter_origin_number ?: old('archive_letter_origin_number')}}">
@@ -197,7 +176,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="archive_description" class="form-label">Uraian Arsip</label>
+                                        <label for="archive_description" class="form-label">Uraian Arsip <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control @error('archive_description') is-invalid @enderror"
                                             id="archive_description" name="archive_description"
                                             value="{{ $archive->archive_description ?:old('archive_description') }}">
@@ -208,7 +187,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="archive_lifespan" class="form-label">Kurun Waktu Arsip</label>
+                                        <label for="archive_lifespan" class="form-label">Kurun Waktu Arsip <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control @error('archive_lifespan') is-invalid @enderror"
                                             id="archive_lifespan" name="archive_lifespan"
                                             value="{{ $archive->archive_lifespan ?:old('archive_lifespan') }}">
@@ -219,7 +198,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="archive_development_level_id" class="form-label">Tingkat Perkembangan Arsip</label>
+                                        <label for="archive_development_level_id" class="form-label">Tingkat Perkembangan Arsip <span class="text-danger">*</span></label>
                                         <select name="archive_development_level_id" id="archive_development_level_id"
                                             class="form-select @error('archive_development_level_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Tingkat Perkembangan Arsip</option>
@@ -240,7 +219,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="archive_media_id" class="form-label">Media Arsip</label>
+                                        <label for="archive_media_id" class="form-label">Media Arsip <span class="text-danger">*</span></label>
                                         <select name="archive_media_id" id="archive_media_id"
                                             class="form-select @error('archive_media_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Media Arsip</option>
@@ -261,7 +240,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="archive_condition_id" class="form-label">Kondisi Arsip</label>
+                                        <label for="archive_condition_id" class="form-label">Kondisi Arsip <span class="text-danger">*</span></label>
                                         <select name="archive_condition_id" id="archive_condition_id"
                                             class="form-select @error('archive_condition_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Kondisi Arsip</option>
@@ -282,7 +261,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="archive_number" class="form-label">Jumlah Arsip</label>
+                                        <label for="archive_number" class="form-label">Jumlah Arsip <span class="text-danger">*</span></label>
                                         <div class="row">
                                             <div class="col-md-2 mb-2 mb-md-0">
                                                 <input type="text" class="form-control @error('archive_number') is-invalid @enderror"
@@ -317,7 +296,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="archive_final_depreciation_action_id" class="form-label">Tindakan Penyusutan Akhir Arsip</label>
+                                        <label for="archive_final_depreciation_action_id" class="form-label">Tindakan Penyusutan Akhir Arsip <span class="text-danger">*</span></label>
                                         <select name="archive_final_depreciation_action_id" id="archive_final_depreciation_action_id"
                                             class="form-select @error('archive_final_depreciation_action_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Tindakan Penyusutan Akhir Arsip</option>
@@ -338,7 +317,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="archive_security_classification_id" class="form-label">Klasifikasi Keamanan Arsip</label>
+                                        <label for="archive_security_classification_id" class="form-label">Klasifikasi Keamanan Arsip <span class="text-danger">*</span></label>
                                         <select name="archive_security_classification_id" id="archive_security_classification_id"
                                             class="form-select @error('archive_security_classification_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Klasifikasi Keamanan Arsip</option>
@@ -359,7 +338,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="archive_public_access_level_id" class="form-label">Tingkat Akses Publik Arsip</label>
+                                        <label for="archive_public_access_level_id" class="form-label">Tingkat Akses Publik Arsip <span class="text-danger">*</span></label>
                                         <select name="archive_public_access_level_id" id="archive_public_access_level_id"
                                             class="form-select @error('archive_public_access_level_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Tingkat Akses Publik Arsip</option>
@@ -380,7 +359,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="archive_access_level_id" class="form-label">Akses Level Arsip</label>
+                                        <label for="archive_access_level_id" class="form-label">Akses Level Arsip <span class="text-danger">*</span></label>
                                         <select name="archive_access_level_id" id="archive_access_level_id"
                                             class="form-select @error('archive_access_level_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Akses Level Arsip</option>
@@ -401,7 +380,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="archive_input_date" class="form-label">Tanggal Input Arsip</label>
+                                        <label for="archive_input_date" class="form-label">Tanggal Input Arsip <span class="text-danger">*</span></label>
                                         <input type="date" class="form-control @error('archive_input_date') is-invalid @enderror"
                                             id="archive_input_date" name="archive_input_date"
                                             value="{{ $archive->archive_input_date ?: old('archive_input_date') }}">
