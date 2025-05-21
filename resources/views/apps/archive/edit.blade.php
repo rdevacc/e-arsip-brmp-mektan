@@ -77,13 +77,10 @@
                                             class="form-select @error('work_team_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Tim Kerja</option>
                                             @foreach ($workTeams as $workTeam)
-                                                @if (old('work_team_id', $archive->work_team_id) == $workTeam->id)
-                                                    <option value="{{ $workTeam->id }}" selected>
-                                                        {{ $workTeam->name }}
-                                                    </option>
-                                                @else
-                                                    <option value="{{ $workTeam->id }}">{{ $workTeam->name }}</option>
-                                                @endif
+                                                <option value="{{ $workTeam->id }}"
+                                                    {{ old('work_team_id', $archive->work_team_id) == $workTeam->id ? 'selected' : '' }}>
+                                                    {{ $workTeam->name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                         @error('work_team_id')
@@ -592,6 +589,7 @@
     document.addEventListener('DOMContentLoaded', () => {
         const workGroup = document.getElementById('work_group_id');
         const workTeam = document.getElementById('work_team_id');
+        const form = workTeam.closest('form');
 
         workGroup.addEventListener('change', async () => {
             const id = workGroup.value;
@@ -615,6 +613,11 @@
                 workTeam.innerHTML = `<option selected disabled>Gagal memuat data</option>`;
                 workTeam.disabled = true;
             }
+        });
+
+        // Hapus 'disabled' sebelum form disubmit agar value ikut terkirim
+        form.addEventListener('submit', () => {
+            workTeam.disabled = false;
         });
     });
 </script>

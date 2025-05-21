@@ -43,7 +43,7 @@ Route::prefix('/app')->group(function (){
 
         $results = WorkTeamClassification::where('code', 'like', "%{$q}%")
                     ->orWhere('name', 'like', "%{$q}%")
-                    ->limit(20)
+                    // ->limit(20)
                     ->get(['id', 'code', 'name']);
 
         return response()->json($results);

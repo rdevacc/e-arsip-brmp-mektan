@@ -199,6 +199,7 @@
 @endsection
 
 @push('scripts')
+    <!-- Script Pie Chart-->
     <script>
         const ctx = document.getElementById('archiveChart').getContext('2d');
 

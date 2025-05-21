@@ -9,8 +9,16 @@
           </li>
 
           <li class="nav-item">
-              <a class="nav-link {{ request()->routeIs('archive-index') ? 'active' : '' }}" href="{{route('archive-index')}}">
-                  <i class="bi bi-menu-button-wide"></i><span>Data Arsip</span></i>
+              <a class="nav-link {{ request()->routeIs('archive-*') ? 'active' : '' }}" href="{{route('archive-index')}}">
+                  <i class="bi bi-menu-button-wide"></i>
+                  <span>Data Arsip</span>
+              </a>
+          </li>
+
+          <li class="nav-item">
+              <a class="nav-link {{ request()->routeIs('report-*') ? 'active' : '' }}" href="#">
+                  <i class="bi bi-file-earmark-text"></i>
+                  <span>Laporan</span>
               </a>
           </li>
 

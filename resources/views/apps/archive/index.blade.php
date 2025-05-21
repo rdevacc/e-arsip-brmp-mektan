@@ -43,87 +43,54 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
+                            <div class="row mx-1 mt-2 d-flex justify-content-between">
+                                <!-- Tombol Tambah di kiri -->
+                                <div class="col-md-auto mb-2">
+                                    <a href="{{ route('archive-create') }}" class="btn btn-primary w-100 w-md-auto">Tambah</a>
+                                </div>
 
-                            <!-- Card Body -->
-                            {{-- <h4 class="card-title">Data Seluruh Arsip</h4> --}}
-
-                            <div class="row d-flex flex-wrap align-items-end">
-                                <!-- Button Section -->
-                                <div class="col mb-2 d-flex">
-                                    <!-- Tombol Tambah -->
-                                    <div>
-                                        <a href="{{ route('archive-create') }}" class="btn btn-primary me-1">Tambah</a>
-                                    </div>
-                                    {{-- <div>
-                                        <form action="{{ route('excel') }}" method="post" class="me-1">
-                                            @csrf
-                                            <div>
-                                                <button type="submit" class="btn btn-success"
-                                                    id="excelButton">Excel</button>
-                                                <input type="hidden" name="excelDataStart" id="excelDataStart">
-                                                <input type="hidden" name="excelDataEnd" id="excelDataEnd">
-                                                <input type="hidden" name="excelDataSearch" id="excelDataSearch">
+                                <!-- Filter Section di kanan -->
+                                <div class="col-md-auto">
+                                    <div class="row row-cols-1 row-cols-md-3 g-2 justify-content-end">
+                                        <!-- Filter Kurun Waktu -->
+                                        <div class="col-md-auto">
+                                            <div class="input-group">
+                                                <select id="filterLifespan" class="form-select">
+                                                    <option value="">Semua Kurun Waktu</option>
+                                                    @foreach ($lifespanList as $lifespan)
+                                                        <option value="{{ $lifespan }}">{{ $lifespan }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
-                                        </form>
-                                    </div>
-                                    <div>
-                                        <form action="{{ route('pdf') }}" method="post">
-                                            @csrf
-                                            <div>
-                                                <button type="submit" class="btn btn-danger" id="PDFButton">PDF</button>
-                                                <input type="hidden" name="PDFDataStart" id="PDFDataStart">
-                                                <input type="hidden" name="PDFDataEnd" id="PDFDataEnd">
-                                                <input type="hidden" name="PDFDataSearch" id="PDFDataSearch">
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <!-- Date Range Filter -->
-                                    <div class="col-xs-5 col-sm-3 ms-2">
-                                        <div id="daterange"
-                                            style="background: #fff;cursor:pointer;padding: 5px 10px;border:1px solid #ccc;width100%;text-align:center">
-                                            <i class="bi bi-calendar"></i>&nbsp;
-                                            <span></span>
-                                            <i class="bi bi-caret-down-fill"></i>
                                         </div>
-                                    </div> --}}
-                                </div>
-                                {{-- <div class="col-auto mb-2">
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="searchField"
-                                            placeholder="Cari Kegiatan">
-                                        <button class="btn btn-outline-secondary" type="button" id="searchFieldBtn">
-                                            <i class="bi bi-search"></i>
-                                            Cari
-                                        </button>
-                                    </div>
 
-                                </div> --}}
-                                <div class="col-auto mb-2">
-                                    <select id="filterLifespan" class="form-control" style="width: 200px;">
-                                        <option value="">Semua Kurun Waktu</option>
-                                        @foreach ($lifespanList as $lifespan)
-                                            <option value="{{ $lifespan }}">{{ $lifespan }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-auto mb-2">
-                                    <select id="filterWorkTeamClassification" class="form-control" style="width: 200px;">
-                                        <option value="">Semua Kode Klasifikasi</option>
-                                        @foreach($workTeamClassificationList as $workTeamClassification)
-                                            <option value="{{ $workTeamClassification->id }}">{{ $workTeamClassification->code }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-auto mb-2">
-                                    <select id="filterArchiveStatus" class="form-control" style="width: 200px;">
-                                        <option value="">Semua Status Arsip</option>
-                                        @foreach($archiveStatusList as $archiveStatus)
-                                            <option value="{{ $archiveStatus->name }}">{{ $archiveStatus->name }}</option>
-                                        @endforeach
-                                    </select>
+                                        <!-- Filter Kode Klasifikasi -->
+                                        <div class="col-md-auto">
+                                            <div class="input-group">
+                                                <select id="filterWorkTeamClassification" class="form-select">
+                                                    <option value="">Semua Kode Klasifikasi</option>
+                                                    @foreach($workTeamClassificationList as $workTeamClassification)
+                                                        <option value="{{ $workTeamClassification->id }}">{{ $workTeamClassification->code }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- Filter Status Arsip -->
+                                        <div class="col-md-auto">
+                                            <div class="input-group">
+                                                <select id="filterArchiveStatus" class="form-select">
+                                                    <option value="">Semua Status Arsip</option>
+                                                    @foreach($archiveStatusList as $archiveStatus)
+                                                        <option value="{{ $archiveStatus->name }}">{{ $archiveStatus->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
+                               
                             <!-- Table with stripped rows -->
                             <div class="table-responsive">
                                 <table id="archives-table" class="table table-striped" style="width:100%">

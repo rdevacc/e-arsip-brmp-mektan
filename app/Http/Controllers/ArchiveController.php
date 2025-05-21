@@ -161,6 +161,13 @@ class ArchiveController extends Controller
         $boxes = Box::get(['id', 'name']);
         $folders = Folder::get(['id', 'name']);
 
+        if (old('work_team_classification_id')) {
+            $selected = WorkTeamClassification::find(old('work_team_classification_id'));
+            if ($selected) {
+                session()->flash('old_work_team_classification_text', $selected->code . ' - ' . $selected->name);
+            }
+        }
+
 
         return view('apps.archive.create', compact([
             'workUnits',

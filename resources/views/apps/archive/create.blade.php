@@ -81,6 +81,11 @@
                                         <label for="work_team_classification_id" class="form-label">Kode Klasifikasi</label>
                                         <select name="work_team_classification_id" id="work_team_classification_id" class="form-select @error('work_team_classification_id') is-invalid @enderror" style="width: 100%;">
                                             <option value="">Pilih Kode Klasifikasi</option>
+                                            @if (old('work_team_classification_id'))
+                                                <option value="{{ old('work_team_classification_id') }}" selected>
+                                                    {{ old('work_team_classification_id_text') ?? session('old_work_team_classification_text') ?? 'Memuat...' }}
+                                                </option>
+                                            @endif
                                         </select>
                                         @error('work_team_classification_id')
                                             <div class="invalid-feedback">{{ $message }}</div>
