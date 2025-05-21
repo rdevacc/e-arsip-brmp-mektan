@@ -14,7 +14,6 @@ use App\Models\ArchiveQuantityUnit;
 use App\Models\ArchiveRetention;
 use App\Models\ArchiveSecurityClassification;
 use App\Models\ArchiveStatus;
-use App\Models\ArchiveType;
 use App\Models\Box;
 use App\Models\Building;
 use App\Models\Cabinet;
@@ -26,9 +25,9 @@ use App\Models\WorkTeam;
 use App\Models\WorkTeamClassification;
 use App\Models\WorkUnit;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Log;
 
 class ArchiveController extends Controller
 {
@@ -41,72 +40,69 @@ class ArchiveController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $archives = Archive::with([
-                'work_team_classification:id,name,code',
-                'archive_status:id,name'
-            ])->select([
-                'id',
-                'work_team_classification_id',
-                'archive_status_id',
-                'archive_description',
-                'archive_lifespan',
-            ]);
+            $archives = Archive::select('archives.*', 'wtc.code as work_team_classification_code', 'ast.name as archive_status_name')
+                ->leftJoin('work_team_classifications as wtc', 'archives.work_team_classification_id', '=', 'wtc.id')
+                ->leftJoin('archive_statuses as ast', 'archives.archive_status_id', '=', 'ast.id');
 
-
-           if ($request->work_team_classification) {
-                $archives->whereHas('work_team_classification', function ($q) use ($request) {
-                    $q->where('id', $request->work_team_classification);
-                });
+            // Filter example (optional)
+            if ($request->work_team_classification) {
+                $archives->where('wtc.code', $request->work_team_classification);
             }
-
-           if ($request->archive_status) {
-                $archives->whereHas('archive_status', function ($q) use ($request) {
-                    $q->where('name', $request->archive_status);
-                });
+            if ($request->archive_status) {
+                $archives->where('ast.name', $request->archive_status);
             }
-
             if ($request->archive_lifespan) {
-                $archives->where('archive_lifespan', $request->archive_lifespan)
-                         ->orderByRaw('CAST(archive_lifespan AS UNSIGNED) DESC');
+                $archives->where('archives.archive_lifespan', $request->archive_lifespan);
+            }
+
+            // Tangani sorting manual berdasarkan kolom yang diklik
+            if ($request->order) {
+                $columnIndex = $request->order[0]['column'];
+                $dir = $request->order[0]['dir'];
+
+                // Mapping index kolom datatable ke kolom database
+                // Sesuaikan index dengan urutan kolom di frontend (columns array)
+                $columns = [
+                    1 => 'wtc.code',
+                    3 => 'archives.archive_lifespan',
+                    4 => 'ast.name',
+                ];
+
+                if (isset($columns[$columnIndex])) {
+                    $archives->orderBy($columns[$columnIndex], $dir);
+                } else {
+                    $archives->orderByDesc('archives.id');
+                }
             } else {
-                // Default urut berdasarkan id terbaru
-                $archives->orderByDesc('id');
+                // Default order
+                $archives->orderByDesc('archives.id');
             }
 
             return DataTables::eloquent($archives)
                 ->addIndexColumn()
-                ->addColumn('work_team_classification', fn($archive) => $archive->work_team_classification->code ?? '-')
+                ->addColumn('work_team_classification', fn($archive) => $archive->work_team_classification_code ?? '-')
                 ->addColumn('archive_description', fn($archive) => $archive->archive_description ?? '-')
                 ->addColumn('archive_lifespan', fn($archive) => $archive->archive_lifespan ?? '-')
-                ->addColumn('archive_status', fn($archive) => $archive->archive_status->name ?? '-')
+                ->addColumn('archive_status', fn($archive) => $archive->archive_status_name ?? '-')
                 ->addColumn('action', function ($archive) {
                     return view('components.admin.button', compact('archive'))->render();
                 })
                 ->filter(function ($query) use ($request) {
                     if ($request->has('search') && $request->search['value'] != '') {
                         $search = $request->search['value'];
-
-                        $query->where('archive_description', 'like', "%{$search}%");
-    
-                        // $query->where(function ($q) use ($search) {
-                        //     $q->where('archive_description', 'like', "%{$search}%")
-                        //       ->orWhere('archive_lifespan', 'like', "%{$search}%")
-                        //       ->orWhereHas('work_team_classification', function ($subQuery) use ($search) {
-                        //           $subQuery->where('name', 'like', "%{$search}%");
-                        //       })
-                        //       ->orWhereHas('archive_status', function ($subQuery) use ($search) {
-                        //           $subQuery->where('name', 'like', "%{$search}%");
-                        //       });
-                        // });
+                        $query->where(function ($q) use ($search) {
+                            $q->where('archive_description', 'like', "%{$search}%")
+                            ->orWhere('archive_lifespan', 'like', "%{$search}%")
+                            ->orWhere('wtc.code', 'like', "%{$search}%")
+                            ->orWhere('ast.name', 'like', "%{$search}%");
+                        });
                     }
-
-                    
                 })
-                ->rawColumns(['action']) // agar HTML tombol tidak di-escape
+                ->rawColumns(['action'])
                 ->make(true);
         }
-        
-        
+
+        // Data for filters (optional)
         $workTeamClassificationList = Archive::with('work_team_classification')
                                     ->whereNotNull('work_team_classification_id')
                                     ->get()
@@ -114,7 +110,7 @@ class ArchiveController extends Controller
                                     ->unique('id')
                                     ->sortByDesc('id')
                                     ->values();
-       
+
         $archiveStatusList = Archive::with('archive_status')
                                     ->whereNotNull('archive_status_id')
                                     ->get()
@@ -135,6 +131,7 @@ class ArchiveController extends Controller
             'lifespanList'
         ]));
     }
+
 
     public function create(){
         

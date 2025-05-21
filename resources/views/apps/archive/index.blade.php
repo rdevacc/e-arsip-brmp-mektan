@@ -70,7 +70,7 @@
                                                 <select id="filterWorkTeamClassification" class="form-select">
                                                     <option value="">Semua Kode Klasifikasi</option>
                                                     @foreach($workTeamClassificationList as $workTeamClassification)
-                                                        <option value="{{ $workTeamClassification->id }}">{{ $workTeamClassification->code }}</option>
+                                                        <option value="{{ $workTeamClassification->code }}">{{ $workTeamClassification->code }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -135,7 +135,7 @@
 
     <!-- Load Data -->
     <script>
-        $(function () {
+       $(function () {
             var table = $('#archives-table').DataTable({
                 processing: true,
                 serverSide: true,
@@ -147,40 +147,28 @@
                         d.archive_lifespan = $('#filterLifespan').val();
                     }
                 },
+                order: [[1, 'asc']], // default sort kolom index 1 (work_team_classification)
                 columns: [
-                    {
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false,
-                        width: '10px',
-                        targets: 0,
-                    },
-                    { data: 'work_team_classification', name: 'work_team_classification' },
-                    { data: 'archive_description', name: 'archive_description' },
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, width: '10px' },
+                    { data: 'work_team_classification', name: 'work_team_classification_code' },
+                    { data: 'archive_description', name: 'archive_description', orderable: false },
                     { data: 'archive_lifespan', name: 'archive_lifespan' },
-                    { data: 'archive_status', name: 'archive_status' },
+                    { data: 'archive_status', name: 'archive_status_name' },
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ]
             });
 
-            // Inisialisasi tooltip setiap kali tabel di-render ulang
+            // Tooltip Bootstrap 5
             table.on('draw.dt', function () {
-            $('[data-bs-toggle="tooltip"]').tooltip(); // Bootstrap 5
+                $('[data-bs-toggle="tooltip"]').tooltip();
             });
 
-            $('#filterWorkTeamClassification').change(function () {
-                table.draw(); // refresh DataTables saat filter berubah
-            });
-
-            $('#filterArchiveStatus').change(function () {
-                table.draw(); // refresh DataTables saat filter berubah
-            });
-
-            $('#filterLifespan').on('change', function() {
-                table.draw();
-            });
+            // Filter change event
+            $('#filterWorkTeamClassification').change(function () { table.draw(); });
+            $('#filterArchiveStatus').change(function () { table.draw(); });
+            $('#filterLifespan').change(function () { table.draw(); });
         });
+
     </script>
 
     <!-- Tooltip -->
@@ -190,6 +178,7 @@
         });
     </script>
 
+    <!-- Delete -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Delegate click event ke tombol dengan class .btn-delete
@@ -219,35 +208,21 @@
         });
     </script>
 
+    <!-- Catch data value status dari dashboard -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const urlParams = new URLSearchParams(window.location.search);
             const statusParam = urlParams.get('status');
 
-            console.log(statusParam)
-
             if (statusParam) {
                 const select = document.getElementById('filterArchiveStatus');
                 select.value = statusParam;
 
-                // Trigger change event
-                const event = new Event('change');
-                select.dispatchEvent(event);
+                // Trigger change event ke DataTable yg benar
+                $('#filterArchiveStatus').trigger('change');
             }
-
-            // Inisialisasi DataTable
-            const table = $('#yourDataTableId').DataTable({
-                // ... konfigurasi lainnya ...
-            });
-
-            // Event listener untuk filter status
-            $('#filterArchiveStatus').on('change', function () {
-                const selected = $(this).val();
-                table.column(1) // Ganti dengan indeks kolom status di tabel kamu
-                    .search(selected)
-                    .draw();
-            });
         });
+
     </script>
 
 @endpush
