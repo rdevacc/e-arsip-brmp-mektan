@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\ArchiveAccessLevelController;
+use App\Http\Controllers\ArchiveConditionController;
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\DashboardController;
+use App\Models\ArchiveCondition;
 use App\Models\WorkTeamClassification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -70,5 +72,19 @@ Route::prefix('/app')->group(function (){
         'edit' => 'archive-access-level.edit',
         'update' => 'archive-access-level.edit-submit',
         'destroy' => 'archive-access-level.delete',
+    ]);
+
+
+    /**
+     * * Archive Condition Routes *
+     */
+    Route::resource('/archive-condition', ArchiveConditionController::class)->names([
+        'index' => 'archive-condition.index',
+        'create' => 'archive-condition.create',
+        'show' => 'archive-condition.show',
+        'store' => 'archive-condition.create-submit',
+        'edit' => 'archive-condition.edit',
+        'update' => 'archive-condition.edit-submit',
+        'destroy' => 'archive-condition.delete',
     ]);
 });

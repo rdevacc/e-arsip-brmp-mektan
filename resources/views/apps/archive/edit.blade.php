@@ -522,7 +522,7 @@
 
                                 {{-- Button --}}
                                 <div class="mt-5 mb-2 me-2 text-end">
-                                    <button type="reset" class="btn btn-secondary">Reset</button>
+                                    <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ route('archive-index') }}'">Kembali</button>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </form><!-- Vertical Form -->
