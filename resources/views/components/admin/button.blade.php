@@ -1,4 +1,4 @@
-<div class="d-flex">
+<div class="d-flex justify-content-end align-items-center">
     {{-- <a class="btn btn-info" href="{{ route('archive-show', $archive->id) }}"
         data-bs-toggle="tooltip"
         data-bs-placement="top"
@@ -39,5 +39,15 @@
             <i class="bi bi-trash text-body-secondary"></i>
         </button>
     </form>
+     {{-- Select Status --}}
+   <div class="ps-1" style="pl">
+    <select name="status" class="form-select form-select-sm select-ellipsis status-select" data-id="{{ $archive->id }}">
+        @foreach ($statuses as $status)
+            <option value="{{ $status->id }}" {{ $archive->archive_status_id == $status->id ? 'selected' : '' }}>
+                {{ $status->name }}
+            </option>
+        @endforeach
+    </select>
+    </div>
     {{-- @endcanany --}}
 </div>

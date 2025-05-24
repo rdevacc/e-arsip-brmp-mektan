@@ -11,6 +11,17 @@
 
     {{-- Daterange CSS --}}
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <style>
+        .select-ellipsis {
+        max-width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    </style>
+    
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 @endpush
 
 
@@ -102,7 +113,7 @@
                                             <th class="text-center align-middle">
                                                 Kode Klasifikasi
                                             </th>
-                                            <th class="text-center align-middle">
+                                            <th class="text-center align-middle" style="width: 250px;">
                                                 Uraian
                                             </th>
                                            <th class="text-center align-middle">
@@ -111,7 +122,7 @@
                                             <th class="text-center align-middle">
                                                 Status Arsip
                                             </th>
-                                            <th class="text-center align-middle">
+                                            <th class="text-center align-middle" style="width: 200px;">
                                                 Action
                                             </th>
                                         </tr>
@@ -147,7 +158,6 @@
                         d.archive_lifespan = $('#filterLifespan').val();
                     }
                 },
-                order: [[1, 'asc']], // default sort kolom index 1 (work_team_classification)
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, width: '10px' },
                     { data: 'work_team_classification', name: 'work_team_classification_code' },
@@ -161,6 +171,58 @@
             // Tooltip Bootstrap 5
             table.on('draw.dt', function () {
                 $('[data-bs-toggle="tooltip"]').tooltip();
+            });
+
+            
+             // Ubah status arsip
+            $(document).on('change', '.status-select', function () {
+                const statusId = parseInt($(this).val());
+                const archiveId = $(this).data('id');
+                const token = $('meta[name="csrf-token"]').attr('content');
+
+                const updateStatus = () => {
+                    $.ajax({
+                        url: `/app/archive/${archiveId}/update-status`,
+                        type: 'POST',
+                        data: {
+                            status_id: statusId,
+                            _token: token
+                        },
+                        success: function (response) {
+                            $('#archives-table').DataTable().ajax.reload(null, false); // Jangan reset halaman
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: response.message
+                            });
+                        },
+                        error: function (xhr) {
+                            console.error('Gagal memperbarui status');
+                            console.log(xhr.status, xhr.responseText);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: 'Tidak dapat memperbarui status arsip.'
+                            });
+                        }
+                    });
+                };
+
+                if (statusId === 8) {
+                    Swal.fire({
+                        title: 'Yakin ingin memusnahkan arsip ini?',
+                        text: 'Data lokasi arsip akan dikosongkan.',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya, Musnahkan',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) updateStatus();
+                        else $('#archives-table').DataTable().ajax.reload(null, false); // Kembalikan tampilan
+                    });
+                } else {
+                    updateStatus();
+                }
             });
 
             // Filter change event

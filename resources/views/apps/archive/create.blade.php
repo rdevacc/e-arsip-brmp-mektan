@@ -1,5 +1,19 @@
 @extends('layouts.app')
 
+@push('css')
+    <style>
+    .no-spinner::-webkit-outer-spin-button,
+    .no-spinner::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .no-spinner[type=number] {
+        -moz-appearance: textfield;
+    }
+    </style>
+@endpush
+
 @section('content')
     <main id="main" class="main">
         <section class="section">
@@ -157,7 +171,7 @@
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label for="archive_lifespan" class="form-label">Kurun Waktu Arsip <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control @error('archive_lifespan') is-invalid @enderror"
+                                        <input required type="number" class="form-control no-spinner @error('archive_lifespan') is-invalid @enderror"
                                             id="archive_lifespan" name="archive_lifespan" value="{{ old('archive_lifespan') ?: '' }}">
                                         @error('archive_lifespan')
                                             <div class="invalid-feedback">

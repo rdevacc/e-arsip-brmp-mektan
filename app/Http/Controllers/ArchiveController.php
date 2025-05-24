@@ -27,7 +27,6 @@ use App\Models\WorkUnit;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\Log;
 
 class ArchiveController extends Controller
 {
@@ -36,6 +35,34 @@ class ArchiveController extends Controller
         $teams = WorkTeam::where('work_group_id', $work_group_id)->get(['id', 'name']);
         return response()->json($teams);
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status_id' => 'required|exists:archive_statuses,id',
+        ]);
+
+        $musnahId = 8;
+
+        $archive = Archive::findOrFail($id);
+        $archive->archive_status_id = $request->status_id;
+
+        if ($request->status_id == $musnahId) {
+            // Reset lokasi arsip jadi null karena status musnah
+            $archive->building_id = null;
+            $archive->cabinet_id = null;
+            $archive->shelf_id = null;
+            $archive->shelf_row_id = null;
+            $archive->box_id = null;
+            $archive->folder_id = null;
+        }
+
+        $archive->save();
+
+        return response()->json(['message' => 'Status berhasil diperbarui']);
+    }
+
+
 
     public function index(Request $request)
     {
@@ -75,8 +102,13 @@ class ArchiveController extends Controller
                 }
             } else {
                 // Default order
-                $archives->orderByDesc('archives.id');
+                $archives->orderBy('work_team_classification_code', 'asc')
+                        ->orderByDesc('archive_lifespan');
             }
+
+            
+            // Statuses for select option
+            $statuses = ArchiveStatus::orderBy('name')->get(['id', 'name']);
 
             return DataTables::eloquent($archives)
                 ->addIndexColumn()
@@ -84,8 +116,8 @@ class ArchiveController extends Controller
                 ->addColumn('archive_description', fn($archive) => $archive->archive_description ?? '-')
                 ->addColumn('archive_lifespan', fn($archive) => $archive->archive_lifespan ?? '-')
                 ->addColumn('archive_status', fn($archive) => $archive->archive_status_name ?? '-')
-                ->addColumn('action', function ($archive) {
-                    return view('components.admin.button', compact('archive'))->render();
+                ->addColumn('action', function ($archive) use ($statuses) {
+                    return view('components.admin.button', compact('archive', 'statuses'))->render();
                 })
                 ->filter(function ($query) use ($request) {
                     if ($request->has('search') && $request->search['value'] != '') {
@@ -128,7 +160,7 @@ class ArchiveController extends Controller
         return view('apps.archive.index', compact([
             'workTeamClassificationList',
             'archiveStatusList',
-            'lifespanList'
+            'lifespanList',
         ]));
     }
 
@@ -212,7 +244,7 @@ class ArchiveController extends Controller
             'archive_quantity_unit_id' => 'required',
             'archive_letter_origin_number' => 'required',
             'archive_description' => 'required',
-            'archive_lifespan' => 'required',
+            'archive_lifespan' => 'required|integer|digits:4|min:1900|max:9999',
             'archive_number' => 'required',
             'archive_input_date' => 'required',
             'building_id' => 'required',
@@ -240,6 +272,10 @@ class ArchiveController extends Controller
             'archive_letter_origin_number.required' => 'Nomor Asal Surat Arsip field is required!',
             'archive_description.required' => 'Uraian Arsip field is required!',
             'archive_lifespan.required' => 'Kurun Waktu Arsip field is required!',
+            'archive_lifespan.integer' => 'Kurun Waktu Arsip field must be an integer!',
+            'archive_lifespan.digits' => 'Kurun Waktu Arsip field must 4 digits!',
+            'archive_lifespan.min' => 'Kurun Waktu Arsip field min 1900!',
+            'archive_lifespan.max' => 'Kurun Waktu Arsip field max 2100!',
             'archive_number.required' => 'Jumlah Arsip field is required!',
             'archive_input_date.required' => 'Tanggal Input Arsip field is required!',
             'building_id.required' => 'Gedung Arsip field is required!',

@@ -1,18 +1,16 @@
-// Override Archive Page Sidebar
 $(document).ready(function() {
-    if (window.location.href.indexOf("Archive") > -1 || window.location.href.indexOf("archive") > -1) {
-      $('body').addClass('toggle-sidebar');
-    }
-  });
+  // Override Archive Page Sidebar
+  const segments = window.location.pathname.toLowerCase().split('/');
+  if (segments[2] === 'archive') {
+    $('body').addClass('toggle-sidebar');
+  }
 
-// Active Nav-link
-$(document).ready(function() {
-  var path = $(location).attr('href');
+  // Active Nav-link
+  var currentPath = window.location.pathname;
   $('.nav-link').each(function() {
-    var href = $(this).attr('href');
-    if (href === path) {
-      $(this).removeClass('collapsed');
-      $(this).addClass('active');
+    var linkPath = $(this).attr('href');
+    if (linkPath === currentPath) {
+      $(this).removeClass('collapsed').addClass('active');
     }
   });
 });

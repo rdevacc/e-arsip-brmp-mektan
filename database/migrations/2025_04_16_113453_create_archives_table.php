@@ -38,7 +38,7 @@ return new class extends Migration
             $table->string('archive_classification_description')->nullable(true);
             $table->string('archive_letter_origin_number')->nullable(true);
             $table->text('archive_description')->nullable(true);
-            $table->string('archive_lifespan')->nullable(true);
+            $table->integer('archive_lifespan')->nullable(true);
             $table->integer('archive_number')->nullable(true);
             $table->date('archive_input_date')->nullable(true);
             $table->timestamps();

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArchiveAccessLevelController;
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\DashboardController;
 use App\Models\WorkTeamClassification;
@@ -49,9 +50,25 @@ Route::prefix('/app')->group(function (){
         return response()->json($results);
 
     })->name('work_team_classifications.search');
+    Route::post('/archive/{id}/update-status', [ArchiveController::class, 'updateStatus'])->name('archives.update-status');
+
 
     /**
      * * Dashboard Routes *
      */
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
+    /**
+     * * Archive Access Level Routes *
+     */
+    Route::resource('/archive-access-level', ArchiveAccessLevelController::class)->names([
+        'index' => 'archive-access-level.index',
+        'create' => 'archive-access-level.create',
+        'show' => 'archive-access-level.show',
+        'store' => 'archive-access-level.create-submit',
+        'edit' => 'archive-access-level.edit',
+        'update' => 'archive-access-level.edit-submit',
+        'destroy' => 'archive-access-level.delete',
+    ]);
 });
