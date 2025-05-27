@@ -1,5 +1,19 @@
 @extends('layouts.app')
 
+@push('css')
+    <style>
+    .no-spinner::-webkit-outer-spin-button,
+    .no-spinner::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .no-spinner[type=number] {
+        -moz-appearance: textfield;
+    }
+    </style>
+@endpush
+
 @section('content')
     <main id="main" class="main">
         <section class="section">
@@ -7,7 +21,7 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Edit Data Level Akses Arsip</h5>
+                            <h5 class="card-title">Tambah Data Retensi Arsip</h5>
 
                              @if ($errors->any())
                                 <div class="alert alert-danger">
@@ -27,15 +41,14 @@
                                 </div>
                             @endif
 
-                            <form method="POST" action="{{ route('archive-access-level.edit-submit', $archive_access_level->id) }}">
+                            <form method="POST" action="{{ route('archive-retention.create-submit') }}">
                                 @csrf
-                                @method('PUT')
                                 <div class="row">
                                     <div class="col-12 mb-3">
-                                        <label for="name" class="form-label">Nama Level Akses Arsip <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                            id="name" name="name" value="{{ $archive_access_level->name ?:old('name') }}">
-                                        @error('name')
+                                        <label for="range_value" class="form-label">Rentang Retensi Arsip <span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control no-spinner @error('range_value') is-invalid @enderror"
+                                            id="range_value" name="range_value" value="{{ old('range_value') ?: '' }}">
+                                        @error('range_value')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
@@ -45,7 +58,7 @@
 
                                 <!-- Button -->
                                 <div class="mt-5 mb-2 me-2 text-end">
-                                    <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ route('archive-access-level.index') }}'">Kembali</button>
+                                    <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ route('archive-retention.index') }}'">Kembali</button>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </form>

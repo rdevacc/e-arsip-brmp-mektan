@@ -21,7 +21,7 @@ class ArchiveRetentionSeeder extends Seeder
         DB::table('archive_retentions')->insert([
             [
                 'id' => 1,
-                'range' => 1,
+                'range_value' => 1,
                 // 'retention_desc' => 'Tahun',
                 // 'a_retentionED' => $randomDate,
                 'created_at' => now(),
@@ -29,7 +29,7 @@ class ArchiveRetentionSeeder extends Seeder
             ],
             [
                 'id' => 2,
-                'range' => 2,
+                'range_value' => 2,
                 // 'retention_desc' => 'Tahun',
                 // 'a_retentionED' => $randomDate,
                 'created_at' => now(),
@@ -37,7 +37,7 @@ class ArchiveRetentionSeeder extends Seeder
             ],
             [
                 'id' => 3,
-                'range' => 3,
+                'range_value' => 3,
                 // 'retention_desc' => 'Tahun',
                 // 'a_retentionED' => $randomDate,
                 'created_at' => now(),
@@ -45,7 +45,7 @@ class ArchiveRetentionSeeder extends Seeder
             ],
             [
                 'id' => 4,
-                'range' => 4,
+                'range_value' => 4,
                 // 'retention_desc' => 'Tahun',
                 // 'a_retentionED' => $randomDate,
                 'created_at' => now(),
@@ -53,7 +53,7 @@ class ArchiveRetentionSeeder extends Seeder
             ],
             [
                 'id' => 5,
-                'range' => 5,
+                'range_value' => 5,
                 // 'retention_desc' => 'Tahun',
                 // 'a_retentionED' => $randomDate,
                 'created_at' => now(),

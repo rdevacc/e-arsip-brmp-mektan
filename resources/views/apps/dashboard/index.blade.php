@@ -1,5 +1,20 @@
 @extends('layouts.app')
 
+@push('css')
+    <style>
+        .gradient-purple {
+            background: linear-gradient(to right, #7301e4, #7F00FF);
+            color: white;
+        }
+        .gradient-hydrogen {
+            background: linear-gradient(to right, #0082c8, #0190dd)
+        }
+        .bg-slate{
+            background: #f7f7f7
+        }
+    </style>
+@endpush
+
 @section('content')
     <main id="main" class="main">
         <section class="section dashboard">
@@ -7,7 +22,7 @@
                 <h1>Dashboard</h1>
             </div>
 
-            <div class="card">
+            <div class="card gradient-purple">
                 <div class="card-body px-2 py-2">
                     <div class="container-fluid">
                         <div class="row mt-3">
@@ -113,7 +128,7 @@
             </div>
 
 
-            <div class="card">
+            <div class="card gradient-hydrogen">
                 <div class="card-body px-2 py-2">
                     <div class="container-fluid">
                         <div class="row mt-3">
@@ -206,7 +221,7 @@
             <!-- Pie Chart -->
             <div class="row">
                 <div class="mx-auto">
-                    <div class="card">
+                    <div class="card bg-slate">
                         <div class="card-body">
                             <h5 class="card-title text-center">
                                 Diagram

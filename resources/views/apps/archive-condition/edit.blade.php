@@ -7,7 +7,7 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Tambah Data Kondisi Arsip</h5>
+                            <h5 class="card-title">Edit Data Kondisi Arsip</h5>
 
                              @if ($errors->any())
                                 <div class="alert alert-danger">

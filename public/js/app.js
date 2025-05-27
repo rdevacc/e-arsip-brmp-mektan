@@ -1,7 +1,7 @@
 $(document).ready(function() {
   // Override Archive Page Sidebar
   const segments = window.location.pathname.toLowerCase().split('/');
-  if (segments[2] === 'archive') {
+  if (segments[2] === 'archive' || segments[2] === 'dashboard') {
     $('body').addClass('toggle-sidebar');
   }
 

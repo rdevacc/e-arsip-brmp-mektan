@@ -11,7 +11,7 @@ class ArchiveRetention extends Model
     use HasFactory;
        
     protected $fillable = [
-        'range'
+        'range_value'
     ];
 
     /**

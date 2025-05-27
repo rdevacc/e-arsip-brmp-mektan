@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('archive_retentions', function (Blueprint $table) {
             $table->id();
-            $table->integer('range');
+            $table->integer('range_value')->unique();
             // $table->date('a_retentionED');
             $table->timestamps();
         });

@@ -7,7 +7,7 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Edit Data Level Akses Arsip</h5>
+                            <h5 class="card-title">Edit Data Tingkat Perkembangan Arsip</h5>
 
                              @if ($errors->any())
                                 <div class="alert alert-danger">
@@ -27,14 +27,14 @@
                                 </div>
                             @endif
 
-                            <form method="POST" action="{{ route('archive-access-level.edit-submit', $archive_access_level->id) }}">
+                            <form method="POST" action="{{ route('archive-development-level.edit-submit', $archive_development_level->id) }}">
                                 @csrf
                                 @method('PUT')
                                 <div class="row">
                                     <div class="col-12 mb-3">
-                                        <label for="name" class="form-label">Nama Level Akses Arsip <span class="text-danger">*</span></label>
+                                        <label for="name" class="form-label">Nama Tingkat Perkembangan Arsip <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                            id="name" name="name" value="{{ $archive_access_level->name ?:old('name') }}">
+                                            id="name" name="name" value="{{ $archive_development_level->name ?:old('name') }}">
                                         @error('name')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -45,7 +45,7 @@
 
                                 <!-- Button -->
                                 <div class="mt-5 mb-2 me-2 text-end">
-                                    <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ route('archive-access-level.index') }}'">Kembali</button>
+                                    <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ route('archive-development-level.index') }}'">Kembali</button>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </form>
