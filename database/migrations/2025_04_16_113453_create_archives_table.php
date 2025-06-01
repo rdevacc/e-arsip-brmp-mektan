@@ -28,12 +28,12 @@ return new class extends Migration
             $table->foreignId('archive_security_classification_id')->nullable(true);
             $table->foreignId('archive_status_id')->nullable(true);
             $table->foreignId('archive_quantity_unit_id')->nullable(true);
-            $table->foreignId('building_id')->nullable(true);
-            $table->foreignId('cabinet_id')->nullable(true);
-            $table->foreignId('shelf_id')->nullable(true);
-            $table->foreignId('shelf_row_id')->nullable(true);
-            $table->foreignId('box_id')->nullable(true);
-            $table->foreignId('folder_id')->nullable(true);
+            $table->foreignId('archive_building_id')->nullable(true);
+            $table->foreignId('archive_cabinet_id')->nullable(true);
+            $table->foreignId('archive_shelf_id')->nullable(true);
+            $table->foreignId('archive_shelf_row_id')->nullable(true);
+            $table->foreignId('archive_box_id')->nullable(true);
+            $table->foreignId('archive_folder_id')->nullable(true);
             // $table->string('a_regnumber');
             $table->string('archive_classification_description')->nullable(true);
             $table->string('archive_letter_origin_number')->nullable(true);

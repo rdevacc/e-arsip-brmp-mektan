@@ -14,12 +14,12 @@ use App\Models\ArchiveQuantityUnit;
 use App\Models\ArchiveRetention;
 use App\Models\ArchiveSecurityClassification;
 use App\Models\ArchiveStatus;
-use App\Models\Box;
-use App\Models\Building;
-use App\Models\Cabinet;
-use App\Models\Folder;
-use App\Models\Shelf;
-use App\Models\ShelfRow;
+use App\Models\ArchiveBuilding;
+use App\Models\ArchiveCabinet;
+use App\Models\ArchiveShelf;
+use App\Models\ArchiveShelfRow;
+use App\Models\ArchiveBox;
+use App\Models\ArchiveFolder;
 use App\Models\WorkGroup;
 use App\Models\WorkTeam;
 use App\Models\WorkTeamClassification;
@@ -172,7 +172,7 @@ class ArchiveController extends Controller
         $workGroups = WorkGroup::get(['id', 'name']);
         // $workTeams = WorkTeam::get(['id', 'name']);
         $workTeamClassifications = WorkTeamClassification::get(['id', 'name', 'code']);
-        $archiveRetentions = ArchiveRetention::get(['id', 'range']);
+        $archiveRetentions = ArchiveRetention::get(['id', 'range_value']);
         $archiveStatuses = ArchiveStatus::orderBy('name')->get(['id', 'name']);
         $archiveDevelopmentLevels = ArchiveDevelopmentLevel::get(['id', 'name']);
         $archiveMedias = ArchiveMedia::get(['id', 'name']);
@@ -182,12 +182,12 @@ class ArchiveController extends Controller
         $archiveSecurityClassifications = ArchiveSecurityClassification::get(['id', 'name']);
         $archivePublicAccessLevels = ArchivePublicAccessLevel::get(['id', 'name']);
         $archiveAccessLevels = ArchiveAccessLevel::get(['id', 'name']);
-        $buildings = Building::get(['id', 'name']);
-        $cabinets = Cabinet::get(['id', 'name']);
-        $shelves = Shelf::get(['id', 'name']);
-        $shelfRows = ShelfRow::get(['id', 'name']);
-        $boxes = Box::get(['id', 'name']);
-        $folders = Folder::get(['id', 'name']);
+        $buildings = ArchiveBuilding::get(['id', 'name']);
+        $cabinets = ArchiveCabinet::get(['id', 'name']);
+        $shelves = ArchiveShelf::get(['id', 'name']);
+        $shelfRows = ArchiveShelfRow::get(['id', 'name']);
+        $boxes = ArchiveBox::get(['id', 'name']);
+        $folders = ArchiveFolder::get(['id', 'name']);
 
         if (old('work_team_classification_id')) {
             $selected = WorkTeamClassification::find(old('work_team_classification_id'));
@@ -298,7 +298,7 @@ class ArchiveController extends Controller
         $workGroups = WorkGroup::get(['id', 'name']);
         $workTeams = WorkTeam::get(['id', 'name']);
         $workTeamClassifications = WorkTeamClassification::get(['id', 'name', 'code']);
-        $archiveRetentions = ArchiveRetention::get(['id', 'range']);
+        $archiveRetentions = ArchiveRetention::get(['id', 'range_value']);
         $archiveStatuses = ArchiveStatus::orderBy('name')->get(['id', 'name']);
         $archiveDevelopmentLevels = ArchiveDevelopmentLevel::get(['id', 'name']);
         $archiveMedias = ArchiveMedia::get(['id', 'name']);
@@ -308,12 +308,12 @@ class ArchiveController extends Controller
         $archiveSecurityClassifications = ArchiveSecurityClassification::get(['id', 'name']);
         $archivePublicAccessLevels = ArchivePublicAccessLevel::get(['id', 'name']);
         $archiveAccessLevels = ArchiveAccessLevel::get(['id', 'name']);
-        $buildings = Building::get(['id', 'name']);
-        $cabinets = Cabinet::get(['id', 'name']);
-        $shelves = Shelf::get(['id', 'name']);
-        $shelfRows = ShelfRow::get(['id', 'name']);
-        $boxes = Box::get(['id', 'name']);
-        $folders = Folder::get(['id', 'name']);
+        $buildings = ArchiveBuilding::get(['id', 'name']);
+        $cabinets = ArchiveCabinet::get(['id', 'name']);
+        $shelves = ArchiveShelf::get(['id', 'name']);
+        $shelfRows = ArchiveShelfRow::get(['id', 'name']);
+        $boxes = ArchiveBox::get(['id', 'name']);
+        $folders = ArchiveFolder::get(['id', 'name']);
 
 
         return view('apps.archive.edit', compact([

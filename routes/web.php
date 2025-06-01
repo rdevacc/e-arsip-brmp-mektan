@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArchiveAccessLevelController;
+use App\Http\Controllers\ArchiveBoxController;
 use App\Http\Controllers\ArchiveConditionController;
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\ArchiveDevelopmentLevelController;
@@ -10,10 +11,17 @@ use App\Http\Controllers\ArchivePublicAccessLevelController;
 use App\Http\Controllers\ArchiveQuantityUnitController;
 use App\Http\Controllers\ArchiveRetentionController;
 use App\Http\Controllers\ArchiveSecurityClassificationController;
+use App\Http\Controllers\ArchiveStatusController;
+use App\Http\Controllers\ArchiveBuildingController;
+use App\Http\Controllers\ArchiveCabinetController;
+use App\Http\Controllers\ArchiveFolderController;
+use App\Http\Controllers\ArchiveShelfController;
+use App\Http\Controllers\ArchiveShelfRowController;
 use App\Http\Controllers\DashboardController;
-use App\Models\ArchiveCondition;
-use App\Models\ArchiveFinalDepreciationAction;
-use App\Models\ArchiveMedia;
+use App\Http\Controllers\WorkGroupController;
+use App\Http\Controllers\WorkTeamClassificationController;
+use App\Http\Controllers\WorkTeamController;
+use App\Http\Controllers\WorkUnitController;
 use App\Models\WorkTeamClassification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -155,16 +163,16 @@ Route::prefix('/app')->group(function (){
 
 
     /**
-     * * Archive Security Classification Routes *
+     * * Archive Quantity Unit Routes *
      */
-    Route::resource('/security-classification', ArchiveSecurityClassificationController::class)->names([
-        'index' => 'security-classification.index',
-        'create' => 'security-classification.create',
-        'show' => 'security-classification.show',
-        'store' => 'security-classification.create-submit',
-        'edit' => 'security-classification.edit',
-        'update' => 'security-classification.edit-submit',
-        'destroy' => 'security-classification.delete',
+    Route::resource('/quantity-unit', ArchiveQuantityUnitController::class)->names([
+        'index' => 'quantity-unit.index',
+        'create' => 'quantity-unit.create',
+        'show' => 'quantity-unit.show',
+        'store' => 'quantity-unit.create-submit',
+        'edit' => 'quantity-unit.edit',
+        'update' => 'quantity-unit.edit-submit',
+        'destroy' => 'quantity-unit.delete',
     ]);
 
 
@@ -181,17 +189,171 @@ Route::prefix('/app')->group(function (){
         'destroy' => 'archive-retention.delete',
     ]);
 
+    
+    /**
+     * * Archive Security Classification Routes *
+     */
+    Route::resource('/security-classification', ArchiveSecurityClassificationController::class)->names([
+        'index' => 'security-classification.index',
+        'create' => 'security-classification.create',
+        'show' => 'security-classification.show',
+        'store' => 'security-classification.create-submit',
+        'edit' => 'security-classification.edit',
+        'update' => 'security-classification.edit-submit',
+        'destroy' => 'security-classification.delete',
+    ]);
+
 
     /**
-     * * Archive Quantity Unit Routes *
+     * * Archive Status Routes *
      */
-    Route::resource('/quantity-unit', ArchiveQuantityUnitController::class)->names([
-        'index' => 'quantity-unit.index',
-        'create' => 'quantity-unit.create',
-        'show' => 'quantity-unit.show',
-        'store' => 'quantity-unit.create-submit',
-        'edit' => 'quantity-unit.edit',
-        'update' => 'quantity-unit.edit-submit',
-        'destroy' => 'quantity-unit.delete',
+    Route::resource('/archive-status', ArchiveStatusController::class)->names([
+        'index' => 'archive-status.index',
+        'create' => 'archive-status.create',
+        'show' => 'archive-status.show',
+        'store' => 'archive-status.create-submit',
+        'edit' => 'archive-status.edit',
+        'update' => 'archive-status.edit-submit',
+        'destroy' => 'archive-status.delete',
+    ]);
+
+
+    /**
+     * * Work Unit Routes *
+     */
+    Route::resource('/work-unit', WorkUnitController::class)->names([
+        'index' => 'work-unit.index',
+        'create' => 'work-unit.create',
+        'show' => 'work-unit.show',
+        'store' => 'work-unit.create-submit',
+        'edit' => 'work-unit.edit',
+        'update' => 'work-unit.edit-submit',
+        'destroy' => 'work-unit.delete',
+    ]);
+
+
+    /**
+     * * Work Group Routes *
+     */
+    Route::resource('/work-group', WorkGroupController::class)->names([
+        'index' => 'work-group.index',
+        'create' => 'work-group.create',
+        'show' => 'work-group.show',
+        'store' => 'work-group.create-submit',
+        'edit' => 'work-group.edit',
+        'update' => 'work-group.edit-submit',
+        'destroy' => 'work-group.delete',
+    ]);
+
+
+    /**
+     * * Work Team Routes *
+     */
+    Route::resource('/work-team', WorkTeamController::class)->names([
+        'index' => 'work-team.index',
+        'create' => 'work-team.create',
+        'show' => 'work-team.show',
+        'store' => 'work-team.create-submit',
+        'edit' => 'work-team.edit',
+        'update' => 'work-team.edit-submit',
+        'destroy' => 'work-team.delete',
+    ]);
+
+
+    /**
+     * * Work Team Classification Routes *
+     */
+    Route::resource('/work-team-classification', WorkTeamClassificationController::class)->names([
+        'index' => 'work-team-classification.index',
+        'create' => 'work-team-classification.create',
+        'show' => 'work-team-classification.show',
+        'store' => 'work-team-classification.create-submit',
+        'edit' => 'work-team-classification.edit',
+        'update' => 'work-team-classification.edit-submit',
+        'destroy' => 'work-team-classification.delete',
+    ]);
+
+
+    /**
+     * * Archive Building Routes *
+     */
+    Route::resource('/archive-building', ArchiveBuildingController::class)->names([
+        'index' => 'archive-building.index',
+        'create' => 'archive-building.create',
+        'show' => 'archive-building.show',
+        'store' => 'archive-building.create-submit',
+        'edit' => 'archive-building.edit',
+        'update' => 'archive-building.edit-submit',
+        'destroy' => 'archive-building.delete',
+    ]);
+
+
+    /**
+     * * Archive Cabinet Routes *
+     */
+    Route::resource('/archive-cabinet', ArchiveCabinetController::class)->names([
+        'index' => 'archive-cabinet.index',
+        'create' => 'archive-cabinet.create',
+        'show' => 'archive-cabinet.show',
+        'store' => 'archive-cabinet.create-submit',
+        'edit' => 'archive-cabinet.edit',
+        'update' => 'archive-cabinet.edit-submit',
+        'destroy' => 'archive-cabinet.delete',
+    ]);
+
+
+    /**
+     * * Archive Shelf Routes *
+     */
+    Route::resource('/archive-shelf', ArchiveShelfController::class)->names([
+        'index' => 'archive-shelf.index',
+        'create' => 'archive-shelf.create',
+        'show' => 'archive-shelf.show',
+        'store' => 'archive-shelf.create-submit',
+        'edit' => 'archive-shelf.edit',
+        'update' => 'archive-shelf.edit-submit',
+        'destroy' => 'archive-shelf.delete',
+    ]);
+
+
+    /**
+     * * Archive Shelf Row Routes *
+     */
+    Route::resource('/archive-shelf-row', ArchiveShelfRowController::class)->names([
+        'index' => 'archive-shelf-row.index',
+        'create' => 'archive-shelf-row.create',
+        'show' => 'archive-shelf-row.show',
+        'store' => 'archive-shelf-row.create-submit',
+        'edit' => 'archive-shelf-row.edit',
+        'update' => 'archive-shelf-row.edit-submit',
+        'destroy' => 'archive-shelf-row.delete',
+    ]);
+
+
+    /**
+     * * Archive Box Routes *
+     */
+    Route::resource('/archive-box', ArchiveBoxController::class)->names([
+        'index' => 'archive-box.index',
+        'create' => 'archive-box.create',
+        'show' => 'archive-box.show',
+        'store' => 'archive-box.create-submit',
+        'edit' => 'archive-box.edit',
+        'update' => 'archive-box.edit-submit',
+        'destroy' => 'archive-box.delete',
+    ]);
+
+
+    /**
+     * * Archive Folder Routes *
+     */
+    Route::resource('/archive-folder', ArchiveFolderController::class)->names([
+        'index' => 'archive-folder.index',
+        'create' => 'archive-folder.create',
+        'show' => 'archive-folder.show',
+        'store' => 'archive-folder.create-submit',
+        'edit' => 'archive-folder.edit',
+        'update' => 'archive-folder.edit-submit',
+        'destroy' => 'archive-folder.delete',
     ]);
 });

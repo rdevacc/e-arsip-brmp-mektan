@@ -7,33 +7,33 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class WorkGroup extends Model
+class ArchiveShelf extends Model
 {
     use HasFactory;
-    
+                
     protected $fillable = [
-        'work_unit_id',
+        'archive_cabinet_id',
         'name'
     ];
 
-     /**
-     * * Relationship from Work Group to Work Unit *
+    /**
+     * * Relationship from Shelf to Cabinet*
      */
-    public function work_unit(): BelongsTo
+    public function archive_cabinet(): BelongsTo
     {
-        return $this->belongsTo(WorkUnit::class);
+        return $this->belongsTo(ArchiveCabinet::class);
+    }
+
+    /**
+     * * Relationship from Shelf to ShelfRow*
+     */
+    public function archive_shelfRows(): HasMany
+    {
+        return $this->hasMany(ArchiveShelfRow::class);
     }
 
      /**
-     * * Relationship from Work Group to Work Team *
-     */
-    public function work_teams(): HasMany
-    {
-        return $this->hasMany(WorkGroup::class);
-    }
-    
-     /**
-     * * Relationship from Work Group to Archive *
+     * * Relationship from Shelf to Archive *
      */
     public function archives(): HasMany
     {

@@ -86,5 +86,82 @@
                 <span>Klasifikasi Keamanan Arsip</span>
             </a>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link {{ request()->segment(2) === 'archive-status' ? 'active' : '' }}" href="{{route('archive-status.index') }}">
+                <i class="bi bi-grid"></i>
+                <span>Status Arsip</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {{ request()->segment(2) === 'work-unit' ? 'active' : '' }}" href="{{route('work-unit.index') }}">
+                <i class="bi bi-grid"></i>
+                <span>Unit Kerja</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {{ request()->segment(2) === 'work-group' ? 'active' : '' }}" href="{{route('work-group.index') }}">
+                <i class="bi bi-grid"></i>
+                <span>Kelompok Kerja</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {{ request()->segment(2) === 'work-team' ? 'active' : '' }}" href="{{route('work-team.index') }}">
+                <i class="bi bi-grid"></i>
+                <span>Tim Kerja</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {{ request()->segment(2) === 'work-team-classification' ? 'active' : '' }}" href="{{route('work-team-classification.index') }}">
+                <i class="bi bi-grid"></i>
+                <span>Kode Klasifikasi</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {{ request()->segment(2) === 'archive-building' ? 'active' : '' }}" href="{{route('archive-building.index') }}">
+                <i class="bi bi-grid"></i>
+                <span>Gedung Arsip</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {{ request()->segment(2) === 'archive-cabinet' ? 'active' : '' }}" href="{{route('archive-cabinet.index') }}">
+                <i class="bi bi-grid"></i>
+                <span>Lemari Arsip</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {{ request()->segment(2) === 'archive-shelf' ? 'active' : '' }}" href="{{route('archive-shelf.index') }}">
+                <i class="bi bi-grid"></i>
+                <span>Rak Lemari Arsip</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {{ request()->segment(2) === 'archive-shelf-row' ? 'active' : '' }}" href="{{route('archive-shelf-row.index') }}">
+                <i class="bi bi-grid"></i>
+                <span>Baris Rak Lemari Arsip</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {{ request()->segment(2) === 'archive-box' ? 'active' : '' }}" href="{{route('archive-box.index') }}">
+                <i class="bi bi-grid"></i>
+                <span>Box Arsip</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {{ request()->segment(2) === 'archive-folder' ? 'active' : '' }}" href="{{route('archive-folder.index') }}">
+                <i class="bi bi-grid"></i>
+                <span>Folder Arsip</span>
+            </a>
+        </li>
       </ul>
   </aside>
