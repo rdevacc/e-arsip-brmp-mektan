@@ -32,12 +32,12 @@ class Archive extends Model
         'archive_lifespan',
         'archive_number',
         'archive_input_date',
-        'building_id',
-        'cabinet_id',
-        'shelf_id',
-        'shelf_row_id',
-        'box_id',
-        'folder_id',
+        'archive_building_id',
+        'archive_cabinet_id',
+        'archive_shelf_id',
+        'archive_shelf_row_id',
+        'archive_box_id',
+        'archive_folder_id',
     ];
 
     /**
