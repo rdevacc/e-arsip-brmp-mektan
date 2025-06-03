@@ -53,8 +53,8 @@ class ArchiveController extends Controller
             $archive->cabinet_id = null;
             $archive->shelf_id = null;
             $archive->shelf_row_id = null;
-            $archive->box_id = null;
-            $archive->folder_id = null;
+            $archive->archive_box_id = null;
+            $archive->archive_folder_id = null;
         }
 
         $archive->save();
@@ -247,12 +247,12 @@ class ArchiveController extends Controller
             'archive_lifespan' => 'required|integer|digits:4|min:1900|max:9999',
             'archive_number' => 'required',
             'archive_input_date' => 'required',
-            'building_id' => 'required',
-            'cabinet_id' => 'required',
-            'shelf_id' => 'required',
-            'shelf_row_id' => 'required',
-            'box_id' => 'required',
-            'folder_id' => 'required',
+            'archive_building_id' => 'required',
+            'archive_cabinet_id' => 'required',
+            'archive_shelf_id' => 'required',
+            'archive_shelf_row_id' => 'required',
+            'archive_box_id' => 'required',
+            'archive_folder_id' => 'required',
         ],[
             'user_id.required' => 'User ID field is required!',
             'work_unit_id.required' => 'Unit Kerja field is required!',
@@ -278,12 +278,12 @@ class ArchiveController extends Controller
             'archive_lifespan.max' => 'Kurun Waktu Arsip field max 2100!',
             'archive_number.required' => 'Jumlah Arsip field is required!',
             'archive_input_date.required' => 'Tanggal Input Arsip field is required!',
-            'building_id.required' => 'Gedung Arsip field is required!',
-            'cabinet_id.required' => 'Lemari Arsip field is required!',
-            'shelf_id.required' => 'Rak Arsip field is required!',
-            'shelf_row_id.required' => 'Baris Rak Arsip field is required!',
-            'box_id.required' => 'Boks Arsip field is required!',
-            'folder_id.required' => 'Folder Arsip field is required!',
+            'archive_building_id.required' => 'Gedung Arsip field is required!',
+            'archive_cabinet_id.required' => 'Lemari Arsip field is required!',
+            'archive_shelf_id.required' => 'Rak Arsip field is required!',
+            'archive_shelf_row_id.required' => 'Baris Rak Arsip field is required!',
+            'archive_box_id.required' => 'Boks Arsip field is required!',
+            'archive_folder_id.required' => 'Folder Arsip field is required!',
         ]);
 
         Archive::create($validated);
@@ -367,12 +367,12 @@ class ArchiveController extends Controller
             'archive_lifespan' => 'required',
             'archive_number' => 'required',
             'archive_input_date' => 'required',
-            'building_id' => 'required',
-            'cabinet_id' => 'required',
-            'shelf_id' => 'required',
-            'shelf_row_id' => 'required',
-            'box_id' => 'required',
-            'folder_id' => 'required',
+            'archive_building_id' => 'required',
+            'archive_cabinet_id' => 'required',
+            'archive_shelf_id' => 'required',
+            'archive_shelf_row_id' => 'required',
+            'archive_box_id' => 'required',
+            'archive_folder_id' => 'required',
 
         ],[
             'user_id.required' => 'User ID field is required!',
@@ -395,12 +395,12 @@ class ArchiveController extends Controller
             'archive_lifespan.required' => 'Kurun Waktu Arsip field is required!',
             'archive_number.required' => 'Jumlah Arsip field is required!',
             'archive_input_date.required' => 'Tanggal Input Arsip field is required!',
-            'building_id.required' => 'Gedung Arsip field is required!',
-            'cabinet_id.required' => 'Lemari Arsip field is required!',
-            'shelf_id.required' => 'Rak Arsip field is required!',
-            'shelf_row_id.required' => 'Baris Rak Arsip field is required!',
-            'box_id.required' => 'Boks Arsip field is required!',
-            'folder_id.required' => 'Folder Arsip field is required!',
+            'archive_building_id.required' => 'Gedung Arsip field is required!',
+            'archive_cabinet_id.required' => 'Lemari Arsip field is required!',
+            'archive_shelf_id.required' => 'Rak Arsip field is required!',
+            'archive_shelf_row_id.required' => 'Baris Rak Arsip field is required!',
+            'archive_box_id.required' => 'Boks Arsip field is required!',
+            'archive_folder_id.required' => 'Folder Arsip field is required!',
         ]);
 
         Archive::where('id', $archive->id)->update($validated);

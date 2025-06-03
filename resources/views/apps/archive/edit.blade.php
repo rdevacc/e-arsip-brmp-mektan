@@ -394,12 +394,12 @@
                                     <h5 class="card-title">Lokasi Penyimpanan Arsip</h5>
 
                                     <div class="col-12 mb-3">
-                                        <label for="building_id" class="form-label">Gedung Arsip</label>
-                                        <select name="building_id" id="building_id"
-                                            class="form-select @error('building_id') is-invalid @enderror">
+                                        <label for="archive_building_id" class="form-label">Gedung Arsip</label>
+                                        <select name="archive_building_id" id="archive_building_id"
+                                            class="form-select @error('archive_building_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Gedung Arsip</option>
                                             @foreach ($buildings as $building)
-                                                @if (old('building_id', $archive->building_id) == $building->id)
+                                                @if (old('archive_building_id', $archive->archive_building_id) == $building->id)
                                                     <option value="{{ $building->id }}" selected>
                                                         {{ $building->name }}
                                                     </option>
@@ -408,19 +408,19 @@
                                                 @endif
                                             @endforeach
                                         </select>
-                                        @error('building_id')
+                                        @error('archive_building_id')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="cabinet_id" class="form-label">Lemari Arsip</label>
-                                        <select name="cabinet_id" id="cabinet_id"
-                                            class="form-select @error('cabinet_id') is-invalid @enderror">
+                                        <label for="archive_cabinet_id" class="form-label">Lemari Arsip</label>
+                                        <select name="archive_cabinet_id" id="archive_cabinet_id"
+                                            class="form-select @error('archive_cabinet_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Lemari Arsip</option>
                                             @foreach ($cabinets as $cabinet)
-                                                @if (old('cabinet_id', $archive->cabinet_id) == $cabinet->id)
+                                                @if (old('archive_cabinet_id', $archive->archive_cabinet_id) == $cabinet->id)
                                                     <option value="{{ $cabinet->id }}" selected>
                                                         {{ $cabinet->name }}
                                                     </option>
@@ -429,19 +429,19 @@
                                                 @endif
                                             @endforeach
                                         </select>
-                                        @error('cabinet_id')
+                                        @error('archive_cabinet_id')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="shelf_id" class="form-label">Rak Arsip</label>
-                                        <select name="shelf_id" id="shelf_id"
-                                            class="form-select @error('shelf_id') is-invalid @enderror">
+                                        <label for="archive_shelf_id" class="form-label">Rak Arsip</label>
+                                        <select name="archive_shelf_id" id="archive_shelf_id"
+                                            class="form-select @error('archive_shelf_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Rak Arsip</option>
                                             @foreach ($shelves as $shelf)
-                                                @if (old('shelf_id', $archive->shelf_id) == $shelf->id)
+                                                @if (old('archive_shelf_id', $archive->archive_shelf_id) == $shelf->id)
                                                     <option value="{{ $shelf->id }}" selected>
                                                         {{ $shelf->name }}
                                                     </option>
@@ -450,19 +450,19 @@
                                                 @endif
                                             @endforeach
                                         </select>
-                                        @error('shelf_id')
+                                        @error('archive_shelf_id')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="shelf_row_id" class="form-label">Baris Rak Arsip</label>
-                                        <select name="shelf_row_id" id="shelf_row_id"
-                                            class="form-select @error('shelf_row_id') is-invalid @enderror">
+                                        <label for="archive_shelf_row_id" class="form-label">Baris Rak Arsip</label>
+                                        <select name="archive_shelf_row_id" id="archive_shelf_row_id"
+                                            class="form-select @error('archive_shelf_row_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Baris Rak Arsip</option>
                                             @foreach ($shelfRows as $shelfRow)
-                                            @if (old('shelf_row_id', $archive->shelf_row_id) == $shelfRow->id)
+                                            @if (old('archive_shelf_row_id', $archive->archive_shelf_row_id) == $shelfRow->id)
                                                 <option value="{{ $shelfRow->id }}" selected>
                                                     {{ $shelfRow->name }}
                                                 </option>
@@ -471,19 +471,19 @@
                                             @endif
                                         @endforeach
                                         </select>
-                                        @error('shelf_row_id')
+                                        @error('archive_shelf_row_id')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="box_id" class="form-label">Box Arsip</label>
-                                        <select name="box_id" id="box_id"
-                                            class="form-select @error('box_id') is-invalid @enderror">
+                                        <label for="archive_box_id" class="form-label">Box Arsip</label>
+                                        <select name="archive_box_id" id="archive_box_id"
+                                            class="form-select @error('archive_box_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Box Arsip</option>
                                             @foreach ($boxes as $box)
-                                                @if (old('box_id', $archive->box_id) == $box->id)
+                                                @if (old('archive_box_id', $archive->archive_box_id) == $box->id)
                                                     <option value="{{ $box->id }}" selected>
                                                         {{ $box->name }}
                                                     </option>
@@ -492,19 +492,19 @@
                                                 @endif
                                             @endforeach
                                         </select>
-                                        @error('box_id')
+                                        @error('archive_box_id')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="folder_id" class="form-label">Folder Arsip</label>
-                                        <select name="folder_id" id="folder_id"
-                                            class="form-select @error('folder_id') is-invalid @enderror">
+                                        <label for="archive_folder_id" class="form-label">Folder Arsip</label>
+                                        <select name="archive_folder_id" id="archive_folder_id"
+                                            class="form-select @error('archive_folder_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Folder Arsip</option>
                                             @foreach ($folders as $folder)
-                                                @if (old('folder_id', $archive->folder_id) == $folder->id)
+                                                @if (old('archive_folder_id', $archive->archive_folder_id) == $folder->id)
                                                     <option value="{{ $folder->id }}" selected>
                                                         {{ $folder->name }}
                                                     </option>
@@ -513,7 +513,7 @@
                                                 @endif
                                             @endforeach
                                         </select>
-                                        @error('folder_id')
+                                        @error('archive_folder_id')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
