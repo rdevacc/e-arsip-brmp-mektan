@@ -79,12 +79,24 @@
                         </select>
                     </div>
                 </div>
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <button id="exportExcel" class="btn btn-success w-100" disabled>
+                            <i class="bi bi-file-earmark-excel"></i> Export Excel
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button id="exportPdf" class="btn btn-danger w-100" disabled>
+                            <i class="bi bi-file-earmark-pdf"></i> Export PDF
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="card">
+        <div id="laporanCard" class="card mt-3" style="display: none;">
             <div class="card-body">
-                <div id="laporanCard" class="mt-3" style="display: none;">
+                <div class="mt-3">
                     <table id="laporanTable" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
@@ -110,6 +122,25 @@
 $(document).ready(function () {
     let table;
 
+    // Fungsi untuk enable/disable tombol export
+    function toggleExportButtons(enable) {
+        $('#exportExcel').prop('disabled', !enable);
+        $('#exportPdf').prop('disabled', !enable);
+    }
+
+    // Fungsi membangun parameter URL dari filter
+    function buildExportParams() {
+        return new URLSearchParams({
+            text_search: $('#text_search').val(),
+            start_date: $('#start_date').val(),
+            end_date: $('#end_date').val(),
+            archive_status: $('#archive_status').val(),
+            classification: $('#filterWorkTeamClassification').val(),
+            lifespan: $('#archive_lifespan').val()
+        }).toString();
+    }
+
+    // Fungsi utama untuk fetch data dan render DataTable
     function fetchLaporan() {
         const textSearch = $('#text_search').val();
         const startDate = $('#start_date').val();
@@ -118,12 +149,11 @@ $(document).ready(function () {
         const classification = $('#filterWorkTeamClassification').val();
         const lifespan = $('#archive_lifespan').val();
 
-        console.log({
-            textSearch, startDate, endDate, archiveStatus, classification, lifespan
-        });
+        const hasFilter = textSearch || startDate || endDate || archiveStatus || classification || lifespan;
 
-        if (!textSearch && !startDate && !endDate && !archiveStatus && !classification && !lifespan) {
+        if (!hasFilter) {
             $('#laporanCard').hide();
+            toggleExportButtons(false);
             if ($.fn.DataTable.isDataTable('#laporanTable')) {
                 $('#laporanTable').DataTable().clear().destroy();
             }
@@ -150,21 +180,45 @@ $(document).ready(function () {
                     classification: classification,
                     lifespan: lifespan
                 },
-                error: function (xhr, error, thrown) {
+                error: function (xhr) {
                     console.log(xhr.responseText);
                 }
             },
+            searching: false,
+            ordering: true,
+            order: [[0, 'desc']],
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex', className: 'text-center', orderable: false, searchable: false },
                 { data: 'classification_code', name: 'classification_code' },
                 { data: 'description', name: 'description' },
                 { data: 'lifespan', name: 'lifespan' },
                 { data: 'status', name: 'status' }
-            ]
+            ],
+            drawCallback: function (settings) {
+                const rowCount = settings.json?.data?.length || 0;
+                toggleExportButtons(rowCount > 0);
+            }
         });
     }
 
-    $('#text_search, #start_date, #end_date, #archive_status, #filterWorkTeamClassification, #archive_lifespan').on('change keyup', fetchLaporan);
+    // Event listener untuk semua filter input
+    $('#text_search, #start_date, #end_date, #archive_status, #filterWorkTeamClassification, #archive_lifespan')
+        .on('change keyup', fetchLaporan);
+
+    // Tombol Export Excel
+    $('#exportExcel').on('click', function () {
+        window.location.href = `/app/export-excel?${buildExportParams()}`;
+    });
+
+    // Tombol Export PDF
+    $('#exportPdf').on('click', function () {
+        window.location.href = `/app/export-pdf?${buildExportParams()}`;
+    });
+
+    // Inisialisasi awal
+    $('#laporanCard').hide();
+    toggleExportButtons(false);
 });
 </script>
+
 @endpush
