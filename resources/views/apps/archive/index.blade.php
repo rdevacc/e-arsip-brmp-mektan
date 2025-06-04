@@ -75,7 +75,6 @@
                                             </div>
                                         </div>
 
-                                        <!-- Filter Kode Klasifikasi -->
                                         <div class="col-md-auto">
                                             <div class="input-group">
                                                 <select id="filterWorkTeamClassification" class="form-select">
@@ -87,7 +86,6 @@
                                             </div>
                                         </div>
 
-                                        <!-- Filter Status Arsip -->
                                         <div class="col-md-auto">
                                             <div class="input-group">
                                                 <select id="filterArchiveStatus" class="form-select">

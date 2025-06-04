@@ -15,6 +15,7 @@ use App\Http\Controllers\ArchiveStatusController;
 use App\Http\Controllers\ArchiveBuildingController;
 use App\Http\Controllers\ArchiveCabinetController;
 use App\Http\Controllers\ArchiveFolderController;
+use App\Http\Controllers\ArchiveReportController;
 use App\Http\Controllers\ArchiveShelfController;
 use App\Http\Controllers\ArchiveShelfRowController;
 use App\Http\Controllers\DashboardController;
@@ -356,4 +357,10 @@ Route::prefix('/app')->group(function (){
         'update' => 'archive-folder.edit-submit',
         'destroy' => 'archive-folder.delete',
     ]);
+
+    /**
+     * * Report Routes *
+     */
+    Route::get('/archive-report', [ArchiveReportController::class, 'index'])->name('archive-report.index');
+    Route::get('/archive-report-filter', [ArchiveReportController::class, 'filter'])->name('archive-report.filter');
 });

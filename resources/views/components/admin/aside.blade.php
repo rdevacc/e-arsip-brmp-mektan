@@ -16,7 +16,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('report-*') ? 'active' : '' }}" href="#">
+            <a class="nav-link {{ request()->routeIs('archive-report*') ? 'active' : '' }}" href="{{route('archive-report.index')}}">
                 <i class="bi bi-file-earmark-text"></i>
                 <span>Laporan</span>
             </a>
