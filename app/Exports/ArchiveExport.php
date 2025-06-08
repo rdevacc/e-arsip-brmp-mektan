@@ -3,15 +3,16 @@
 namespace App\Exports;
 
 use App\Models\Archive;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromQuery; // ✅ PERUBAHAN
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Concerns\WithMapping; // ✅ PERUBAHAN
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class ArchiveExport implements FromCollection, WithHeadings, WithStyles, WithEvents
+class ArchiveExport implements FromQuery, WithHeadings, WithStyles, WithEvents, WithMapping // ✅ PERUBAHAN
 {
     protected $filters;
 
@@ -20,9 +21,10 @@ class ArchiveExport implements FromCollection, WithHeadings, WithStyles, WithEve
         $this->filters = $filters;
     }
 
-    public function collection()
+    // ✅ PERUBAHAN: gunakan FromQuery, bukan FromCollection
+    public function query()
     {
-        $query = Archive::with([
+        $query = Archive::query()->with([
             'work_team_classification',
             'archive_status',
             'building',
@@ -32,6 +34,7 @@ class ArchiveExport implements FromCollection, WithHeadings, WithStyles, WithEve
             'folder'
         ]);
 
+        // 🔁 DIPINDAHKAN dari collection()
         if (!empty($this->filters['text_search'])) {
             $query->where('archive_description', 'like', '%' . $this->filters['text_search'] . '%');
         }
@@ -56,20 +59,27 @@ class ArchiveExport implements FromCollection, WithHeadings, WithStyles, WithEve
             $query->where('archive_lifespan', $this->filters['lifespan']);
         }
 
-        return $query->get()->map(function ($item, $index) {
-            return [
-                'no' => $index + 1,
-                'classification_code' => $item->work_team_classification->code ?? '-',
-                'description' => $item->archive_description ?? '-',
-                'lifespan' => $item->archive_lifespan ?? '-',
-                'status' => $item->archive_status->name ?? '-',
-                'building' => $item->building->name ?? '-',
-                'cabinet' => $item->cabinet->name ?? '-',
-                'shelf' => $item->shelf->name ?? '-',
-                'shelf_row' => $item->shelf_row->name ?? '-',
-                'folder' => $item->folder->name ?? '-',
-            ];
-        });
+        return $query;
+    }
+
+    // ✅ PERUBAHAN: ganti dari map() di collection() ke method map() untuk WithMapping
+    public function map($item): array
+    {
+        static $index = 0;
+        $index++;
+
+        return [
+            $index,
+            $item->work_team_classification->code ?? '-',
+            $item->archive_description ?? '-',
+            $item->archive_lifespan ?? '-',
+            $item->archive_status->name ?? '-',
+            $item->building->name ?? '-',
+            $item->cabinet->name ?? '-',
+            $item->shelf->name ?? '-',
+            $item->shelf_row->name ?? '-',
+            $item->folder->name ?? '-',
+        ];
     }
 
     public function headings(): array
@@ -104,15 +114,12 @@ class ArchiveExport implements FromCollection, WithHeadings, WithStyles, WithEve
             AfterSheet::class => function (AfterSheet $event) {
                 $sheet = $event->sheet->getDelegate();
 
-                // Tentukan area data (dari A1 sampai kolom terakhir dan baris terakhir)
                 $highestRow = $sheet->getHighestRow();
                 $highestColumn = $sheet->getHighestColumn();
                 $cellRange = "A1:{$highestColumn}{$highestRow}";
 
-                // Terapkan border ke seluruh tabel
                 $sheet->getStyle($cellRange)->getBorders()->getAllBorders()->setBorderStyle(Border::BORDER_THIN);
             },
         ];
     }
 }
-

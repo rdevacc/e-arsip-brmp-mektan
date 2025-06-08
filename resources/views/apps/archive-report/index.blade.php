@@ -269,7 +269,9 @@
 
         // Tombol Export PDF
         $('#exportPdf').on('click', function () {
-            window.location.href = `/app/export-pdf?${buildExportParams()}`;
+            const params = buildExportParams();
+            const pdfWindow = window.open(`{{ route('archive-report.export.pdf') }}?${params}`, '_blank');
+            window.open(pdfWindow);
         });
 
         // Tombol Load All Data
