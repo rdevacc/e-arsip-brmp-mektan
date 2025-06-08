@@ -171,6 +171,10 @@ class ArchiveReportController extends Controller
 
             $archives = $query->get();
 
+            if (!Storage::exists('pdf_cache')) {
+                Storage::makeDirectory('pdf_cache');
+            }
+
             // Generate PDF dan simpan di storage
             $pdf = Pdf::loadView('apps.archive-report.exportPDF', compact('archives'))
                     ->setPaper('A4', 'landscape');
