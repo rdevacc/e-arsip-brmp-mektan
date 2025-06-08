@@ -363,4 +363,10 @@ Route::prefix('/app')->group(function (){
      */
     Route::get('/archive-report', [ArchiveReportController::class, 'index'])->name('archive-report.index');
     Route::get('/archive-report-filter', [ArchiveReportController::class, 'filter'])->name('archive-report.filter');
+
+    /**
+     * * Export Routes *
+     */
+    Route::get('/app/export-excel', [ArchiveReportController::class, 'exportExcel'])->name('archive-report.export.excel');
+    Route::get('/app/export-pdf', [ArchiveReportController::class, 'exportPdf'])->name('archive-report.export.pdf');
 });

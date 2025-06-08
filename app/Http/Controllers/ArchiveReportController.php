@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ArchiveExport;
 use App\Models\Archive;
-use App\Models\ArchiveStatus;
-use App\Models\WorkTeamClassification;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class ArchiveReportController extends Controller
@@ -40,9 +40,6 @@ class ArchiveReportController extends Controller
         return view('apps.archive-report.index', compact('workTeamClassificationList', 'archiveStatusList', 'lifespanList'));
     }
 
-    /**
-     * Ambil data arsip yang difilter untuk datatables.
-     */
     public function filter(Request $request)
     {
         try {
@@ -99,4 +96,17 @@ class ArchiveReportController extends Controller
         }
     }
 
+    public function exportExcel(Request $request)
+    {
+        $filters = $request->only([
+            'text_search',
+            'start_date',
+            'end_date',
+            'archive_status',
+            'classification',
+            'lifespan',
+        ]);
+
+        return Excel::download(new ArchiveExport($filters), 'Laporan Arsip.xlsx');
+    }
 }
