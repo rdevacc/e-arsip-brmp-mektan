@@ -113,64 +113,97 @@ class ArchiveReportController extends Controller
         return Excel::download(new ArchiveExport($filters), 'Laporan-Arsip.xlsx');
     }
 
-    public function generatePdf(Request $request)
-    {
-        Log::info('Memulai generate PDF dengan filter:', $request->all());
+        public function generatePdf(Request $request)
+        {
+            Log::info('Memulai generate PDF dengan filter:', $request->all());
 
-        $filters = $request->only([
-            'text_search',
-            'start_date',
-            'end_date',
-            'archive_status',
-            'classification',
-            'lifespan',
-        ]);
-
-        $filters = array_map(function ($v) {
-            return $v === 'null' ? null : $v;
-        }, $filters);
-
-        $hash = md5(json_encode($filters));
-        $filename = "laporan-arsip-$hash.pdf";
-        $path = "pdf_cache/$filename";
-
-        if (!Storage::exists('pdf_cache')) {
-            Log::info('Folder pdf_cache tidak ada, membuat...');
-            Storage::makeDirectory('pdf_cache');
-        }
-
-        if (!Storage::exists($path)) {
-            $query = Archive::with([
-                'work_team_classification',
+            $filters = $request->only([
+                'text_search',
+                'start_date',
+                'end_date',
                 'archive_status',
-                'building',
-                'cabinet',
-                'shelf',
-                'shelf_row',
-                'folder'
+                'classification',
+                'lifespan',
             ]);
 
-            // (filter query)
+            // Ubah 'null' string jadi null beneran
+            $filters = array_map(function ($v) {
+                return $v === 'null' ? null : $v;
+            }, $filters);
 
-            $archives = $query->get();
+            $hash = md5(json_encode($filters));
+            $filename = "laporan-arsip-$hash.pdf";
+            $path = "pdf_cache/$filename";
 
-            Log::info('Jumlah arsip:', ['count' => $archives->count()]);
+            // Buat folder jika belum ada
+            if (!Storage::exists('pdf_cache')) {
+                Log::info('Folder pdf_cache tidak ada, membuat...');
+                Storage::makeDirectory('pdf_cache');
+            }
 
-            $pdf = Pdf::loadView('apps.archive-report.exportPDF', compact('archives'))
-                    ->setPaper('A4', 'landscape');
+            try {
+                if (!Storage::exists($path)) {
+                    $query = Archive::with([
+                        'work_team_classification',
+                        'archive_status',
+                        'building',
+                        'cabinet',
+                        'shelf',
+                        'shelf_row',
+                        'folder'
+                    ]);
 
-            $result = Storage::put($path, $pdf->output());
+                    // FILTER QUERY
+                    if (!empty($filters['text_search'])) {
+                        $query->where('archive_description', 'like', '%' . $filters['text_search'] . '%');
+                    }
 
-            Log::info('Hasil simpan PDF: ' . ($result ? 'Berhasil' : 'Gagal'));
-        } else {
-            Log::info('File sudah ada: ' . $path);
+                    if (!empty($filters['start_date'])) {
+                        $query->whereDate('created_at', '>=', $filters['start_date']);
+                    }
+
+                    if (!empty($filters['end_date'])) {
+                        $query->whereDate('created_at', '<=', $filters['end_date']);
+                    }
+
+                    if (!empty($filters['archive_status'])) {
+                        $query->where('archive_status_id', $filters['archive_status']);
+                    }
+
+                    if (!empty($filters['classification'])) {
+                        $query->where('work_team_classification_id', $filters['classification']);
+                    }
+
+                    if (isset($filters['lifespan']) && $filters['lifespan'] !== null) {
+                        $query->where('archive_lifespan', $filters['lifespan']);
+                    }
+
+                    $archives = $query->get();
+
+                    Log::info('Jumlah arsip:', ['count' => $archives->count()]);
+
+                    $pdf = Pdf::loadView('apps.archive-report.exportPDF', compact('archives'))
+                            ->setPaper('A4', 'landscape');
+
+                    $result = Storage::put($path, $pdf->output());
+
+                    Log::info('Hasil simpan PDF: ' . ($result ? 'Berhasil' : 'Gagal'));
+                } else {
+                    Log::info('File sudah ada: ' . $path);
+                }
+
+                return response()->file(storage_path("app/$path"), [
+                    'Content-Type' => 'application/pdf',
+                    'Content-Disposition' => 'inline; filename="' . $filename . '"'
+                ]);
+
+            } catch (\Throwable $e) {
+                Log::error("Gagal generate PDF: " . $e->getMessage(), [
+                    'trace' => $e->getTraceAsString()
+                ]);
+                abort(500, 'Terjadi kesalahan saat generate PDF.');
+            }
         }
-
-        return response()->file(storage_path("app/$path"), [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="' . $filename . '"'
-        ]);
-    }
 
     public function showLoadingPdf(Request $request)
     {
