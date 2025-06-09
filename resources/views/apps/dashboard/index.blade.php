@@ -48,7 +48,7 @@
 
                         <div class="row justify-content-center g-3">
                             <!-- Card 1 -->
-                            <div class="col-6 col-md-3">
+                            <div class="col-12 col-md-3">
                                 <div class="card info-card total-archive-card">
                                     <div class="card-body">
                                         <h5 class="card-title">Arsip Aktif</h5>
@@ -67,7 +67,7 @@
                             </div>
 
                             <!-- Card 2 -->
-                            <div class="col-6 col-md-3">
+                            <div class="col-12 col-md-3">
                                 <div class="card info-card total-archive-card">
                                     <div class="card-body">
                                         <h5 class="card-title">Arsip Inaktif</h5>
@@ -86,7 +86,7 @@
                             </div>
 
                             <!-- Card 3 -->
-                            <div class="col-6 col-md-3">
+                            <div class="col-12 col-md-3">
                                 <div class="card info-card total-archive-card">
                                     <div class="card-body">
                                         <h5 class="card-title">Arsip Usul Musnah</h5>
@@ -105,7 +105,7 @@
                             </div>
 
                             <!-- Card 4 -->
-                            <div class="col-6 col-md-3">
+                            <div class="col-12 col-md-3">
                                 <div class="card info-card total-archive-card">
                                     <div class="card-body">
                                         <h5 class="card-title">Arsip Musnah</h5>
