@@ -116,8 +116,7 @@ class ArchiveReportController extends Controller
 
     public function generatePdf(Request $request)
     {
-        Log::info('Menggunakan Snappy untuk generate PDF');
-        Log::info('Memulai generate PDF dengan filter:', $request->all());
+        Log::info('Memulai generate PDF');
 
         $filters = $request->only([
             'text_search',
@@ -131,42 +130,53 @@ class ArchiveReportController extends Controller
         // Ubah string 'null' jadi nilai null
         $filters = array_map(fn($v) => $v === 'null' ? null : $v, $filters);
 
-        // Tambahkan informasi waktu terakhir data diubah untuk menjamin cache valid
+        // Ambil waktu terakhir data dibuat atau diubah
         $updatedAt = Archive::max('updated_at');
         $createdAt = Archive::max('created_at');
 
-        $filters['last_updated'] = max(
-            optional($updatedAt)->timestamp ?? 0,
-            optional($createdAt)->timestamp ?? 0
+        $timestamp = max(
+            optional($updatedAt)?->timestamp ?? 0,
+            optional($createdAt)?->timestamp ?? 0
         );
+
+        $filters['last_updated'] = $timestamp;
+
+        // Log waktu perubahan terakhir
+        Log::info('Max timestamps:', [
+            'updated_at' => $updatedAt,
+            'created_at' => $createdAt,
+            'last_used' => $timestamp,
+        ]);
 
         $hash = md5(json_encode($filters));
         $filename = "laporan-arsip-$hash.pdf";
         $path = "pdf_cache/$filename";
 
-        // Buat folder pdf_cache jika belum ada
+        // Pastikan folder pdf_cache ada
         if (!Storage::exists('pdf_cache')) {
-            Log::info('Folder pdf_cache tidak ada, membuat...');
+            Log::info('Folder pdf_cache tidak ditemukan, membuat folder...');
             Storage::makeDirectory('pdf_cache');
         }
 
-        // Cek apakah file sudah ada dan apakah sudah kadaluarsa (> 1 hari)
-        $fileTooOld = false;
+        $useCached = false;
 
+        // Cek apakah file cache masih berlaku
         if (Storage::exists($path)) {
             $lastModified = Storage::lastModified($path);
-            $fileTooOld = now()->diffInHours(Carbon::createFromTimestamp($lastModified)) >= 24;
+            $fileAgeHours = now()->diffInHours(Carbon::createFromTimestamp($lastModified));
+            Log::info("File cache ditemukan. Usia: {$fileAgeHours} jam");
 
-            if ($fileTooOld) {
-                Log::info("File cache sudah lebih dari 1 hari, akan dihapus: $path");
-                Storage::delete($path);
+            if ($fileAgeHours < 24) {
+                $useCached = true;
+                Log::info("Menggunakan file cache yang masih berlaku: $filename");
             } else {
-                Log::info("File cache masih berlaku, tidak perlu generate ulang.");
+                Log::info("Cache kadaluarsa, akan dihapus dan digenerate ulang");
+                Storage::delete($path);
             }
         }
 
-        // Jika belum ada atau kadaluarsa, generate PDF baru
-        if (!Storage::exists($path)) {
+        if (!$useCached) {
+            // Query data
             $query = Archive::with([
                 'work_team_classification',
                 'archive_status',
@@ -177,7 +187,6 @@ class ArchiveReportController extends Controller
                 'folder'
             ]);
 
-            // Terapkan filter
             if (!empty($filters['text_search'])) {
                 $query->where('archive_description', 'like', '%' . $filters['text_search'] . '%');
             }
@@ -203,16 +212,15 @@ class ArchiveReportController extends Controller
             }
 
             $archives = $query->get();
-            Log::info('Jumlah arsip:', ['count' => $archives->count()]);
+            Log::info('Jumlah arsip yang diambil:', ['count' => $archives->count()]);
 
             $pdf = SnappyPdf::loadView('apps.archive-report.exportPDF', compact('archives'))
                 ->setPaper('A4', 'landscape');
 
             $result = Storage::put($path, $pdf->output());
-            Log::info('Hasil simpan PDF: ' . ($result ? 'Berhasil' : 'Gagal'));
+            Log::info('Hasil generate PDF dan simpan cache: ' . ($result ? 'BERHASIL' : 'GAGAL'));
         }
 
-        // Kirimkan file PDF ke browser
         return response()->file(storage_path("app/$path"), [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline; filename="' . $filename . '"'
