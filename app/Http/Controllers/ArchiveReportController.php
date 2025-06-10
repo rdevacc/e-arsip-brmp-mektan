@@ -6,6 +6,7 @@ use App\Exports\ArchiveExport;
 use App\Models\Archive;
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -116,7 +117,7 @@ class ArchiveReportController extends Controller
 
     public function generatePdf(Request $request)
     {
-        Log::info('Memulai generate PDF');
+        Log::info('Menggunakan Redis untuk cache PDF');
 
         $filters = $request->only([
             'text_search',
@@ -127,56 +128,21 @@ class ArchiveReportController extends Controller
             'lifespan',
         ]);
 
-        // Ubah string 'null' jadi nilai null
+        // Ubah string 'null' jadi null
         $filters = array_map(fn($v) => $v === 'null' ? null : $v, $filters);
 
-        // Ambil waktu terakhir data dibuat atau diubah
-        $updatedAt = Archive::max('updated_at');
-        $createdAt = Archive::max('created_at');
+        // Tambahkan informasi waktu terakhir data berubah
+        $lastUpdated = Archive::max('updated_at');
+        $filters['last_updated'] = optional($lastUpdated)->timestamp ?? now()->timestamp;
 
-        $timestamp = max(
-            optional($updatedAt)?->timestamp ?? 0,
-            optional($createdAt)?->timestamp ?? 0
-        );
+        $cacheKey = 'pdf:' . md5(json_encode($filters));
 
-        $filters['last_updated'] = $timestamp;
-
-        // Log waktu perubahan terakhir
-        Log::info('Max timestamps:', [
-            'updated_at' => $updatedAt,
-            'created_at' => $createdAt,
-            'last_used' => $timestamp,
-        ]);
-
-        $hash = md5(json_encode($filters));
-        $filename = "laporan-arsip-$hash.pdf";
-        $path = "pdf_cache/$filename";
-
-        // Pastikan folder pdf_cache ada
-        if (!Storage::exists('pdf_cache')) {
-            Log::info('Folder pdf_cache tidak ditemukan, membuat folder...');
-            Storage::makeDirectory('pdf_cache');
-        }
-
-        $useCached = false;
-
-        // Cek apakah file cache masih berlaku
-        if (Storage::exists($path)) {
-            $lastModified = Storage::lastModified($path);
-            $fileAgeHours = now()->diffInHours(Carbon::createFromTimestamp($lastModified));
-            Log::info("File cache ditemukan. Usia: {$fileAgeHours} jam");
-
-            if ($fileAgeHours < 24) {
-                $useCached = true;
-                Log::info("Menggunakan file cache yang masih berlaku: $filename");
-            } else {
-                Log::info("Cache kadaluarsa, akan dihapus dan digenerate ulang");
-                Storage::delete($path);
-            }
-        }
-
-        if (!$useCached) {
-            // Query data
+        // Jika cache tersedia, ambil dari cache
+        if (Cache::has($cacheKey)) {
+            Log::info("File PDF ditemukan di Redis cache: $cacheKey");
+            $pdfContent = Cache::get($cacheKey);
+        } else {
+            // Ambil data arsip
             $query = Archive::with([
                 'work_team_classification',
                 'archive_status',
@@ -190,41 +156,38 @@ class ArchiveReportController extends Controller
             if (!empty($filters['text_search'])) {
                 $query->where('archive_description', 'like', '%' . $filters['text_search'] . '%');
             }
-
             if (!empty($filters['start_date'])) {
                 $query->whereDate('created_at', '>=', $filters['start_date']);
             }
-
             if (!empty($filters['end_date'])) {
                 $query->whereDate('created_at', '<=', $filters['end_date']);
             }
-
             if (!empty($filters['archive_status'])) {
                 $query->where('archive_status_id', $filters['archive_status']);
             }
-
             if (!empty($filters['classification'])) {
                 $query->where('work_team_classification_id', $filters['classification']);
             }
-
             if (isset($filters['lifespan']) && $filters['lifespan'] !== null) {
                 $query->where('archive_lifespan', $filters['lifespan']);
             }
 
             $archives = $query->get();
-            Log::info('Jumlah arsip yang diambil:', ['count' => $archives->count()]);
+            Log::info('Jumlah arsip diambil:', ['count' => $archives->count()]);
 
             $pdf = SnappyPdf::loadView('apps.archive-report.exportPDF', compact('archives'))
                 ->setPaper('A4', 'landscape');
 
-            $result = Storage::put($path, $pdf->output());
-            Log::info('Hasil generate PDF dan simpan cache: ' . ($result ? 'BERHASIL' : 'GAGAL'));
+            $pdfContent = $pdf->output();
+
+            // Simpan ke Redis selama 1 jam
+            Cache::put($cacheKey, $pdfContent, now()->addHours(1));
+            Log::info("PDF baru disimpan ke Redis cache: $cacheKey");
         }
 
-        return response()->file(storage_path("app/$path"), [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="' . $filename . '"'
-        ]);
+        return response($pdfContent)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'inline; filename="laporan-arsip.pdf"');
     }
 
     public function showLoadingPdf(Request $request)
