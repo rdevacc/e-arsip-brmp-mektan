@@ -43,7 +43,6 @@ class ArchiveSeeder extends Seeder
                 'archive_shelf_row_id' => 1,
                 'archive_box_id' => 1,
                 'archive_folder_id' => 1,
-                // 'archive_regnumber' => 'Arsip/001',
                 'archive_letter_origin_number' => 'B.47/KP.580/H.9/01/2025',
                 'archive_description' => 'Uraian Arsip',
                 'archive_lifespan' => '2018',

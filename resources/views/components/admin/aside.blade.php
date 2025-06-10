@@ -25,6 +25,20 @@
         <li class="nav-heading">Super Admin</li>
 
         <li class="nav-item">
+            <a class="nav-link {{ request()->segment(2) === 'user' ? 'active' : '' }}" href="{{route('user.index') }}">
+                <i class="bi bi-grid"></i>
+                <span>Users</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {{ request()->segment(2) === 'role' ? 'active' : '' }}" href="{{route('role.index') }}">
+                <i class="bi bi-grid"></i>
+                <span>Roles</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link {{ request()->segment(2) === 'archive-access-level' ? 'active' : '' }}" href="{{route('archive-access-level.index') }}">
                 <i class="bi bi-grid"></i>
                 <span>Level Akses Arsip</span>

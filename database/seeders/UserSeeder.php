@@ -40,6 +40,17 @@ class UserSeeder extends Seeder
             [
                 'id' => 3,
                 'role_id' => 2,
+                'name' => 'Kartini',
+                'email' => 'kartini@gmail.com',
+                'email_verified_at' => now(),
+                'password' => Hash::make('password'),
+                'remember_token' => '',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 4,
+                'role_id' => 2,
                 'name' => 'Candra',
                 'email' => 'candra@gmail.com',
                 'email_verified_at' => now(),

@@ -19,6 +19,8 @@ use App\Http\Controllers\ArchiveReportController;
 use App\Http\Controllers\ArchiveShelfController;
 use App\Http\Controllers\ArchiveShelfRowController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkGroupController;
 use App\Http\Controllers\WorkTeamClassificationController;
 use App\Http\Controllers\WorkTeamController;
@@ -77,6 +79,34 @@ Route::prefix('/app')->group(function (){
      * * Dashboard Routes *
      */
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
+    /**
+     * * Users Routes *
+     */
+    Route::resource('/user', UserController::class)->names([
+        'index' => 'user.index',
+        'create' => 'user.create',
+        'show' => 'user.show',
+        'store' => 'user.create-submit',
+        'edit' => 'user.edit',
+        'update' => 'user.edit-submit',
+        'destroy' => 'user.delete',
+    ]);
+
+
+    /**
+     * * Roles Routes *
+     */
+    Route::resource('/role', RoleController::class)->names([
+        'index' => 'role.index',
+        'create' => 'role.create',
+        'show' => 'role.show',
+        'store' => 'role.create-submit',
+        'edit' => 'role.edit',
+        'update' => 'role.edit-submit',
+        'destroy' => 'role.delete',
+    ]);
 
 
     /**
