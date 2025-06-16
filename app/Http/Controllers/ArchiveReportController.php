@@ -120,24 +120,16 @@ class ArchiveReportController extends Controller
         Log::info('Menggunakan Redis untuk cache PDF');
 
         $filters = $request->only([
-            'text_search',
-            'start_date',
-            'end_date',
-            'archive_status',
-            'classification',
-            'lifespan',
+            'text_search', 'start_date', 'end_date',
+            'archive_status', 'classification', 'lifespan',
         ]);
 
-        // Ubah string 'null' jadi null
         $filters = array_map(fn($v) => $v === 'null' ? null : $v, $filters);
 
-        // Tambahkan informasi waktu terakhir data berubah
-        $lastUpdated = Archive::max('updated_at');
-        $filters['last_updated'] = optional($lastUpdated)->timestamp ?? now()->timestamp;
+        $filters['last_updated'] = optional(Archive::max('updated_at'))->timestamp ?? now()->timestamp;
 
         $cacheKey = 'pdf:' . md5(json_encode($filters));
 
-        // Jika cache tersedia, ambil dari cache
         if (Cache::has($cacheKey)) {
             Log::info("File PDF ditemukan di Redis cache: $cacheKey");
             $pdfContent = Cache::get($cacheKey);
@@ -145,50 +137,49 @@ class ArchiveReportController extends Controller
             return response($pdfContent)
                 ->header('Content-Type', 'application/pdf')
                 ->header('Content-Disposition', 'attachment; filename="laporan-arsip.pdf"');
-        } else {
-            // Ambil data arsip
-            $query = Archive::with([
-                'work_team_classification',
-                'archive_status',
-                'building',
-                'cabinet',
-                'shelf',
-                'shelf_row',
-                'folder'
-            ]);
-
-            if (!empty($filters['text_search'])) {
-                $query->where('archive_description', 'like', '%' . $filters['text_search'] . '%');
-            }
-            if (!empty($filters['start_date'])) {
-                $query->whereDate('created_at', '>=', $filters['start_date']);
-            }
-            if (!empty($filters['end_date'])) {
-                $query->whereDate('created_at', '<=', $filters['end_date']);
-            }
-            if (!empty($filters['archive_status'])) {
-                $query->where('archive_status_id', $filters['archive_status']);
-            }
-            if (!empty($filters['classification'])) {
-                $query->where('work_team_classification_id', $filters['classification']);
-            }
-            if (isset($filters['lifespan']) && $filters['lifespan'] !== null) {
-                $query->where('archive_lifespan', $filters['lifespan']);
-            }
-
-            $archives = $query->get();
-            Log::info('Jumlah arsip diambil:', ['count' => $archives->count()]);
-
-            $pdf = SnappyPdf::loadView('apps.archive-report.exportPDF', compact('archives'))
-                ->setPaper('A4', 'landscape');
-
-            $pdfContent = $pdf->output();
-
-            // Simpan ke Redis selama 1 jam
-            Cache::put($cacheKey, $pdfContent, now()->addHours(1));
-            Log::info("PDF baru disimpan ke Redis cache: $cacheKey");
         }
 
-        return $pdf->download('Laporan-Arsip.pdf');
+        // Jika tidak ada cache, ambil data dari database
+        $query = Archive::with([
+            'work_team_classification',
+            'archive_status',
+            'building', 'cabinet', 'shelf',
+            'shelf_row', 'folder'
+        ]);
+
+        if (!empty($filters['text_search'])) {
+            $query->where('archive_description', 'like', '%' . $filters['text_search'] . '%');
+        }
+        if (!empty($filters['start_date'])) {
+            $query->whereDate('created_at', '>=', $filters['start_date']);
+        }
+        if (!empty($filters['end_date'])) {
+            $query->whereDate('created_at', '<=', $filters['end_date']);
+        }
+        if (!empty($filters['archive_status'])) {
+            $query->where('archive_status_id', $filters['archive_status']);
+        }
+        if (!empty($filters['classification'])) {
+            $query->where('work_team_classification_id', $filters['classification']);
+        }
+        if (isset($filters['lifespan']) && $filters['lifespan'] !== null) {
+            $query->where('archive_lifespan', $filters['lifespan']);
+        }
+
+        $archives = $query->get();
+        Log::info('Jumlah arsip diambil:', ['count' => $archives->count()]);
+
+        $pdf = SnappyPdf::loadView('apps.archive-report.exportPDF', compact('archives'))
+            ->setPaper('A4', 'landscape');
+
+        $pdfContent = $pdf->output();
+
+        Cache::put($cacheKey, $pdfContent, now()->addHours(1));
+        Log::info("PDF baru disimpan ke Redis cache: $cacheKey");
+
+        return response($pdfContent)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'attachment; filename="laporan-arsip.pdf"');
     }
+
 }

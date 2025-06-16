@@ -398,6 +398,5 @@ Route::prefix('/app')->group(function (){
      * * Export Routes *
      */
     Route::get('/app/export-excel', [ArchiveReportController::class, 'exportExcel'])->name('archive-report.export.excel');
-    Route::get('/app/export-pdf', [ArchiveReportController::class, 'showLoadingPdf'])->name('archive-report.export.pdf');
-    Route::get('/app/generate-pdf', [ArchiveReportController::class, 'generatePdf'])->name('archive-report.generate.pdf');
+    Route::get('/app/export-pdf', [ArchiveReportController::class, 'generatePdf'])->name('archive-report.export.pdf');
 });
