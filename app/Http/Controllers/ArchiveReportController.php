@@ -141,6 +141,10 @@ class ArchiveReportController extends Controller
         if (Cache::has($cacheKey)) {
             Log::info("File PDF ditemukan di Redis cache: $cacheKey");
             $pdfContent = Cache::get($cacheKey);
+
+            return response($pdfContent)
+                ->header('Content-Type', 'application/pdf')
+                ->header('Content-Disposition', 'attachment; filename="laporan-arsip.pdf"');
         } else {
             // Ambil data arsip
             $query = Archive::with([
@@ -185,17 +189,6 @@ class ArchiveReportController extends Controller
             Log::info("PDF baru disimpan ke Redis cache: $cacheKey");
         }
 
-        return response($pdfContent)
-            ->header('Content-Type', 'application/pdf')
-            ->header('Content-Disposition', 'inline; filename="laporan-arsip.pdf"');
+        return $pdf->download('Laporan-Arsip.pdf');
     }
-
-    public function showLoadingPdf(Request $request)
-    {
-        // Kirim semua parameter ke view
-        return view('apps.archive-report.loadingPDF', [
-            'params' => $request->query()
-        ]);
-    }
-
 }

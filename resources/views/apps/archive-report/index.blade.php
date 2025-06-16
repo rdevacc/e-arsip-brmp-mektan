@@ -270,8 +270,7 @@
         // Tombol Export PDF
         $('#exportPdf').on('click', function () {
             const params = buildExportParams();
-            const pdfWindow = window.open(`{{ route('archive-report.export.pdf') }}?${params}`, '_blank');
-            window.open(pdfWindow);
+            window.location.href = `{{ route('archive-report.export.pdf') }}?${params}`;
         });
 
         // Tombol Load All Data
