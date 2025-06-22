@@ -26,44 +26,46 @@
                             <a href="{{ route('archive-folder.create') }}" class="btn btn-primary w-100 w-md-auto">Tambah</a>
                         </div>
                     </div>
-                    <table class="table">
-                        <thead class="table-primary">
-                            <th>#</th>
-                            <th>Nama Folder Arsip</th>
-                            <th>Nama Box Arsip</th>
-                            <th>Action</th>
-                        </thead>
-                        <tbody>
-                            @foreach ( $archiveFolders as $archiveFolder )
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $archiveFolder->name }}</td>
-                                    <td>{{ $archiveFolder->archive_box->name }}</td>
-                                    <td class="d-flex">
-                                        <a class="btn btn-warning mx-1" href="{{ route('archive-folder.edit', $archiveFolder->id) }}"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                            data-bs-custom-class="custom-tooltip"
-                                            data-bs-title="Edit Folder Arsip">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
-
-                                        <form action="{{ route('archive-folder.delete', $archiveFolder->id) }}" method="POST" class="form-delete">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-delete"
-                                                data-id="{{ $archiveFolder->id }}"
-                                                data-url="{{ route('archive-folder.delete', $archiveFolder->id) }}"
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="table-primary">
+                                <th>#</th>
+                                <th>Nama Folder Arsip</th>
+                                <th>Nama Box Arsip</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
+                                @foreach ( $archiveFolders as $archiveFolder )
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $archiveFolder->name }}</td>
+                                        <td>{{ $archiveFolder->archive_box->name }}</td>
+                                        <td class="d-flex">
+                                            <a class="btn btn-warning mx-1" href="{{ route('archive-folder.edit', $archiveFolder->id) }}"
                                                 data-bs-toggle="tooltip"
-                                                title="Hapus Folder Arsip">
-                                                <i class="bi bi-trash text-body-secondary"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                                data-bs-placement="top"
+                                                data-bs-custom-class="custom-tooltip"
+                                                data-bs-title="Edit Folder Arsip">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+
+                                            <form action="{{ route('archive-folder.delete', $archiveFolder->id) }}" method="POST" class="form-delete">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-delete"
+                                                    data-id="{{ $archiveFolder->id }}"
+                                                    data-url="{{ route('archive-folder.delete', $archiveFolder->id) }}"
+                                                    data-bs-toggle="tooltip"
+                                                    title="Hapus Folder Arsip">
+                                                    <i class="bi bi-trash text-body-secondary"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </section>

@@ -26,44 +26,46 @@
                             <a href="{{ route('work-team-classification.create') }}" class="btn btn-primary w-100 w-md-auto">Tambah</a>
                         </div>
                     </div>
-                    <table class="table">
-                        <thead class="table-primary">
-                            <th>#</th>
-                            <th>Kode Klasifikasi</th>
-                            <th>Nama Kode Klasifikasi</th>
-                            <th>Action</th>
-                        </thead>
-                        <tbody>
-                            @foreach ( $workTeamClassifications as $workTeamClassification )
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $workTeamClassification->code }}</td>
-                                    <td>{{ $workTeamClassification->name }}</td>
-                                    <td class="d-flex">
-                                        <a class="btn btn-warning mx-1" href="{{ route('work-team-classification.edit', $workTeamClassification->id) }}"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                            data-bs-custom-class="custom-tooltip"
-                                            data-bs-title="Edit Kode Klasifikasi">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
-
-                                        <form action="{{ route('work-team-classification.delete', $workTeamClassification->id) }}" method="POST" class="form-delete">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-delete"
-                                                data-id="{{ $workTeamClassification->id }}"
-                                                data-url="{{ route('work-team-classification.delete', $workTeamClassification->id) }}"
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="table-primary">
+                                <th>#</th>
+                                <th>Kode Klasifikasi</th>
+                                <th>Nama Kode Klasifikasi</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
+                                @foreach ( $workTeamClassifications as $workTeamClassification )
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $workTeamClassification->code }}</td>
+                                        <td>{{ $workTeamClassification->name }}</td>
+                                        <td class="d-flex">
+                                            <a class="btn btn-warning mx-1" href="{{ route('work-team-classification.edit', $workTeamClassification->id) }}"
                                                 data-bs-toggle="tooltip"
-                                                title="Hapus Kode Klasifikasi">
-                                                <i class="bi bi-trash text-body-secondary"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                                data-bs-placement="top"
+                                                data-bs-custom-class="custom-tooltip"
+                                                data-bs-title="Edit Kode Klasifikasi">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+
+                                            <form action="{{ route('work-team-classification.delete', $workTeamClassification->id) }}" method="POST" class="form-delete">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-delete"
+                                                    data-id="{{ $workTeamClassification->id }}"
+                                                    data-url="{{ route('work-team-classification.delete', $workTeamClassification->id) }}"
+                                                    data-bs-toggle="tooltip"
+                                                    title="Hapus Kode Klasifikasi">
+                                                    <i class="bi bi-trash text-body-secondary"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </section>

@@ -26,42 +26,44 @@
                             <a href="{{ route('archive-building.create') }}" class="btn btn-primary w-100 w-md-auto">Tambah</a>
                         </div>
                     </div>
-                    <table class="table">
-                        <thead class="table-primary">
-                            <th>#</th>
-                            <th>Nama Gedung Arsip</th>
-                            <th>Action</th>
-                        </thead>
-                        <tbody>
-                            @foreach ( $archive_buildings as $archive_building )
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $archive_building->name }}</td>
-                                    <td class="d-flex">
-                                        <a class="btn btn-warning mx-1" href="{{ route('archive-building.edit', $archive_building->id) }}"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                            data-bs-custom-class="custom-tooltip"
-                                            data-bs-title="Edit Gedung Arsip">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
-
-                                        <form action="{{ route('archive-building.delete', $archive_building->id) }}" method="POST" class="form-delete">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-delete"
-                                                data-id="{{ $archive_building->id }}"
-                                                data-url="{{ route('archive-building.delete', $archive_building->id) }}"
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="table-primary">
+                                <th>#</th>
+                                <th>Nama Gedung Arsip</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
+                                @foreach ( $archive_buildings as $archive_building )
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $archive_building->name }}</td>
+                                        <td class="d-flex">
+                                            <a class="btn btn-warning mx-1" href="{{ route('archive-building.edit', $archive_building->id) }}"
                                                 data-bs-toggle="tooltip"
-                                                title="Hapus Gedung Arsip">
-                                                <i class="bi bi-trash text-body-secondary"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                                data-bs-placement="top"
+                                                data-bs-custom-class="custom-tooltip"
+                                                data-bs-title="Edit Gedung Arsip">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+
+                                            <form action="{{ route('archive-building.delete', $archive_building->id) }}" method="POST" class="form-delete">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-delete"
+                                                    data-id="{{ $archive_building->id }}"
+                                                    data-url="{{ route('archive-building.delete', $archive_building->id) }}"
+                                                    data-bs-toggle="tooltip"
+                                                    title="Hapus Gedung Arsip">
+                                                    <i class="bi bi-trash text-body-secondary"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </section>

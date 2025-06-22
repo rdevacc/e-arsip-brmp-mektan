@@ -18,6 +18,13 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    },
+    th:first-child,
+    td:first-child {
+        width: 1% !important;
+        white-space: nowrap;
+        padding-left: 0.25rem !important;
+        padding-right: 0.25rem !important;
     }
     </style>
     
@@ -106,7 +113,9 @@
                                 <table id="archives-table" class="table table-striped" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th><input type="checkbox" id="select-all"></th>
+                                           <th style="width: 1%; white-space: nowrap;">
+                                                <input type="checkbox" id="select-all" style="margin: 0; transform: scale(1.2); vertical-align: middle;">
+                                            </th>
                                             <th class="text-center align-middle">
                                                 #
                                             </th>
@@ -184,12 +193,23 @@
                     }
                 },
                 columns: [
-                    { data: 'id', orderable: false, searchable: false, 
-                        render: function (data, type, full, meta) {
-                            return '<input type="checkbox" class="row-checkbox" value="' + data + '">';
+                    {
+                        data: 'id',
+                        orderable: false,
+                        searchable: false,
+                        width: '1%',
+                        render: function (data) {
+                            return `<input type="checkbox" class="row-checkbox" value="${data}" style="margin:0; transform: scale(1.2); vertical-align: middle;">`;
                         }
                     },
-                    { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, width: '10px' },
+                    {
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false,
+                        width: '10px',
+                        className: 'text-center'
+                    },
                     { data: 'work_team_classification', name: 'work_team_classification_code' },
                     { data: 'archive_description', name: 'archive_description', orderable: false },
                     { data: 'archive_lifespan', name: 'archive_lifespan' },

@@ -26,42 +26,44 @@
                             <a href="{{ route('quantity-unit.create') }}" class="btn btn-primary w-100 w-md-auto">Tambah</a>
                         </div>
                     </div>
-                    <table class="table">
-                        <thead class="table-primary">
-                            <th>#</th>
-                            <th>Nama Satuan Kuantitas Arsip</th>
-                            <th>Action</th>
-                        </thead>
-                        <tbody>
-                            @foreach ( $archiveQuantityUnits as $archiveQuantityUnit )
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $archiveQuantityUnit->name }}</td>
-                                    <td class="d-flex">
-                                        <a class="btn btn-warning mx-1" href="{{ route('quantity-unit.edit', $archiveQuantityUnit->id) }}"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                            data-bs-custom-class="custom-tooltip"
-                                            data-bs-title="Edit Satuan Kuantitas Arsip">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
-
-                                        <form action="{{ route('quantity-unit.delete', $archiveQuantityUnit->id) }}" method="POST" class="form-delete">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-delete"
-                                                data-id="{{ $archiveQuantityUnit->id }}"
-                                                data-url="{{ route('quantity-unit.delete', $archiveQuantityUnit->id) }}"
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="table-primary">
+                                <th>#</th>
+                                <th>Nama Satuan Kuantitas Arsip</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
+                                @foreach ( $archiveQuantityUnits as $archiveQuantityUnit )
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $archiveQuantityUnit->name }}</td>
+                                        <td class="d-flex">
+                                            <a class="btn btn-warning mx-1" href="{{ route('quantity-unit.edit', $archiveQuantityUnit->id) }}"
                                                 data-bs-toggle="tooltip"
-                                                title="Hapus Satuan Kuantitas Arsip">
-                                                <i class="bi bi-trash text-body-secondary"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                                data-bs-placement="top"
+                                                data-bs-custom-class="custom-tooltip"
+                                                data-bs-title="Edit Satuan Kuantitas Arsip">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+
+                                            <form action="{{ route('quantity-unit.delete', $archiveQuantityUnit->id) }}" method="POST" class="form-delete">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-delete"
+                                                    data-id="{{ $archiveQuantityUnit->id }}"
+                                                    data-url="{{ route('quantity-unit.delete', $archiveQuantityUnit->id) }}"
+                                                    data-bs-toggle="tooltip"
+                                                    title="Hapus Satuan Kuantitas Arsip">
+                                                    <i class="bi bi-trash text-body-secondary"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </section>

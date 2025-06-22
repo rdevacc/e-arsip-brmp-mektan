@@ -26,46 +26,48 @@
                             <a href="{{ route('user.create') }}" class="btn btn-primary w-100 w-md-auto">Tambah</a>
                         </div>
                     </div>
-                    <table class="table">
-                        <thead class="table-primary">
-                            <th>#</th>
-                            <th>Nama User</th>
-                            <th>Role</th>
-                            <th>Email</th>
-                            <th>Action</th>
-                        </thead>
-                        <tbody>
-                            @foreach ( $users as $user )
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->role->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td class="d-flex">
-                                        <a class="btn btn-warning mx-1" href="{{ route('user.edit', $user->id) }}"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                            data-bs-custom-class="custom-tooltip"
-                                            data-bs-title="Edit User">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
-
-                                        <form action="{{ route('user.delete', $user->id) }}" method="POST" class="form-delete">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-delete"
-                                                data-id="{{ $user->id }}"
-                                                data-url="{{ route('user.delete', $user->id) }}"
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="table-primary">
+                                <th>#</th>
+                                <th>Nama User</th>
+                                <th>Role</th>
+                                <th>Email</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
+                                @foreach ( $users as $user )
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->role->name }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td class="d-flex">
+                                            <a class="btn btn-warning mx-1" href="{{ route('user.edit', $user->id) }}"
                                                 data-bs-toggle="tooltip"
-                                                title="Hapus User">
-                                                <i class="bi bi-trash text-body-secondary"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                                data-bs-placement="top"
+                                                data-bs-custom-class="custom-tooltip"
+                                                data-bs-title="Edit User">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+
+                                            <form action="{{ route('user.delete', $user->id) }}" method="POST" class="form-delete">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-delete"
+                                                    data-id="{{ $user->id }}"
+                                                    data-url="{{ route('user.delete', $user->id) }}"
+                                                    data-bs-toggle="tooltip"
+                                                    title="Hapus User">
+                                                    <i class="bi bi-trash text-body-secondary"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </section>

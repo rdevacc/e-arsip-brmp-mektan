@@ -26,42 +26,44 @@
                             <a href="{{ route('archive-condition.create') }}" class="btn btn-primary w-100 w-md-auto">Tambah</a>
                         </div>
                     </div>
-                    <table class="table">
-                        <thead class="table-primary">
-                            <th>#</th>
-                            <th>Nama Kondisi Arsip</th>
-                            <th>Action</th>
-                        </thead>
-                        <tbody>
-                            @foreach ( $ArchiveConditions as $condition )
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $condition->name }}</td>
-                                    <td class="d-flex">
-                                        <a class="btn btn-warning mx-1" href="{{ route('archive-condition.edit', $condition->id) }}"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                            data-bs-custom-class="custom-tooltip"
-                                            data-bs-title="Edit Kondisi Arsip">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
-
-                                        <form action="{{ route('archive-condition.delete', $condition->id) }}" method="POST" class="form-delete">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-delete"
-                                                data-id="{{ $condition->id }}"
-                                                data-url="{{ route('archive-condition.delete', $condition->id) }}"
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="table-primary">
+                                <th>#</th>
+                                <th>Nama Kondisi Arsip</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
+                                @foreach ( $ArchiveConditions as $condition )
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $condition->name }}</td>
+                                        <td class="d-flex">
+                                            <a class="btn btn-warning mx-1" href="{{ route('archive-condition.edit', $condition->id) }}"
                                                 data-bs-toggle="tooltip"
-                                                title="Hapus Kondisi Arsip">
-                                                <i class="bi bi-trash text-body-secondary"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                                data-bs-placement="top"
+                                                data-bs-custom-class="custom-tooltip"
+                                                data-bs-title="Edit Kondisi Arsip">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+
+                                            <form action="{{ route('archive-condition.delete', $condition->id) }}" method="POST" class="form-delete">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-delete"
+                                                    data-id="{{ $condition->id }}"
+                                                    data-url="{{ route('archive-condition.delete', $condition->id) }}"
+                                                    data-bs-toggle="tooltip"
+                                                    title="Hapus Kondisi Arsip">
+                                                    <i class="bi bi-trash text-body-secondary"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </section>

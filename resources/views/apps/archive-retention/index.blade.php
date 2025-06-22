@@ -26,42 +26,44 @@
                             <a href="{{ route('archive-retention.create') }}" class="btn btn-primary w-100 w-md-auto">Tambah</a>
                         </div>
                     </div>
-                    <table class="table">
-                        <thead class="table-primary">
-                            <th>#</th>
-                            <th>Nama Retensi Arsip</th>
-                            <th>Action</th>
-                        </thead>
-                        <tbody>
-                            @foreach ( $archiveRetentions as $archiveRetention )
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $archiveRetention->range_value }} Tahun</td>
-                                    <td class="d-flex">
-                                        <a class="btn btn-warning mx-1" href="{{ route('archive-retention.edit', $archiveRetention->id) }}"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                            data-bs-custom-class="custom-tooltip"
-                                            data-bs-title="Edit Retensi Arsip">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
-
-                                        <form action="{{ route('archive-retention.delete', $archiveRetention->id) }}" method="POST" class="form-delete">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-delete"
-                                                data-id="{{ $archiveRetention->id }}"
-                                                data-url="{{ route('archive-retention.delete', $archiveRetention->id) }}"
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="table-primary">
+                                <th>#</th>
+                                <th>Nama Retensi Arsip</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
+                                @foreach ( $archiveRetentions as $archiveRetention )
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $archiveRetention->range_value }} Tahun</td>
+                                        <td class="d-flex">
+                                            <a class="btn btn-warning mx-1" href="{{ route('archive-retention.edit', $archiveRetention->id) }}"
                                                 data-bs-toggle="tooltip"
-                                                title="Hapus Retensi Arsip">
-                                                <i class="bi bi-trash text-body-secondary"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                                data-bs-placement="top"
+                                                data-bs-custom-class="custom-tooltip"
+                                                data-bs-title="Edit Retensi Arsip">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+
+                                            <form action="{{ route('archive-retention.delete', $archiveRetention->id) }}" method="POST" class="form-delete">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-delete"
+                                                    data-id="{{ $archiveRetention->id }}"
+                                                    data-url="{{ route('archive-retention.delete', $archiveRetention->id) }}"
+                                                    data-bs-toggle="tooltip"
+                                                    title="Hapus Retensi Arsip">
+                                                    <i class="bi bi-trash text-body-secondary"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </section>

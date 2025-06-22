@@ -26,42 +26,44 @@
                             <a href="{{ route('work-unit.create') }}" class="btn btn-primary w-100 w-md-auto">Tambah</a>
                         </div>
                     </div>
-                    <table class="table">
-                        <thead class="table-primary">
-                            <th>#</th>
-                            <th>Nama Unit Kerja</th>
-                            <th>Action</th>
-                        </thead>
-                        <tbody>
-                            @foreach ( $workUnits as $workUnit )
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $workUnit->name }}</td>
-                                    <td class="d-flex">
-                                        <a class="btn btn-warning mx-1" href="{{ route('work-unit.edit', $workUnit->id) }}"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                            data-bs-custom-class="custom-tooltip"
-                                            data-bs-title="Edit Unit Kerja">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
-
-                                        <form action="{{ route('work-unit.delete', $workUnit->id) }}" method="POST" class="form-delete">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-delete"
-                                                data-id="{{ $workUnit->id }}"
-                                                data-url="{{ route('work-unit.delete', $workUnit->id) }}"
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="table-primary">
+                                <th>#</th>
+                                <th>Nama Unit Kerja</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
+                                @foreach ( $workUnits as $workUnit )
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $workUnit->name }}</td>
+                                        <td class="d-flex">
+                                            <a class="btn btn-warning mx-1" href="{{ route('work-unit.edit', $workUnit->id) }}"
                                                 data-bs-toggle="tooltip"
-                                                title="Hapus Unit Kerja">
-                                                <i class="bi bi-trash text-body-secondary"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                                data-bs-placement="top"
+                                                data-bs-custom-class="custom-tooltip"
+                                                data-bs-title="Edit Unit Kerja">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+
+                                            <form action="{{ route('work-unit.delete', $workUnit->id) }}" method="POST" class="form-delete">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-delete"
+                                                    data-id="{{ $workUnit->id }}"
+                                                    data-url="{{ route('work-unit.delete', $workUnit->id) }}"
+                                                    data-bs-toggle="tooltip"
+                                                    title="Hapus Unit Kerja">
+                                                    <i class="bi bi-trash text-body-secondary"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </section>

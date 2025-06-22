@@ -99,17 +99,19 @@
         <div id="laporanCard" class="card mt-3" style="display: none;">
             <div class="card-body">
                 <div class="mt-3">
-                    <table id="laporanTable" class="table table-striped" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th class="text-center align-middle">#</th>
-                                <th class="text-center align-middle">Kode Klasifikasi</th>
-                                <th class="text-center align-middle" style="width: 250px;">Uraian</th>
-                                <th class="text-center align-middle">Kurun Waktu</th>
-                                <th class="text-center align-middle">Status Arsip</th>
-                            </tr>
-                        </thead>
-                    </table>
+                    <div class="table-responsive">
+                        <table id="laporanTable" class="table table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th class="text-center align-middle">#</th>
+                                    <th class="text-center align-middle">Kode Klasifikasi</th>
+                                    <th class="text-center align-middle" style="width: 250px;">Uraian</th>
+                                    <th class="text-center align-middle">Kurun Waktu</th>
+                                    <th class="text-center align-middle">Status Arsip</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

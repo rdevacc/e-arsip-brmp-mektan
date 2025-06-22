@@ -26,42 +26,44 @@
                             <a href="{{ route('public-access-level.create') }}" class="btn btn-primary w-100 w-md-auto">Tambah</a>
                         </div>
                     </div>
-                    <table class="table">
-                        <thead class="table-primary">
-                            <th>#</th>
-                            <th>Nama Tingkat Akses Publik Arsip</th>
-                            <th>Action</th>
-                        </thead>
-                        <tbody>
-                            @foreach ( $archivePublicAccessLevels as $archivePublicAccessLevel )
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $archivePublicAccessLevel->name }}</td>
-                                    <td class="d-flex">
-                                        <a class="btn btn-warning mx-1" href="{{ route('public-access-level.edit', $archivePublicAccessLevel->id) }}"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                            data-bs-custom-class="custom-tooltip"
-                                            data-bs-title="Edit Tingkat Akses Publik Arsip">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
-
-                                        <form action="{{ route('public-access-level.delete', $archivePublicAccessLevel->id) }}" method="POST" class="form-delete">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-delete"
-                                                data-id="{{ $archivePublicAccessLevel->id }}"
-                                                data-url="{{ route('public-access-level.delete', $archivePublicAccessLevel->id) }}"
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="table-primary">
+                                <th>#</th>
+                                <th>Nama Tingkat Akses Publik Arsip</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
+                                @foreach ( $archivePublicAccessLevels as $archivePublicAccessLevel )
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $archivePublicAccessLevel->name }}</td>
+                                        <td class="d-flex">
+                                            <a class="btn btn-warning mx-1" href="{{ route('public-access-level.edit', $archivePublicAccessLevel->id) }}"
                                                 data-bs-toggle="tooltip"
-                                                title="Hapus Tingkat Akses Publik Arsip">
-                                                <i class="bi bi-trash text-body-secondary"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                                data-bs-placement="top"
+                                                data-bs-custom-class="custom-tooltip"
+                                                data-bs-title="Edit Tingkat Akses Publik Arsip">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+
+                                            <form action="{{ route('public-access-level.delete', $archivePublicAccessLevel->id) }}" method="POST" class="form-delete">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-delete"
+                                                    data-id="{{ $archivePublicAccessLevel->id }}"
+                                                    data-url="{{ route('public-access-level.delete', $archivePublicAccessLevel->id) }}"
+                                                    data-bs-toggle="tooltip"
+                                                    title="Hapus Tingkat Akses Publik Arsip">
+                                                    <i class="bi bi-trash text-body-secondary"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </section>
