@@ -268,8 +268,10 @@
                     success: function (response) {
                         $('#bulkStatusModal').modal('hide');
                         $('#archives-table').DataTable().ajax.reload(null, false);
-                        Swal.fire('Berhasil', response.message, 'success');
                         $('#select-all').prop('checked', false);
+                        lastChecked = null;
+                        toggleBulkButton()
+                        Swal.fire('Berhasil', response.message, 'success');
                     },
                     error: function () {
                         Swal.fire('Gagal', 'Terjadi kesalahan saat memperbarui status.', 'error');
