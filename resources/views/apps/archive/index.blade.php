@@ -267,10 +267,11 @@
                     },
                     success: function (response) {
                         $('#bulkStatusModal').modal('hide');
-                        $('#archives-table').DataTable().ajax.reload(null, false);
-                        $('#select-all').prop('checked', false);
-                        lastChecked = null;
-                        toggleBulkButton()
+                        $('#archives-table').DataTable().ajax.reload(function (){
+                            $('#select-all').prop('checked', false);
+                            lastChecked = null;
+                            toggleBulkButton()
+                        }, false);
                         Swal.fire('Berhasil', response.message, 'success');
                     },
                     error: function () {
