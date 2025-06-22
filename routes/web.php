@@ -73,6 +73,8 @@ Route::prefix('/app')->group(function (){
 
     })->name('work_team_classifications.search');
     Route::post('/archive/{id}/update-status', [ArchiveController::class, 'updateStatus'])->name('archives.update-status');
+    Route::post('/app/archive/bulk-update', [ArchiveController::class, 'bulkUpdate'])->name('archive-bulk-update');
+
 
 
     /**
@@ -400,3 +402,4 @@ Route::prefix('/app')->group(function (){
     Route::get('/app/export-excel', [ArchiveReportController::class, 'exportExcel'])->name('archive-report.export.excel');
     Route::get('/app/export-pdf', [ArchiveReportController::class, 'generatePdf'])->name('archive-report.export.pdf');
 });
+

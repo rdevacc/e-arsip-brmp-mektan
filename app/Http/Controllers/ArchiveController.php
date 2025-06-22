@@ -62,10 +62,26 @@ class ArchiveController extends Controller
         return response()->json(['message' => 'Status berhasil diperbarui']);
     }
 
+    public function bulkUpdate(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'status_id' => 'required|integer|exists:archive_statuses,id',
+        ]);
 
+        Archive::whereIn('id', $request->ids)->update([
+            'archive_status_id' => $request->status_id,
+            'updated_at' => now()
+        ]);
+
+        return response()->json(['message' => 'Status arsip berhasil diperbarui.']);
+    }
 
     public function index(Request $request)
     {
+        // Getting Statuses
+        $statuses = ArchiveStatus::orderBy('name')->get(['id', 'name']);
+
         if ($request->ajax()) {
             $archives = Archive::select('archives.*', 'wtc.code as work_team_classification_code', 'ast.name as archive_status_name')
                 ->leftJoin('work_team_classifications as wtc', 'archives.work_team_classification_id', '=', 'wtc.id')
@@ -107,9 +123,6 @@ class ArchiveController extends Controller
             }
 
             
-            // Statuses for select option
-            $statuses = ArchiveStatus::orderBy('name')->get(['id', 'name']);
-
             return DataTables::eloquent($archives)
                 ->addIndexColumn()
                 ->addColumn('work_team_classification', fn($archive) => $archive->work_team_classification_code ?? '-')
@@ -161,6 +174,7 @@ class ArchiveController extends Controller
             'workTeamClassificationList',
             'archiveStatusList',
             'lifespanList',
+            'statuses'
         ]));
     }
 

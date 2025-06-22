@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use App\Exports\ArchiveExport;
 use App\Models\Archive;
 use Barryvdh\Snappy\Facades\SnappyPdf;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -181,5 +179,4 @@ class ArchiveReportController extends Controller
             ->header('Content-Type', 'application/pdf')
             ->header('Content-Disposition', 'attachment; filename="laporan-arsip.pdf"');
     }
-
 }

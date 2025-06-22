@@ -54,10 +54,11 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="row mx-1 mt-2 d-flex justify-content-between">
-                                <!-- Tombol Tambah di kiri -->
-                                <div class="col-md-auto mb-2">
-                                    <a href="{{ route('archive-create') }}" class="btn btn-primary w-100 w-md-auto">Tambah</a>
+                            <div class="row mx-1 mt-2 d-flex justify-content-between align-items-center">
+                                <!-- Tombol Tambah & Ubah Status di kiri -->
+                                <div class="col-md-auto d-flex gap-2 mb-2">
+                                    <a href="{{ route('archive-create') }}" class="btn btn-primary">Tambah</a>
+                                    <button class="btn btn-warning" id="bulk-status-btn" disabled>Ubah Status Massal</button>
                                 </div>
 
                                 <!-- Filter Section di kanan -->
@@ -105,6 +106,7 @@
                                 <table id="archives-table" class="table table-striped" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <th><input type="checkbox" id="select-all"></th>
                                             <th class="text-center align-middle">
                                                 #
                                             </th>
@@ -135,6 +137,31 @@
             </div>
         </section>
     </main>
+    
+    <!-- Modal Ubah Status Massal -->
+    <div class="modal fade" id="bulkStatusModal" tabindex="-1" aria-labelledby="bulkStatusModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="bulk-status-form">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title">Ubah Status Arsip</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+            </div>
+            <div class="modal-body">
+            <select class="form-select" id="bulk-status-select" required>
+                @foreach($statuses as $status)
+                <option value="{{ $status->id }}">{{ $status->name }}</option>
+                @endforeach
+            </select>
+            </div>
+            <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+        </div>
+        </form>
+    </div>
+    </div>
+
 @endsection
 
 @push('scripts')
@@ -157,6 +184,11 @@
                     }
                 },
                 columns: [
+                    { data: 'id', orderable: false, searchable: false, 
+                        render: function (data, type, full, meta) {
+                            return '<input type="checkbox" class="row-checkbox" value="' + data + '">';
+                        }
+                    },
                     { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, width: '10px' },
                     { data: 'work_team_classification', name: 'work_team_classification_code' },
                     { data: 'archive_description', name: 'archive_description', orderable: false },
@@ -166,12 +198,89 @@
                 ]
             });
 
+            // Pilih Semua Checkbox
+            $('#select-all').on('click', function () {
+                $('.row-checkbox').prop('checked', this.checked);
+                toggleBulkButton();
+            });
+
+            // Cek satu per satu
+            $(document).on('change', '.row-checkbox', function () {
+                $('#select-all').prop('checked', $('.row-checkbox:checked').length === $('.row-checkbox').length);
+                toggleBulkButton();
+            });
+
+
+            // Shift + klik
+            let lastChecked = null;
+
+            $(document).on('click', '.row-checkbox', function (e) {
+                if (!lastChecked) {
+                    lastChecked = this;
+                    return;
+                }
+
+                if (e.shiftKey) {
+                    const checkboxes = $('.row-checkbox');
+                    const start = checkboxes.index(this);
+                    const end = checkboxes.index(lastChecked);
+
+                    const isChecked = lastChecked.checked;
+
+                    checkboxes.slice(Math.min(start, end), Math.max(start, end) + 1)
+                        .prop('checked', isChecked);
+                    
+                    toggleBulkButton();
+                }
+
+                lastChecked = this;
+            });
+
+
+            // Toggle tombol bulk
+            function toggleBulkButton() {
+                const anyChecked = $('.row-checkbox:checked').length > 0;
+                $('#bulk-status-btn').prop('disabled', !anyChecked);
+            }
+
+            // Tampilkan modal
+            $('#bulk-status-btn').on('click', function () {
+                $('#bulkStatusModal').modal('show');
+            });
+
+            // Submit form
+            $('#bulk-status-form').on('submit', function (e) {
+                e.preventDefault();
+                const selectedIDs = $('.row-checkbox:checked').map(function () {
+                    return this.value;
+                }).get();
+
+                const newStatus = $('#bulk-status-select').val();
+
+                $.ajax({
+                    url: "{{ route('archive-bulk-update') }}",
+                    type: 'POST',
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr('content'),
+                        ids: selectedIDs,
+                        status_id: newStatus
+                    },
+                    success: function (response) {
+                        $('#bulkStatusModal').modal('hide');
+                        $('#archives-table').DataTable().ajax.reload(null, false);
+                        Swal.fire('Berhasil', response.message, 'success');
+                    },
+                    error: function () {
+                        Swal.fire('Gagal', 'Terjadi kesalahan saat memperbarui status.', 'error');
+                    }
+                });
+            });
+
             // Tooltip Bootstrap 5
             table.on('draw.dt', function () {
                 $('[data-bs-toggle="tooltip"]').tooltip();
             });
-
-            
+        
              // Ubah status arsip
             $(document).on('change', '.status-select', function () {
                 const statusId = parseInt($(this).val());
