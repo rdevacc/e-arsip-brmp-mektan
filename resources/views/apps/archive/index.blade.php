@@ -144,7 +144,7 @@
                                             <th class="text-center align-middle">
                                                 Kode Klasifikasi
                                             </th>
-                                            <th class="text-center align-middle" style="width: 250px;">
+                                            <th class="text-center align-middle" style="width: 550px;">
                                                 Uraian
                                             </th>
                                            <th class="text-center align-middle">
@@ -159,7 +159,7 @@
                                             <th class="text-center align-middle">
                                                 Status Arsip
                                             </th>
-                                            <th class="text-center align-middle" style="width: 200px;">
+                                            <th class="text-center align-middle" style="width: 100px;">
                                                 Action
                                             </th>
                                         </tr>
