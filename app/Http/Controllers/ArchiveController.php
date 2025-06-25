@@ -100,7 +100,7 @@ class ArchiveController extends Controller
     {
         // Getting Statuses
         $statuses = ArchiveStatus::orderBy('name')->get(['id', 'name']);
-
+        
         if ($request->ajax()) {
             $archives = Archive::select(
                 'archives.*',
@@ -127,7 +127,7 @@ class ArchiveController extends Controller
             }
 
             if ($request->year_period) {
-                $archives->where('archives.year_period', $request->year_period);
+                $archives->where('archives.year_period', 'like', '%' . $request->year_period);
             }
 
             if ($request->archive_lifespan) {
