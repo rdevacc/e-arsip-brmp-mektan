@@ -350,7 +350,10 @@
                             lastChecked = null;
                             toggleBulkButton()
                         }, false);
-                        Swal.fire('Berhasil', response.message, 'success');
+                        Swal.fire('Berhasil', response.message, 'success')
+                        .then(() => {
+                            location.reload();
+                        });
                     },
                     error: function () {
                         Swal.fire('Gagal', 'Terjadi kesalahan saat memperbarui data.', 'error');
@@ -363,7 +366,7 @@
                 $('[data-bs-toggle="tooltip"]').tooltip();
             });
         
-             // Ubah status arsip
+            // Ubah status arsip
             $(document).on('change', '.status-select', function () {
                 const statusId = parseInt($(this).val());
                 const archiveId = $(this).data('id');

@@ -166,7 +166,7 @@ class ArchiveController extends Controller
                 ->addColumn('work_team_classification', fn($archive) => $archive->work_team_classification_code ?? '-')
                 ->addColumn('archive_description', fn($archive) => $archive->archive_description ?? '-')
                 ->addColumn('archive_lifespan', fn($archive) => $archive->archive_lifespan ?? '-')
-                ->addColumn('period', fn($archive) => $archive->period ?? '-')
+                ->addColumn('period_name', fn($archive) => $archive->period_name ?? '-')
                 ->addColumn('year_period', fn($archive) => $archive->year_period ?? '-')
                 ->addColumn('archive_status', fn($archive) => $archive->archive_status_name ?? '-')
                 ->addColumn('action', function ($archive) use ($statuses) {
