@@ -127,7 +127,7 @@ class ArchiveController extends Controller
             }
 
             if ($request->year_period) {
-                $archives->where('archives.year_period', 'like', '%' . $request->year_period);
+                $archives->where('archives.year_period', 'like', '%' . $request->year_period . '%');
             }
 
             if ($request->archive_lifespan) {

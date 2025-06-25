@@ -96,7 +96,7 @@
 
                                         <div class="col-md-auto">
                                             <div class="input-group">
-                                                <select id="filteryearPeriod" class="form-select">
+                                                <select id="filterYearPeriod" class="form-select">
                                                     <option value="">Semua Tahun Periode</option>
                                                     @foreach ($yearPeriodList as $yearPeriod)
                                                         <option value="{{ $yearPeriod }}">{{ $yearPeriod }}</option>
