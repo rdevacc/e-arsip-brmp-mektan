@@ -39,15 +39,5 @@
             <i class="bi bi-trash text-body-secondary"></i>
         </button>
     </form>
-     {{-- Select Status --}}
-   <div class="ps-1" style="pl">
-    <select name="status" class="form-select form-select-sm select-ellipsis status-select" data-id="{{ $archive->id }}">
-        @foreach ($statuses as $status)
-            <option value="{{ $status->id }}" {{ $archive->archive_status_id == $status->id ? 'selected' : '' }}>
-                {{ $status->name }}
-            </option>
-        @endforeach
-    </select>
-    </div>
     {{-- @endcanany --}}
 </div>

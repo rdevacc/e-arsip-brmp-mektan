@@ -194,25 +194,6 @@
                             </div>
                             <!-- End Static Archive Card -->
 
-                            <!-- Dynamic Archive Card -->
-                            <div class="col-xxl-3 col-md-3">
-                                <div class="card info-card total-archive-card">
-                                    <div class="card-body">
-                                    <h5 class="card-title">Arsip Dinamis <span></h5>
-                                    <div class="d-flex align-items-center">
-                                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <a href="{{ $dynamicArchive != 0 ? route('archive-index', ['status' => 'Dinamis']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
-                                                <i class="bi bi-menu-button-wide"></i>
-                                            </a>
-                                        </div>
-                                        <div class="ps-3">
-                                        <h6>{{ $dynamicArchive }}</h6>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Dynamic Archive Card -->
                         </div>
                     </div>
                 </div>

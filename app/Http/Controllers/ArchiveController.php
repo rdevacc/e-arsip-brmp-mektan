@@ -87,7 +87,7 @@ class ArchiveController extends Controller
                 ->leftJoin('work_team_classifications as wtc', 'archives.work_team_classification_id', '=', 'wtc.id')
                 ->leftJoin('archive_statuses as ast', 'archives.archive_status_id', '=', 'ast.id');
 
-            // Filter example (optional)
+            // Filter
             if ($request->work_team_classification) {
                 $archives->where('wtc.code', $request->work_team_classification);
             }
