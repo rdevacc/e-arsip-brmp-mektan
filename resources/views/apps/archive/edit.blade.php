@@ -390,6 +390,35 @@
                                             </div>
                                         @enderror
                                     </div>
+                                    <div class="col-12 mb-3">
+                                        <label for="period_id" class="form-label">Periode Arsip <span class="text-danger">*</span></label>
+                                        <div class="row">
+                                            <div class="col-md-4 mb-2 mb-md-0">
+                                                <select name="period_id" id="period_id"
+                                                    class="form-select @error('period_id') is-invalid @enderror">
+                                                    <option selected disabled>Pilih Periode</option>
+                                                    @foreach ($periods as $period)
+                                                        <option value="{{ $period->id }}" @selected(old('period_id') == $period->id)>
+                                                            {{ $period->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('period_id')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-8 mb-2 mb-md-0">
+                                                <input type="text" placeholder="Masukkan Tahun Periode" class="form-control @error('year_period') is-invalid @enderror"
+                                                id="year_period" name="year_period" value="{{ old('year_period') ?: '' }}">
+                                                @error('year_period')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <h5 class="card-title">Lokasi Penyimpanan Arsip</h5>
 

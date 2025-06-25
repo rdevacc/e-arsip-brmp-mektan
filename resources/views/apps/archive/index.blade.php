@@ -85,6 +85,28 @@
 
                                         <div class="col-md-auto">
                                             <div class="input-group">
+                                                <select id="filterPeriod" class="form-select">
+                                                    <option value="">Semua Periode</option>
+                                                    @foreach ($periodList as $period)
+                                                        <option value="{{ $period->name }}">{{ $period->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-auto">
+                                            <div class="input-group">
+                                                <select id="filteryearPeriod" class="form-select">
+                                                    <option value="">Semua Tahun Periode</option>
+                                                    @foreach ($yearPeriodList as $yearPeriod)
+                                                        <option value="{{ $yearPeriod }}">{{ $yearPeriod }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-auto">
+                                            <div class="input-group">
                                                 <select id="filterWorkTeamClassification" class="form-select">
                                                     <option value="">Semua Kode Klasifikasi</option>
                                                     @foreach($workTeamClassificationList as $workTeamClassification)
@@ -128,6 +150,12 @@
                                            <th class="text-center align-middle">
                                                 Kurun Waktu
                                             </th>
+                                           <th class="text-center align-middle">
+                                                Periode
+                                            </th>
+                                           <th class="text-center align-middle">
+                                                Tahun Periode
+                                            </th>
                                             <th class="text-center align-middle">
                                                 Status Arsip
                                             </th>
@@ -158,6 +186,7 @@
             </div>
             <div class="modal-body">
             <select class="form-select" id="bulk-status-select" required>
+                 <option selected disabled value="">Semua Status Arsip</option>
                 @foreach($statuses as $status)
                 <option value="{{ $status->id }}">{{ $status->name }}</option>
                 @endforeach
@@ -190,6 +219,8 @@
                         d.work_team_classification = $('#filterWorkTeamClassification').val();
                         d.archive_status= $('#filterArchiveStatus').val();
                         d.archive_lifespan = $('#filterLifespan').val();
+                        d.period = $('#filterPeriod').val();
+                        d.year_period = $('#filterYearPeriod').val();
                     }
                 },
                 columns: [
@@ -213,6 +244,8 @@
                     { data: 'work_team_classification', name: 'work_team_classification_code' },
                     { data: 'archive_description', name: 'archive_description', orderable: false },
                     { data: 'archive_lifespan', name: 'archive_lifespan' },
+                    { data: 'period_name', name: 'period_name' },
+                    { data: 'year_period', name: 'year_period_name' },
                     { data: 'archive_status', name: 'archive_status_name' },
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ]
@@ -359,6 +392,8 @@
             // Filter change event
             $('#filterWorkTeamClassification').change(function () { table.draw(); });
             $('#filterArchiveStatus').change(function () { table.draw(); });
+            $('#filterPeriod').change(function () { table.draw(); });
+            $('#filterYearPeriod').change(function () { table.draw(); });
             $('#filterLifespan').change(function () { table.draw(); });
         });
 

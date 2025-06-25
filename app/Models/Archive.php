@@ -32,6 +32,8 @@ class Archive extends Model
         'archive_lifespan',
         'archive_number',
         'archive_input_date',
+        'period_id',
+        'year_period',
         'archive_building_id',
         'archive_cabinet_id',
         'archive_shelf_id',
@@ -159,6 +161,14 @@ class Archive extends Model
     public function archive_quantity_unit(): BelongsTo
     {
         return $this->belongsTo(ArchiveQuantityUnit::class);
+    }
+
+    /**
+     * * Relationship from Archive to Period*
+     */
+    public function period(): BelongsTo
+    {
+        return $this->belongsTo(Period::class);
     }
 
     /**
