@@ -65,7 +65,7 @@
                                 <!-- Tombol Tambah & Ubah Status di kiri -->
                                 <div class="col-md-auto d-flex gap-2 mb-2">
                                     <a href="{{ route('archive-create') }}" class="btn btn-primary">Tambah</a>
-                                    <button class="btn btn-warning" id="bulk-status-btn" disabled>Ubah Status Massal</button>
+                                    <button class="btn btn-warning" id="bulk-edit-btn" disabled>Ubah Massal</button>
                                 </div>
 
                                 <!-- Filter Section di kanan -->
@@ -176,29 +176,46 @@
     </main>
     
     <!-- Modal Ubah Status Massal -->
-    <div class="modal fade" id="bulkStatusModal" tabindex="-1" aria-labelledby="bulkStatusModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form id="bulk-status-form">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title">Ubah Status Arsip</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-            </div>
-            <div class="modal-body">
-            <select class="form-select" id="bulk-status-select" required>
-                 <option selected disabled value="">Semua Status Arsip</option>
-                @foreach($statuses as $status)
-                <option value="{{ $status->id }}">{{ $status->name }}</option>
-                @endforeach
-            </select>
-            </div>
-            <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Simpan</button>
-            </div>
+    <div class="modal fade" id="bulkEditModal" tabindex="-1" aria-labelledby="bulkEditModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="bulk-edit-form">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ubah Massal Arsip</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Status Arsip</label>
+                            <select class="form-select" id="bulk-status-select">
+                                <option selected disabled value="">Pilih Status</option>
+                                @foreach($statuses as $status)
+                                    <option value="{{ $status->id }}">{{ $status->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Periode</label>
+                            <select class="form-select" id="bulk-period-select">
+                                <option selected disabled value="">Pilih Periode</option>
+                                @foreach($periodList as $period)
+                                    <option value="{{ $period->id }}">{{ $period->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Tahun Periode</label>
+                            <input type="text" class="form-control" id="bulk-year-period-input" placeholder="Contoh: 2025">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </div>
+            </form>
         </div>
-        </form>
     </div>
-    </div>
+
 
 @endsection
 
@@ -266,7 +283,6 @@
 
             // Shift + klik
             let lastChecked = null;
-
             $(document).on('click', '.row-checkbox', function (e) {
                 if (!lastChecked) {
                     lastChecked = this;
@@ -293,22 +309,29 @@
             // Toggle tombol bulk
             function toggleBulkButton() {
                 const anyChecked = $('.row-checkbox:checked').length > 0;
-                $('#bulk-status-btn').prop('disabled', !anyChecked);
+                $('#bulk-edit-btn').prop('disabled', !anyChecked);
             }
 
             // Tampilkan modal
-            $('#bulk-status-btn').on('click', function () {
-                $('#bulkStatusModal').modal('show');
+            $('#bulk-edit-btn').on('click', function () {
+                $('#bulkEditModal').modal('show');
             });
 
             // Submit form
-            $('#bulk-status-form').on('submit', function (e) {
+            $('#bulk-edit-form').on('submit', function (e) {
                 e.preventDefault();
                 const selectedIDs = $('.row-checkbox:checked').map(function () {
                     return this.value;
                 }).get();
 
                 const newStatus = $('#bulk-status-select').val();
+                const newPeriod = $('#bulk-period-select').val();
+                const newYearPeriod = $('#bulk-year-period-input').val();
+
+                if (!newStatus && !newPeriod && !newYearPeriod) {
+                    Swal.fire('Peringatan', 'Pilih minimal 1 perubahan.', 'warning');
+                    return;
+                }
 
                 $.ajax({
                     url: "{{ route('archive-bulk-update') }}",
@@ -316,10 +339,12 @@
                     data: {
                         _token: $('meta[name="csrf-token"]').attr('content'),
                         ids: selectedIDs,
-                        status_id: newStatus
+                        status_id: newStatus,
+                        period_id: newPeriod,
+                        year_period: newYearPeriod
                     },
                     success: function (response) {
-                        $('#bulkStatusModal').modal('hide');
+                        $('#bulkEditModal').modal('hide');
                         $('#archives-table').DataTable().ajax.reload(function (){
                             $('#select-all').prop('checked', false);
                             lastChecked = null;
@@ -328,7 +353,7 @@
                         Swal.fire('Berhasil', response.message, 'success');
                     },
                     error: function () {
-                        Swal.fire('Gagal', 'Terjadi kesalahan saat memperbarui status.', 'error');
+                        Swal.fire('Gagal', 'Terjadi kesalahan saat memperbarui data.', 'error');
                     }
                 });
             });

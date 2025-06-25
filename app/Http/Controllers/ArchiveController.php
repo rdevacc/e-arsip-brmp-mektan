@@ -66,15 +66,34 @@ class ArchiveController extends Controller
     {
         $request->validate([
             'ids' => 'required|array',
-            'status_id' => 'required|integer|exists:archive_statuses,id',
+            'status_id' => 'nullable|integer|exists:archive_statuses,id',
+            'period_id' => 'nullable|integer|exists:periods,id',
+            'year_period' => 'nullable|string|max:255',
         ]);
 
-        Archive::whereIn('id', $request->ids)->update([
-            'archive_status_id' => $request->status_id,
-            'updated_at' => now()
-        ]);
+        $updateData = [];
 
-        return response()->json(['message' => 'Status arsip berhasil diperbarui.']);
+        if ($request->filled('status_id')) {
+            $updateData['archive_status_id'] = $request->status_id;
+        }
+
+        if ($request->filled('period_id')) {
+            $updateData['period_id'] = $request->period_id;
+        }
+
+        if ($request->filled('year_period')) {
+            $updateData['year_period'] = $request->year_period;
+        }
+
+        if (empty($updateData)) {
+            return response()->json(['message' => 'Tidak ada perubahan yang dikirim.'], 422);
+        }
+
+        $updateData['updated_at'] = now();
+
+        Archive::whereIn('id', $request->ids)->update($updateData);
+
+        return response()->json(['message' => 'Data arsip berhasil diperbarui.']);
     }
 
     public function index(Request $request)
