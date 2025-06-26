@@ -65,6 +65,7 @@
                                 <!-- Tombol Tambah & Ubah Status di kiri -->
                                 <div class="col-md-auto d-flex gap-2 mb-2">
                                     <a href="{{ route('archive-create') }}" class="btn btn-primary">Tambah</a>
+                                    <a href="{{ route('import-excel.index') }}" class="btn btn-success">Upload Excel</a>
                                     <button class="btn btn-warning" id="bulk-edit-btn" disabled>Ubah Massal</button>
                                 </div>
 

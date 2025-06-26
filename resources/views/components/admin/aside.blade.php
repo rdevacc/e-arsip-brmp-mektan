@@ -22,6 +22,13 @@
             </a>
         </li>
 
+        <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('import-excel*') ? 'active' : '' }}" href="{{route('import-excel.index')}}">
+                <i class="bi bi-cloud-upload"></i>
+                <span>Import Data Excel</span>
+            </a>
+        </li>
+
         <li class="nav-heading">Super Admin</li>
 
         <li class="nav-item">

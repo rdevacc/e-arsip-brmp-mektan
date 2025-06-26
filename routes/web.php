@@ -19,6 +19,7 @@ use App\Http\Controllers\ArchiveReportController;
 use App\Http\Controllers\ArchiveShelfController;
 use App\Http\Controllers\ArchiveShelfRowController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ImportArchiveController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkGroupController;
@@ -401,5 +402,11 @@ Route::prefix('/app')->group(function (){
      */
     Route::get('/app/export-excel', [ArchiveReportController::class, 'exportExcel'])->name('archive-report.export.excel');
     Route::get('/app/export-pdf', [ArchiveReportController::class, 'generatePdf'])->name('archive-report.export.pdf');
+
+    /**
+     * * Import Excel Routes *
+     */
+    Route::get('/app/import-excel', [ImportArchiveController::class, 'index'])->name('import-excel.index');
+    Route::post('/app/import-excel', [ImportArchiveController::class, 'upload'])->name('import-excel.upload');
 });
 
