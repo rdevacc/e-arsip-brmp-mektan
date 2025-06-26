@@ -68,9 +68,10 @@
                                     <a href="{{ route('import-excel.index') }}" class="btn btn-success">Upload Excel</a>
                                     <button class="btn btn-warning" id="bulk-edit-btn" disabled>Ubah Massal</button>
                                 </div>
-
+                            </div>
+                            <div class="row mx-1 d-flex justify-content-between align-items-center">
                                 <!-- Filter Section di kanan -->
-                                <div class="col-md-auto">
+                                <div class="col-md-auto d-flex gap-2 mb-2">
                                     <div class="row row-cols-1 row-cols-md-3 g-2 justify-content-end">
                                         <!-- Filter Kurun Waktu -->
                                         <div class="col-md-auto">
@@ -132,7 +133,7 @@
                             </div>
                                
                             <!-- Table with stripped rows -->
-                            <div class="table-responsive">
+                            <div class="table-responsive mx-1">
                                 <table id="archives-table" class="table table-striped" style="width:100%">
                                     <thead>
                                         <tr>

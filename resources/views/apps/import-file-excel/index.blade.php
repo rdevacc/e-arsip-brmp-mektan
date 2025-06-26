@@ -141,7 +141,7 @@
                         title: 'Berhasil',
                         text: 'File berhasil diupload dan diproses!',
                     }).then(() => {
-                        window.location.reload();
+                        window.location.href = response.redirect;
                     });
                 });
 

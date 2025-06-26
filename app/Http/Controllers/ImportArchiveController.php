@@ -91,7 +91,11 @@ class ImportArchiveController extends Controller
             Archive::insert($insertData);
         }
 
-        return response()->json(['success' => true, 'message' => 'Data berhasil diupload dan diproses']);
+        return response()->json([
+            'success' => true,
+            'message' => 'Data berhasil diupload dan diproses',
+            'redirect' => route('archive-index')
+        ]);
     }
 
     private function toNull($value)
