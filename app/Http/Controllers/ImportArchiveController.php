@@ -49,10 +49,11 @@ class ImportArchiveController extends Controller
         }
 
         $insertData = [];
+        $this->lookupCache = []; // Reset cache setiap kali proses upload
 
         // Loop data mulai dari baris ke-3 (indeks 2)
         foreach (array_slice($data, 2) as $row) {
-            if (!isset($row[0]) || trim($row[0]) == '') continue; // Lewatkan baris kosong
+            if (!isset($row[0]) || trim((string)$row[0]) == '') continue; // Lewatkan baris kosong
 
             // Ambil nilai jumlah & kuantitas unit
             $jumlah = null;
@@ -98,9 +99,12 @@ class ImportArchiveController extends Controller
         ]);
     }
 
+    private $lookupCache = []; // Tempat cache lokal lookup
+
     private function toNull($value)
     {
-        $value = trim($value);
+        if (is_null($value)) return null;
+        $value = trim((string)$value); // Cast ke string untuk hindari warning
         return ($value === '' || $value === '-') ? null : $value;
     }
 
@@ -109,6 +113,15 @@ class ImportArchiveController extends Controller
         $value = $this->toNull($value);
         if (is_null($value)) return null;
 
-        return $model::where($column, $value)->value('id');
+        $cacheKey = $model . ':' . $column . ':' . $value;
+
+        if (isset($this->lookupCache[$cacheKey])) {
+            return $this->lookupCache[$cacheKey];
+        }
+
+        $id = $model::where($column, $value)->value('id');
+        $this->lookupCache[$cacheKey] = $id;
+
+        return $id;
     }
 }
