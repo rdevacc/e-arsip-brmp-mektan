@@ -5,27 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Archive;
-use App\Models\ArchiveAccessLevel;
 use App\Models\ArchiveBox;
 use App\Models\ArchiveBuilding;
-use App\Models\ArchiveCabinet;
-use App\Models\ArchiveCondition;
 use App\Models\ArchiveDevelopmentLevel;
-use App\Models\ArchiveFinalDepreciationAction;
 use App\Models\ArchiveFolder;
 use App\Models\ArchiveMedia;
-use App\Models\ArchivePublicAccessLevel;
 use App\Models\ArchiveQuantityUnit;
-use App\Models\ArchiveRetention;
-use App\Models\ArchiveSecurityClassification;
 use App\Models\ArchiveShelf;
 use App\Models\ArchiveShelfRow;
 use App\Models\ArchiveStatus;
 use App\Models\Period;
-use App\Models\WorkGroup;
-use App\Models\WorkTeam;
 use App\Models\WorkTeamClassification;
-use App\Models\WorkUnit;
+use Illuminate\Support\Facades\Storage;
 
 class ImportArchiveController extends Controller
 {
@@ -91,6 +82,9 @@ class ImportArchiveController extends Controller
         if (count($insertData) > 0) {
             Archive::insert($insertData);
         }
+
+        // Hapus file setelah diproses
+        Storage::delete($path);
 
         return response()->json([
             'success' => true,
