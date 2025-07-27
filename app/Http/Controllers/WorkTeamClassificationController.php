@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class WorkTeamClassificationController extends Controller
 {
     public function index(){
-        $workTeamClassifications = WorkTeamClassification::orderBy('code')->get(['id', 'work_team_id', 'name', 'code']);
+        $workTeamClassifications = WorkTeamClassification::orderBy('code')->get(['id', 'name', 'code']);
 
         return view('apps.work-team-classification.index', compact('workTeamClassifications'));
     }
