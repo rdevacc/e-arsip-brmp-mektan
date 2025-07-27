@@ -73,14 +73,21 @@ class WorkTeamSeeder extends Seeder
             [
                 'id' => 9,
                 'work_group_id' => 4,
-                'name' => 'Tim Kerja Pengelolaan Produk Instrumen Hasil Standardisasi Mekanisasi Pertanian',
+                'name' => 'Ketua Tim Kerja Pendayagunaan Hasil Balai Besar Perakitan dan Modernisasi Mekanisasi Pertanian Mekanisasi Pertanian',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'id' => 10,
                 'work_group_id' => 4,
-                'name' => 'Tim Kerja Pengelolaan Penyebarluasan Hasil Standardisasi Mekanisasi Pertanian',
+                'name' => 'Ketua Tim Kerja Pengelolaan Kerja Sama Balai Besar Perakitan dan Modernisasi Mekanisasi Pertanian Mekanisasi Pertanian',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 11,
+                'work_group_id' => 5,
+                'name' => 'Ketua Tim Kerja Lainnya',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

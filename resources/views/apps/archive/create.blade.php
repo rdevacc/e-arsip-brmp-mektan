@@ -47,21 +47,23 @@
                                 <div class="row">
                                     <input type="hidden" value="1" class="form-control" for="user_id" name="user_id"
                                         id="user_id">
-                                    <div class="col-12 mb-3">
-                                        <label for="work_unit_id" class="form-label">Unit Kerja <span class="text-danger">*</span></label>
-                                        <select name="work_unit_id" id="work_unit_id"
-                                            class="form-select @error('work_unit_id') is-invalid @enderror">
-                                            <option selected disabled>Pilih Unit Kerja</option>
-                                            @foreach ($workUnits as $workUnit)
-                                                <option value="{{ $workUnit->id }}" @selected(old('work_unit_id') == $workUnit->id)>
-                                                    {{ $workUnit->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('work_unit_id')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
+                                    <div class="row mb-3">
+                                        <label for="work_unit_id" class="col-sm-3 col-form-label">Unit Kerja <span class="text-danger">*</span></label>
+                                        <div class="col-sm-9">
+                                            <select name="work_unit_id" id="work_unit_id"
+                                                class="form-select @error('work_unit_id') is-invalid @enderror">
+                                                <option selected disabled>Pilih Unit Kerja</option>
+                                                @foreach ($workUnits as $workUnit)
+                                                    <option value="{{ $workUnit->id }}" @selected(old('work_unit_id') == $workUnit->id)>
+                                                        {{ $workUnit->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('work_unit_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label for="work_group_id" class="form-label">Kelompok Kerja <span class="text-danger">*</span></label>
@@ -128,6 +130,38 @@
                                             @endforeach
                                         </select>
                                         @error('archive_retention_id')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label for="archive_type_id" class="form-label">Tipe Arsip <span class="text-danger">*</span></label>
+                                        <select name="archive_type_id" id="archive_type_id"
+                                            class="form-select @error('archive_type_id') is-invalid @enderror">
+                                            <option selected disabled>Pilih Tipe Arsip</option>
+                                            @foreach ($archiveTypes as $archiveType)
+                                                <option value="{{ $archiveType->id }}" @selected(old('archive_type_id') == $archiveType->id)>
+                                                    {{ $archiveType->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('archive_type_id')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label for="archive_subtype_id" class="form-label">SubTipe Arsip <span class="text-danger">*</span></label>
+                                        <select name="archive_subtype_id" id="archive_subtype_id"
+                                            class="form-select @error('archive_subtype_id') is-invalid @enderror">
+                                            <option selected disabled>Pilih SubTipe Arsip</option>
+                                            @foreach ($archiveSubTypes as $archiveSubType)
+                                                <option value="{{ $archiveSubType->id }}" @selected(old('archive_subtype_id') == $archiveSubType->id)>
+                                                    {{ $archiveSubType->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('archive_subtype_id')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
@@ -465,7 +499,8 @@
                                     <button type="reset" class="btn btn-secondary">Reset</button>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
-                            </form><!-- Vertical Form -->
+                            </form>
+                            <!-- Vertical Form -->
                         </div>
                     </div>
                 </div>

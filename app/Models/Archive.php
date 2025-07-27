@@ -24,6 +24,8 @@ class Archive extends Model
         'archive_security_classification_id',
         'archive_access_level_id',
         'archive_public_access_level_id',
+        'archive_type_id',
+        'archive_subtype_id',
         'archive_status_id',
         'archive_quantity_unit_id',
         'archive_letter_origin_number',
@@ -145,6 +147,22 @@ class Archive extends Model
     public function archive_public_access_level(): BelongsTo
     {
         return $this->belongsTo(ArchivePublicAccessLevel::class);
+    }
+
+    /**
+     * * Relationship from Archive to Archive Type*
+     */
+    public function archive_types(): BelongsTo
+    {
+        return $this->belongsTo(ArchiveType::class);
+    }
+
+    /**
+     * * Relationship from Archive to Archive Type*
+     */
+    public function archive_subtypes(): BelongsTo
+    {
+        return $this->belongsTo(ArchiveSubType::class);
     }
 
     /**

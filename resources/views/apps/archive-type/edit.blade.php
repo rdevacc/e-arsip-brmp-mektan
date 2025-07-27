@@ -7,7 +7,7 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Edit Data Kode Klasifikasi</h5>
+                            <h5 class="card-title">Edit Data Jenis Arsip</h5>
 
                              @if ($errors->any())
                                 <div class="alert alert-danger">
@@ -27,24 +27,14 @@
                                 </div>
                             @endif
 
-                            <form method="POST" action="{{ route('work-team-classification.edit-submit', $work_team_classification->id) }}">
+                            <form method="POST" action="{{ route('archive-type.edit-submit', $archive_type->id) }}">
                                 @csrf
                                 @method('PUT')
                                 <div class="row">
                                     <div class="col-12 mb-3">
-                                        <label for="code" class="form-label">Kode Klasifikasi <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control @error('code') is-invalid @enderror"
-                                            id="code" name="code" value="{{ $work_team_classification->code ?:old('code') }}">
-                                        @error('code')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-12 mb-3">
-                                        <label for="name" class="form-label">Nama Kode Klasifikasi <span class="text-danger">*</span></label>
+                                        <label for="name" class="form-label">Nama Jenis Arsip <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                            id="name" name="name" value="{{ $work_team_classification->name ?:old('name') }}">
+                                            id="name" name="name" value="{{ $archive_type->name ?:old('name') }}">
                                         @error('name')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -55,7 +45,7 @@
 
                                 <!-- Button -->
                                 <div class="mt-5 mb-2 me-2 text-end">
-                                    <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ route('work-team-classification.index') }}'">Kembali</button>
+                                    <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ route('archive-type.index') }}'">Kembali</button>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </form>

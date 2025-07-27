@@ -19,6 +19,8 @@ use App\Models\ArchiveShelf;
 use App\Models\ArchiveShelfRow;
 use App\Models\ArchiveBox;
 use App\Models\ArchiveFolder;
+use App\Models\ArchiveSubType;
+use App\Models\ArchiveType;
 use App\Models\Period;
 use App\Models\WorkGroup;
 use App\Models\WorkTeam;
@@ -105,17 +107,29 @@ class ArchiveController extends Controller
             $archives = Archive::select(
                 'archives.*',
                 'wtc.code as work_team_classification_code',
+                'atn.name as archive_type_name',
+                'stn.name as archive_subtype_name',
                 'ast.name as archive_status_name',
                 'prd.name as period_name',
                 'archives.year_period as year_period_name'
             )
             ->leftJoin('work_team_classifications as wtc', 'archives.work_team_classification_id', '=', 'wtc.id')
             ->leftJoin('periods as prd', 'archives.period_id', '=', 'prd.id')
+            ->leftJoin('archive_types as atn', 'archives.archive_type_id', '=', 'atn.id')
+            ->leftJoin('archive_sub_types as stn', 'archives.archive_subtype_id', '=', 'stn.id')
             ->leftJoin('archive_statuses as ast', 'archives.archive_status_id', '=', 'ast.id');
 
             // Filter
             if ($request->work_team_classification) {
                 $archives->where('wtc.code', $request->work_team_classification);
+            }
+
+            if ($request->archive_type) {
+                $archives->where('atn.name', $request->archive_type);
+            }
+
+            if ($request->archive_subtype) {
+                $archives->where('stn.name', $request->archive_subtype);
             }
 
             if ($request->archive_status) {
@@ -146,7 +160,9 @@ class ArchiveController extends Controller
                     3 => 'archives.archive_lifespan',
                     4 => 'prd.name',
                     5 => 'archives.year_period',
-                    6 => 'ast.name',
+                    6 => 'atn.name',
+                    7 => 'stn.name',
+                    8 => 'ast.name',
                 ];
 
                 if (isset($columns[$columnIndex])) {
@@ -168,6 +184,8 @@ class ArchiveController extends Controller
                 ->addColumn('archive_lifespan', fn($archive) => $archive->archive_lifespan ?? '-')
                 ->addColumn('period_name', fn($archive) => $archive->period_name ?? '-')
                 ->addColumn('year_period', fn($archive) => $archive->year_period ?? '-')
+                ->addColumn('archive_type', fn($archive) => $archive->archive_type_name ?? '-')
+                ->addColumn('archive_subtype', fn($archive) => $archive->archive_subtype_name ?? '-')
                 ->addColumn('archive_status', fn($archive) => $archive->archive_status_name ?? '-')
                 ->addColumn('action', function ($archive) use ($statuses) {
                     return view('components.admin.button', compact('archive', 'statuses'))->render();
@@ -233,6 +251,8 @@ class ArchiveController extends Controller
         $workGroups = WorkGroup::get(['id', 'name']);
         $workTeamClassifications = WorkTeamClassification::get(['id', 'name', 'code']);
         $archiveRetentions = ArchiveRetention::get(['id', 'range_value']);
+        $archiveTypes = ArchiveType::orderBy('name')->get(['id', 'name']);
+        $archiveSubTypes = ArchiveSubType::orderBy('name')->get(['id', 'name']);
         $archiveStatuses = ArchiveStatus::orderBy('name')->get(['id', 'name']);
         $archiveDevelopmentLevels = ArchiveDevelopmentLevel::get(['id', 'name']);
         $archiveMedias = ArchiveMedia::get(['id', 'name']);
@@ -262,6 +282,8 @@ class ArchiveController extends Controller
             'workGroups',
             'workTeamClassifications',
             "archiveRetentions",
+            "archiveTypes",
+            "archiveSubTypes",
             "archiveStatuses",
             "archiveDevelopmentLevels",
             "archiveMedias",
@@ -300,6 +322,8 @@ class ArchiveController extends Controller
             'archive_security_classification_id' => '',
             'archive_access_level_id' => '',
             'archive_public_access_level_id' => '',
+            'archive_type_id' => '',
+            'archive_subtype_id' => '',
             'archive_status_id' => '',
             'archive_quantity_unit_id' => '',
             'archive_letter_origin_number' => '',
@@ -329,6 +353,8 @@ class ArchiveController extends Controller
             'archive_security_classification_id.required' => 'Klasifikasi Keamanan Arsip field is required!',
             'archive_public_access_level_id.required' => 'Tingkat Akses Publik Arsip field is required!',
             'archive_access_level_id.required' => 'Level Akses Arsip field is required!',
+            'archive_type_id.required' => 'Tipe Arsip field is required!',
+            'archive_subtype_id.required' => 'Sub Tipe Arsip field is required!',
             'archive_status_id.required' => 'Status Arsip field is required!',
             'archive_quantity_unit_id.required' => 'Unit Kuantitas Arsip field is required!',
             'archive_letter_origin_number.required' => 'Nomor Asal Surat Arsip field is required!',
@@ -363,6 +389,8 @@ class ArchiveController extends Controller
         $workTeams = WorkTeam::get(['id', 'name']);
         $workTeamClassifications = WorkTeamClassification::get(['id', 'name', 'code']);
         $archiveRetentions = ArchiveRetention::get(['id', 'range_value']);
+        $archiveTypes = ArchiveType::orderBy('name')->get(['id', 'name']);
+        $archiveSubTypes = ArchiveSubType::orderBy('name')->get(['id', 'name']);
         $archiveStatuses = ArchiveStatus::orderBy('name')->get(['id', 'name']);
         $archiveDevelopmentLevels = ArchiveDevelopmentLevel::get(['id', 'name']);
         $archiveMedias = ArchiveMedia::get(['id', 'name']);
@@ -388,6 +416,8 @@ class ArchiveController extends Controller
             'workTeams',
             'workTeamClassifications',
             "archiveRetentions",
+            "archiveTypes",
+            "archiveSubTypes",
             "archiveStatuses",
             "archiveDevelopmentLevels",
             "archiveMedias",
@@ -426,6 +456,8 @@ class ArchiveController extends Controller
             'archive_security_classification_id' => '',
             'archive_access_level_id' => '',
             'archive_public_access_level_id' => '',
+            'archive_type_id' => '',
+            'archive_subtype_id' => '',
             'archive_status_id' => '',
             'archive_quantity_unit_id' => '',
             'archive_letter_origin_number' => '',
@@ -455,6 +487,8 @@ class ArchiveController extends Controller
             'archive_security_classification_id.required' => 'Klasifikasi Keamanan Arsip field is required!',
             'archive_public_access_level_id.required' => 'Tingkat Akses Publik Arsip field is required!',
             'archive_access_level_id.required' => 'Level Akses Arsip field is required!',
+            'archive_type_id.required' => 'Tipe Arsip field is required!',
+            'archive_subtype_id.required' => 'Sub Tipe Arsip field is required!',
             'archive_status_id.required' => 'Status Arsip field is required!',
             'archive_quantity_unit_id.required' => 'Unit Kuantitas Arsip field is required!',
             'archive_letter_origin_number.required' => 'Nomor Asal Surat Arsip field is required!',

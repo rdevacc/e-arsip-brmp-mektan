@@ -16,13 +16,25 @@ class ArchiveTypeSeeder extends Seeder
         DB::table('archive_types')->insert([
             [
                 'id' => 1,
-                'name' => 'Arsip Statis',
+                'name' => 'Dinamis',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'id' => 2,
-                'name' => 'Arsip Dinamis',
+                'name' => 'Statis',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 3,
+                'name' => 'Terjaga',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 4,
+                'name' => 'Vital',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

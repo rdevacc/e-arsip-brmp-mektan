@@ -15,18 +15,14 @@ class WorkTeamClassificationController extends Controller
     }
 
     public function create(){
-        $workTeams = WorkTeam::get(['id', 'name']);
-
         return view('apps.work-team-classification.create', compact('workTeams'));
     }
 
     public function store(Request $request){
          $validated = $request->validate([
-             'work_team_id' => 'required',
              'code' => 'required',
              'name' => 'required'
          ],[
-            'work_team_id.required' => 'Tim Kerja field is required!',
             'code.required' => 'Kode Klasifikasi field is required!',
             'name.required' => 'Nama Kode Klasifikasi field is required!',
          ]
@@ -46,11 +42,9 @@ class WorkTeamClassificationController extends Controller
 
     public function update(Request $request, WorkTeamClassification $work_team_classification){
         $validated = $request->validate([
-             'work_team_id' => 'required',
              'code' => 'required',
              'name' => 'required'
          ],[
-            'work_team_id.required' => 'Tim Kerja field is required!',
             'code.required' => 'Kode Klasifikasi field is required!',
             'name.required' => 'Nama Kode Klasifikasi field is required!',
          ]

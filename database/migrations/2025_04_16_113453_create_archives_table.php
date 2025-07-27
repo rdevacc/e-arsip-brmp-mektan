@@ -26,6 +26,8 @@ return new class extends Migration
             $table->foreignId('archive_access_level_id')->nullable(true);
             $table->foreignId('archive_public_access_level_id')->nullable(true);
             $table->foreignId('archive_security_classification_id')->nullable(true);
+            $table->foreignId('archive_type_id')->nullable(true);
+            $table->foreignId('archive_subtype_id')->nullable(true);
             $table->foreignId('archive_status_id')->nullable(true);
             $table->foreignId('archive_quantity_unit_id')->nullable(true);
             $table->foreignId('period_id')->nullable(true);

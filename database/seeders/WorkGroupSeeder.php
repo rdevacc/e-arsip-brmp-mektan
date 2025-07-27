@@ -42,6 +42,13 @@ class WorkGroupSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'id' => 5,
+                'work_unit_id' => 1,
+                'name' => 'Ketua kelompok Lainnya',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

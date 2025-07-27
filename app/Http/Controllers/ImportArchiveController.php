@@ -14,6 +14,8 @@ use App\Models\ArchiveQuantityUnit;
 use App\Models\ArchiveShelf;
 use App\Models\ArchiveShelfRow;
 use App\Models\ArchiveStatus;
+use App\Models\ArchiveSubType;
+use App\Models\ArchiveType;
 use App\Models\Period;
 use App\Models\WorkTeamClassification;
 use Illuminate\Support\Facades\Storage;
@@ -72,7 +74,9 @@ class ImportArchiveController extends Controller
                 'archive_shelf_row_id' => $this->getId(ArchiveShelfRow::class, $this->toNull($row[13] ?? null)),
                 'archive_box_id' => $this->getId(ArchiveBox::class, $this->toNull($row[14] ?? null)),
                 'archive_folder_id' => $this->getId(ArchiveFolder::class, $this->toNull($row[15] ?? null)),
-                'archive_status_id' => $this->getId(ArchiveStatus::class, $this->toNull($row[16] ?? null)),
+                'archive_type_id' => $this->getId(ArchiveType::class, $this->toNull($row[16] ?? null)),
+                'archive_subtype_id' => $this->getId(ArchiveSubType::class, $this->toNull($row[17] ?? null)),
+                'archive_status_id' => $this->getId(ArchiveStatus::class, $this->toNull($row[18] ?? null)),
                 'archive_input_date' => now()->format('Y-m-d'),
                 'created_at' => now(),
                 'updated_at' => now(),

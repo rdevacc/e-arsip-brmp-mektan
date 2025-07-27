@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
             ArchiveRetentionSeeder::class,
             ArchiveSecurityClassificationSeeder::class,
             PeriodSeeder::class,
+            ArchiveTypeSeeder::class,
+            ArchiveSubTypeSeeder::class,
             ArchiveStatusSeeder::class,
             WorkUnitSeeder::class,
             WorkGroupSeeder::class,

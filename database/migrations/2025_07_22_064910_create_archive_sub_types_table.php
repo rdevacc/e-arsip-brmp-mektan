@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('work_team_classifications', function (Blueprint $table) {
+        Schema::create('archive_sub_types', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
+            $table->foreignId('archive_type_id')->nullable(true);
             $table->string('name');
             $table->timestamps();
         });
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('work_team_classifications');
+        Schema::dropIfExists('archive_sub_types');
     }
 };

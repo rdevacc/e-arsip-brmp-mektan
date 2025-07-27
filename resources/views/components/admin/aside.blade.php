@@ -109,6 +109,20 @@
         </li>
 
         <li class="nav-item">
+            <a class="nav-link {{ request()->segment(2) === 'archive-type' ? 'active' : '' }}" href="{{route('archive-type.index') }}">
+                <i class="bi bi-grid"></i>
+                <span>Tipe Arsip</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {{ request()->segment(2) === 'archive-subtype' ? 'active' : '' }}" href="{{route('archive-subtype.index') }}">
+                <i class="bi bi-grid"></i>
+                <span>Subtipe Arsip</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link {{ request()->segment(2) === 'archive-status' ? 'active' : '' }}" href="{{route('archive-status.index') }}">
                 <i class="bi bi-grid"></i>
                 <span>Status Arsip</span>

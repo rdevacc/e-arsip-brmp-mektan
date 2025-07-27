@@ -6,35 +6,25 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ArchiveStatusSeeder extends Seeder
+class ArchiveSubTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('archive_statuses')->insert([
+        DB::table('archive_sub_types')->insert([
             [
                 'id' => 1,
-                'name' => 'Simpan',
+                'archive_type_id' => 1,
+                'name' => 'Aktif',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'id' => 2,
-                'name' => 'Usul Musnah',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 3,
-                'name' => 'Musnah',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 4,
-                'name' => 'Permanen',
+                'archive_type_id' => 1,
+                'name' => 'Inaktif',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

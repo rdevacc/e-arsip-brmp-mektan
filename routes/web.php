@@ -18,6 +18,8 @@ use App\Http\Controllers\ArchiveFolderController;
 use App\Http\Controllers\ArchiveReportController;
 use App\Http\Controllers\ArchiveShelfController;
 use App\Http\Controllers\ArchiveShelfRowController;
+use App\Http\Controllers\ArchiveSubTypeController;
+use App\Http\Controllers\ArchiveTypeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ImportArchiveController;
 use App\Http\Controllers\RoleController;
@@ -26,6 +28,7 @@ use App\Http\Controllers\WorkGroupController;
 use App\Http\Controllers\WorkTeamClassificationController;
 use App\Http\Controllers\WorkTeamController;
 use App\Http\Controllers\WorkUnitController;
+use App\Models\ArchiveSubType;
 use App\Models\WorkTeamClassification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -235,6 +238,34 @@ Route::prefix('/app')->group(function (){
         'edit' => 'security-classification.edit',
         'update' => 'security-classification.edit-submit',
         'destroy' => 'security-classification.delete',
+    ]);
+
+    
+    /**
+     * * Archive Types Routes *
+     */
+    Route::resource('/archive-type', ArchiveTypeController::class)->names([
+        'index' => 'archive-type.index',
+        'create' => 'archive-type.create',
+        'show' => 'archive-type.show',
+        'store' => 'archive-type.create-submit',
+        'edit' => 'archive-type.edit',
+        'update' => 'archive-type.edit-submit',
+        'destroy' => 'archive-type.delete',
+    ]);
+    
+
+    /**
+     * * Archive Subtype Routes *
+     */
+    Route::resource('/archive-subtype', ArchiveSubTypeController::class)->names([
+        'index' => 'archive-subtype.index',
+        'create' => 'archive-subtype.create',
+        'show' => 'archive-subtype.show',
+        'store' => 'archive-subtype.create-submit',
+        'edit' => 'archive-subtype.edit',
+        'update' => 'archive-subtype.edit-submit',
+        'destroy' => 'archive-subtype.delete',
     ]);
 
 

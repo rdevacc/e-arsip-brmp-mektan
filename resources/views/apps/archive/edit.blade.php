@@ -144,6 +144,48 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
+                                        <label for="archive_type_id" class="form-label">Tipe Arsip <span class="text-danger">*</span></label>
+                                        <select name="archive_type_id" id="archive_type_id"
+                                            class="form-select @error('archive_type_id') is-invalid @enderror">
+                                            <option selected disabled>Pilih Tipe Arsip</option>
+                                            @foreach ($archiveTypes as $archiveType)
+                                                @if (old('archive_type_id', $archive->archive_type_id) == $archiveType->id)
+                                                    <option value="{{ $archiveType->id }}" selected>
+                                                        {{ $archiveType->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $archiveType->id }}">{{ $archiveType->name }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                        @error('archive_type_id')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label for="archive_subtype_id" class="form-label">SubTipe Arsip <span class="text-danger">*</span></label>
+                                        <select name="archive_subtype_id" id="archive_subtype_id"
+                                            class="form-select @error('archive_subtype_id') is-invalid @enderror">
+                                            <option selected disabled>Pilih SubTipe Arsip</option>
+                                            @foreach ($archiveSubTypes as $archiveSubType)
+                                                @if (old('archive_subtype_id', $archive->archive_subtype_id) == $archiveSubType->id)
+                                                    <option value="{{ $archiveSubType->id }}" selected>
+                                                        {{ $archiveSubType->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $archiveSubType->id }}">{{ $archiveSubType->name }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                        @error('archive_subtype_id')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-12 mb-3">
                                         <label for="archive_status_id" class="form-label">Status Arsip <span class="text-danger">*</span></label>
                                         <select name="archive_status_id" id="archive_status_id"
                                             class="form-select @error('archive_status_id') is-invalid @enderror">

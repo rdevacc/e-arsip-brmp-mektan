@@ -31,22 +31,6 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 mb-3">
-                                        <label for="work_team_id" class="form-label">Tim Kerja <span class="text-danger">*</span></label>
-                                        <select name="work_team_id" id="work_team_id"
-                                            class="form-select @error('work_team_id') is-invalid @enderror">
-                                            <option selected disabled>Pilih Tim Kerja</option>
-                                            @foreach ($workTeams as $workTeam)
-                                                <option value="{{ $workTeam->id }}" @selected(old('work_team_id') == $workTeam->id)>
-                                                    {{ $workTeam->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('work_team_id')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-12 mb-3">
                                         <label for="code" class="form-label">Kode Klasifikasi <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control @error('code') is-invalid @enderror"
                                             id="code" name="code" value="{{ old('code') ?: '' }}">
