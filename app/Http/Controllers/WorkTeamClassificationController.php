@@ -15,7 +15,7 @@ class WorkTeamClassificationController extends Controller
     }
 
     public function create(){
-        return view('apps.work-team-classification.create', compact('workTeams'));
+        return view('apps.work-team-classification.create');
     }
 
     public function store(Request $request){
@@ -35,9 +35,8 @@ class WorkTeamClassificationController extends Controller
     }
 
     public function edit(WorkTeamClassification $work_team_classification){
-        $workTeams = WorkTeam::get(['id', 'name']);
 
-        return view('apps.work-team-classification.edit', compact('work_team_classification', 'workTeams'));
+        return view('apps.work-team-classification.edit', compact('work_team_classification'));
     }
 
     public function update(Request $request, WorkTeamClassification $work_team_classification){
