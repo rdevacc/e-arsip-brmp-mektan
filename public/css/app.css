@@ -13,3 +13,192 @@ body {
     color: #717ff5;
     text-decoration: none;
   }
+
+/* Warna Outline Saat Fokus (Sangat Disarankan untuk Visibilitas) */
+.form-select:focus {
+    border-color: #007bff; /* Biru Primer Bootstrap */
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); /* Efek bayangan fokus Bootstrap */
+}
+
+/* Warna Background Permanen untuk form-select (Untuk Penekanan Utama) */
+/* Berikan class kustom pada select Anda, misalnya <select class="form-select bg-highlight"> */
+.form-select.bg-highlight {
+    background-color: #e6f7ff; /* Biru muda lembut */
+    border-color: #90c7e8; /* Batas biru yang lebih gelap */
+    color: #333; /* Warna teks gelap agar terbaca */
+}
+
+/* Warna Background Saat Hover (Umpan Balik Interaksi) */
+.form-select:hover {
+    background-color: #f0f0f0; /* Abu-abu terang */
+}
+
+/* Warna untuk Status Invalid (Merah untuk Kesalahan) */
+/* Bootstrap sudah punya .is-invalid, tapi Anda bisa menyesuaikan warnanya */
+.form-select.is-invalid {
+    background-color: #ffe0e6; /* Merah muda */
+    border-color: #dc3545; /* Merah bahaya Bootstrap */
+    color: #dc3545; /* Warna teks merah */
+}
+
+/* Warna untuk Status Valid (Hijau untuk Sukses) */
+/* Bootstrap sudah punya .is-valid, tapi Anda bisa menyesuaikan warnanya */
+.form-select.is-valid {
+    background-color: #e6ffe6; /* Hijau muda */
+    border-color: #28a745; /* Hijau sukses Bootstrap */
+    color: #28a745; /* Warna teks hijau */
+}
+
+/* Warna Outline Saat Fokus (Sangat Disarankan untuk Visibilitas) */
+.form-control:focus {
+    border-color: #007bff; /* Biru Primer Bootstrap */
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); /* Efek bayangan fokus Bootstrap */
+}
+
+/* Warna Background Permanen untuk form-control (Untuk Penekanan Utama) */
+/* Berikan class kustom pada select Anda, misalnya <select class="form-control bg-highlight"> */
+.form-control.bg-highlight {
+    background-color: #e6f7ff; /* Biru muda lembut */
+    border-color: #90c7e8; /* Batas biru yang lebih gelap */
+    color: #333; /* Warna teks gelap agar terbaca */
+}
+
+/* Warna Background Saat Hover (Umpan Balik Interaksi) */
+.form-control:hover {
+    background-color: #f0f0f0; /* Abu-abu terang */
+}
+
+/* Warna untuk Status Invalid (Merah untuk Kesalahan) */
+/* Bootstrap sudah punya .is-invalid, tapi Anda bisa menyesuaikan warnanya */
+.form-control.is-invalid {
+    background-color: #ffe0e6; /* Merah muda */
+    border-color: #dc3545; /* Merah bahaya Bootstrap */
+    color: #dc3545; /* Warna teks merah */
+}
+
+/* Warna untuk Status Valid (Hijau untuk Sukses) */
+/* Bootstrap sudah punya .is-valid, tapi Anda bisa menyesuaikan warnanya */
+.form-control.is-valid {
+    background-color: #e6ffe6; /* Hijau muda */
+    border-color: #28a745; /* Hijau sukses Bootstrap */
+    color: #28a745; /* Warna teks hijau */
+}
+
+/* --- Select2 Umum (Default State) --- */
+
+/* Untuk mode single select */
+.select2-container--bootstrap-5 .select2-selection--single {
+    background-color: #ffffff; /* Putih bersih */
+    border: 1px solid #ced4da; /* Border abu-abu standar Bootstrap */
+    color: #212529; /* Warna teks gelap standar Bootstrap */
+    height: calc(2.25rem + 2px); /* Menyesuaikan tinggi agar mirip dengan Bootstrap form-control */
+    /* Pastikan ikon panah tetap terlihat kontras */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+}
+
+/* Untuk mode multiple select */
+.select2-container--bootstrap-5 .select2-selection--multiple {
+    background-color: #ffffff; /* Putih bersih */
+    border: 1px solid #ced4da; /* Border abu-abu standar Bootstrap */
+    color: #212529; /* Warna teks gelap standar Bootstrap */
+}
+
+
+
+/* --- Select2 Umum (Default State & Theme Bootstrap 5) --- */
+
+/* Untuk Select2 dalam mode single select */
+.select2-container--bootstrap-5 .select2-selection--single {
+    background-color: #f0f8ff; /* Biru muda lembut sebagai background default */
+    border: 1px solid #cceeff; /* Batas biru yang serasi */
+    color: #333; /* Warna teks gelap agar terbaca jelas */
+    /* Pastikan ikon panah tetap terlihat kontras dengan background baru */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+}
+
+/* Untuk Select2 dalam mode multiple select */
+.select2-container--bootstrap-5 .select2-selection--multiple {
+    background-color: #f0f8ff; /* Biru muda lembut sebagai background default */
+    border: 1px solid #cceeff; /* Batas biru yang serasi */
+    color: #333; /* Warna teks gelap agar terbaca jelas */
+}
+
+/* --- Select2 Saat Hover --- */
+
+/* Untuk single select saat kursor diarahkan (hover) */
+.select2-container--bootstrap-5 .select2-selection--single:hover {
+    background-color: #e0f2ff; /* Sedikit lebih gelap dari default untuk umpan balik */
+}
+
+/* Untuk multiple select saat kursor diarahkan (hover) */
+.select2-container--bootstrap-5 .select2-selection--multiple:hover {
+    background-color: #e0f2ff; /* Sedikit lebih gelap dari default untuk umpan balik */
+}
+
+/* --- Select2 Saat Fokus (Penting untuk Aksesibilitas) --- */
+
+/* Untuk single select saat fokus (diklik atau di-tab) */
+.select2-container--bootstrap-5 .select2-selection--single:focus,
+.select2-container--bootstrap-5.select2-container--focus .select2-selection--single {
+    border-color: #007bff; /* Biru primer Bootstrap */
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); /* Efek bayangan fokus ala Bootstrap */
+}
+
+/* Untuk multiple select saat fokus */
+.select2-container--bootstrap-5 .select2-selection--multiple:focus,
+.select2-container--bootstrap-5.select2-container--focus .select2-selection--multiple {
+    border-color: #007bff; /* Biru primer Bootstrap */
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); /* Efek bayangan fokus ala Bootstrap */
+}
+
+/* --- Select2 untuk Status Validasi (is-invalid / is-valid) --- */
+
+/* Untuk Select2 ketika elemen <select> aslinya memiliki kelas 'is-invalid' */
+.is-invalid + .select2-container--bootstrap-5 .select2-selection--single,
+.is-invalid + .select2-container--bootstrap-5 .select2-selection--multiple {
+    border-color: #dc3545; /* Merah bahaya Bootstrap */
+    background-color: #ffe0e6; /* Merah muda lembut */
+    /* Sesuaikan warna ikon panah agar kontras dengan background merah */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23dc3545' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+}
+
+/* Efek fokus pada Select2 yang invalid */
+.is-invalid + .select2-container--bootstrap-5.select2-container--focus .select2-selection--single,
+.is-invalid + .select2-container--bootstrap-5.select2-container--focus .select2-selection--multiple {
+    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25); /* Shadow merah */
+}
+
+/* Untuk Select2 ketika elemen <select> aslinya memiliki kelas 'is-valid' */
+.is-valid + .select2-container--bootstrap-5 .select2-selection--single,
+.is-valid + .select2-container--bootstrap-5 .select2-selection--multiple {
+    border-color: #28a745; /* Hijau sukses Bootstrap */
+    background-color: #e6ffe6; /* Hijau muda lembut */
+    /* Sesuaikan warna ikon panah agar kontras dengan background hijau */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2328a745' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+}
+
+/* Efek fokus pada Select2 yang valid */
+.is-valid + .select2-container--bootstrap-5.select2-container--focus .select2-selection--single,
+.is-valid + .select2-container--bootstrap-5.select2-container--focus .select2-selection--multiple {
+    box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25); /* Shadow hijau */
+}
+
+/* --- Warna Opsi dalam Dropdown Select2 --- */
+
+/* Background untuk item yang dipilih/highlighted dalam dropdown (saat di-hover atau navigasi keyboard) */
+.select2-container--bootstrap-5 .select2-results__option--highlighted.select2-results__option--selectable {
+    background-color: #007bff !important; /* Biru primer Bootstrap */
+    color: white !important; /* Teks putih untuk kontras */
+}
+
+/* Background untuk item yang sudah dipilih di daftar dropdown (jika berlaku, mis. untuk multiple select) */
+.select2-container--bootstrap-5 .select2-results__option[aria-selected="true"] {
+    background-color: #dee2e6; /* Abu-abu terang */
+    color: #212529; /* Teks gelap */
+}

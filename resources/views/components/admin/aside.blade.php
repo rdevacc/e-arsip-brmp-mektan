@@ -167,7 +167,7 @@
         <li class="nav-item">
             <a class="nav-link {{ request()->segment(2) === 'archive-cabinet' ? 'active' : '' }}" href="{{route('archive-cabinet.index') }}">
                 <i class="bi bi-grid"></i>
-                <span>Lemari Arsip</span>
+                <span>Jenis Penyimpanan Arsip</span>
             </a>
         </li>
 
