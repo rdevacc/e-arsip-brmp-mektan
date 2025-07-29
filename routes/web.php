@@ -78,7 +78,7 @@ Route::prefix('/app')->group(function (){
     })->name('work_team_classifications.search');
     Route::post('/archive/{id}/update-status', [ArchiveController::class, 'updateStatus'])->name('archives.update-status');
     Route::post('/app/archive/bulk-update', [ArchiveController::class, 'bulkUpdate'])->name('archive-bulk-update');
-
+    Route::post('/app/archive/bulk-delete', [ArchiveController::class, 'bulkDelete'])->name('archive-bulk-delete');
 
 
     /**

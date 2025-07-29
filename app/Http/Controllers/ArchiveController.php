@@ -98,6 +98,23 @@ class ArchiveController extends Controller
         return response()->json(['message' => 'Data arsip berhasil diperbarui.']);
     }
 
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->input('ids');
+
+        if (!$ids || !is_array($ids)) {
+            return response()->json(['message' => 'Data tidak valid.'], 400);
+        }
+
+        try {
+            Archive::whereIn('id', $ids)->delete();
+
+            return response()->json(['message' => 'Data berhasil dihapus.']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Gagal menghapus data.'], 500);
+        }
+    }
+
     public function index(Request $request)
     {
         // Getting Statuses

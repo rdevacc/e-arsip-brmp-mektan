@@ -67,6 +67,7 @@
                                     <a href="{{ route('archive-create') }}" class="btn btn-primary">Tambah</a>
                                     <a href="{{ route('import-excel.index') }}" class="btn btn-success">Upload Excel</a>
                                     <button class="btn btn-warning" id="bulk-edit-btn" disabled>Ubah Massal</button>
+                                    <button class="btn btn-danger" id="bulk-delete-btn" disabled>Delete Massal</button>
                                 </div>
                             </div>
                             <div class="row mx-1 d-flex justify-content-between align-items-center">
@@ -320,6 +321,7 @@
             function toggleBulkButton() {
                 const anyChecked = $('.row-checkbox:checked').length > 0;
                 $('#bulk-edit-btn').prop('disabled', !anyChecked);
+                $('#bulk-delete-btn').prop('disabled', !anyChecked);
             }
 
             // Tampilkan modal
@@ -327,7 +329,7 @@
                 $('#bulkEditModal').modal('show');
             });
 
-            // Submit form
+            // Submit Bulk Edit Form
             $('#bulk-edit-form').on('submit', function (e) {
                 e.preventDefault();
                 const selectedIDs = $('.row-checkbox:checked').map(function () {
@@ -370,6 +372,50 @@
                     }
                 });
             });
+
+            // Submit Bulk Delete
+            $('#bulk-delete-btn').on('click', function () {
+            const selectedIDs = $('.row-checkbox:checked').map(function () {
+                return this.value;
+            }).get();
+
+            if (selectedIDs.length === 0) {
+                Swal.fire('Peringatan', 'Pilih arsip yang ingin dihapus.', 'warning');
+                return;
+            }
+
+            Swal.fire({
+                title: 'Yakin ingin menghapus arsip terpilih?',
+                text: "Tindakan ini tidak bisa dibatalkan.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Hapus',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ route('archive-bulk-delete') }}",
+                        type: 'POST',
+                        data: {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                            ids: selectedIDs
+                        },
+                        success: function (response) {
+                            $('#archives-table').DataTable().ajax.reload(function () {
+                                $('#select-all').prop('checked', false);
+                                lastChecked = null;
+                                toggleBulkButton();
+                            }, false);
+                            Swal.fire('Berhasil', response.message, 'success');
+                        },
+                        error: function () {
+                            Swal.fire('Gagal', 'Terjadi kesalahan saat menghapus arsip.', 'error');
+                        }
+                    });
+                }
+            });
+        });
+
 
             // Tooltip Bootstrap 5
             table.on('draw.dt', function () {
