@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('archive_shelf_rows', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('archive_shelf_id')->nullable(true);
+            $table->foreignId('archive_storage_location_id')->nullable(true);
             $table->string('name');
             $table->timestamps();
         });

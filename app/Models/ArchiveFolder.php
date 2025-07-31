@@ -12,16 +12,16 @@ class ArchiveFolder extends Model
     use HasFactory;
                            
     protected $fillable = [
-        'archive_box_id',
+        'archive_storage_location_id',
         'name'
     ];
 
-    /**
-     * * Relationship from Folder to Box*
+   /**
+     * * Relationship from ShelfRow to Archive Storage Location *
      */
-    public function archive_box(): BelongsTo
+    public function archive_storage_location(): BelongsTo
     {
-        return $this->belongsTo(ArchiveBox::class);
+        return $this->belongsTo(ArchiveStorageLocation::class);
     }
         
      /**

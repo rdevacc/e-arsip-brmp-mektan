@@ -7,7 +7,7 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Tambah Data Baris Rak Lemari Arsip</h5>
+                            <h5 class="card-title">Tambah Data Baris Lokasi Penyimpanan Arsip</h5>
 
                              @if ($errors->any())
                                 <div class="alert alert-danger">
@@ -31,13 +31,13 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 mb-3">
-                                        <label for="archive_shelf_id" class="form-label">Rak Lemari Arsip <span class="text-danger">*</span></label>
+                                        <label for="archive_shelf_id" class="form-label">Rak Lokasi Penyimpanan Arsip <span class="text-danger">*</span></label>
                                         <select name="archive_shelf_id" id="archive_shelf_id"
                                             class="form-select @error('archive_shelf_id') is-invalid @enderror">
-                                            <option selected disabled>Pilih Rak Lemari Arsip</option>
-                                            @foreach ($archiveShelves as $archiveShelf)
-                                                <option value="{{ $archiveShelf->id }}" @selected(old('archive_shelf_id') == $archiveShelf->id)>
-                                                    {{ $archiveShelf->name }}</option>
+                                            <option selected disabled>Pilih Rak Lokasi Penyimpanan Arsip</option>
+                                            @foreach ($archiveStorageLocations as $archiveStorageLocation)
+                                                <option value="{{ $archiveStorageLocation->id }}" @selected(old('archive_shelf_id') == $archiveStorageLocation->id)>
+                                                    {{ $archiveStorageLocation->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('archive_shelf_id')
@@ -47,7 +47,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="name" class="form-label">Nama Baris Rak Lemari Arsip <span class="text-danger">*</span></label>
+                                        <label for="name" class="form-label">Nama Baris Lokasi Penyimpanan Arsip <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
                                             id="name" name="name" value="{{ old('name') ?: '' }}">
                                         @error('name')

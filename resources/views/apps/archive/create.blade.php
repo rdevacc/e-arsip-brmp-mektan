@@ -460,17 +460,17 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="archive_cabinet_id" class="col-sm-3 col-form-label">Lemari Arsip <span class="text-danger">*</span></label>
+                                        <label for="archive_storage_location_id" class="col-sm-3 col-form-label">Lokasi Penyimpanan Arsip <span class="text-danger">*</span></label>
                                         <div class="col-sm-9">
-                                            <select name="archive_cabinet_id" id="archive_cabinet_id"
-                                                class="form-select bg-highlight @error('archive_cabinet_id') is-invalid @enderror">
-                                                <option selected disabled>Pilih Lemari Arsip</option>
+                                            <select name="archive_storage_location_id" id="archive_storage_location_id"
+                                                class="form-select bg-highlight @error('archive_storage_location_id') is-invalid @enderror">
+                                                <option selected disabled>Pilih Lokasi Penyimpanan Arsip</option>
                                                 @foreach ($cabinets as $cabinet)
-                                                    <option value="{{ $cabinet->id }}" @selected(old('archive_cabinet_id') == $cabinet->id)>
+                                                    <option value="{{ $cabinet->id }}" @selected(old('archive_storage_location_id') == $cabinet->id)>
                                                         {{ $cabinet->name }}</option>
                                                 @endforeach
                                             </select>
-                                            @error('archive_cabinet_id')
+                                            @error('archive_storage_location_id')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -478,29 +478,11 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="archive_shelf_id" class="col-sm-3 col-form-label">Rak Arsip <span class="text-danger">*</span></label>
-                                        <div class="col-sm-9">
-                                            <select name="archive_shelf_id" id="archive_shelf_id"
-                                                class="form-select bg-highlight @error('archive_shelf_id') is-invalid @enderror">
-                                                <option selected disabled>Pilih Rak Arsip</option>
-                                                @foreach ($shelves as $shelf)
-                                                    <option value="{{ $shelf->id }}" @selected(old('archive_shelf_id') == $shelf->id)>
-                                                        {{ $shelf->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('archive_shelf_id')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <label for="archive_shelf_row_id" class="col-sm-3 col-form-label">Baris Rak Arsip <span class="text-danger">*</span></label>
+                                        <label for="archive_shelf_row_id" class="col-sm-3 col-form-label">Baris Penyimpanan Arsip <span class="text-danger">*</span></label>
                                         <div class="col-sm-9">
                                             <select name="archive_shelf_row_id" id="archive_shelf_row_id"
                                                 class="form-select bg-highlight @error('archive_shelf_row_id') is-invalid @enderror">
-                                                <option selected disabled>Pilih Baris Rak Arsip</option>
+                                                <option selected disabled>Pilih Baris Penyimpanan Arsip</option>
                                                 @foreach ($shelfRows as $shelfRow)
                                                     <option value="{{ $shelfRow->id }}" @selected(old('archive_shelf_row_id') == $shelfRow->id)>
                                                         {{ $shelfRow->name }}</option>

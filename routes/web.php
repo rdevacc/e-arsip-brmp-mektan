@@ -18,6 +18,7 @@ use App\Http\Controllers\ArchiveFolderController;
 use App\Http\Controllers\ArchiveReportController;
 use App\Http\Controllers\ArchiveShelfController;
 use App\Http\Controllers\ArchiveShelfRowController;
+use App\Http\Controllers\ArchiveStorageLocationController;
 use App\Http\Controllers\ArchiveSubTypeController;
 use App\Http\Controllers\ArchiveTypeController;
 use App\Http\Controllers\DashboardController;
@@ -28,6 +29,7 @@ use App\Http\Controllers\WorkGroupController;
 use App\Http\Controllers\WorkTeamClassificationController;
 use App\Http\Controllers\WorkTeamController;
 use App\Http\Controllers\WorkUnitController;
+use App\Models\ArchiveStorageLocation;
 use App\Models\ArchiveSubType;
 use App\Models\WorkTeamClassification;
 use Illuminate\Http\Request;
@@ -354,30 +356,16 @@ Route::prefix('/app')->group(function (){
 
 
     /**
-     * * Archive Cabinet Routes *
+     * * Archive Storage Location Routes *
      */
-    Route::resource('/archive-cabinet', ArchiveCabinetController::class)->names([
-        'index' => 'archive-cabinet.index',
-        'create' => 'archive-cabinet.create',
-        'show' => 'archive-cabinet.show',
-        'store' => 'archive-cabinet.create-submit',
-        'edit' => 'archive-cabinet.edit',
-        'update' => 'archive-cabinet.edit-submit',
-        'destroy' => 'archive-cabinet.delete',
-    ]);
-
-
-    /**
-     * * Archive Shelf Routes *
-     */
-    Route::resource('/archive-shelf', ArchiveShelfController::class)->names([
-        'index' => 'archive-shelf.index',
-        'create' => 'archive-shelf.create',
-        'show' => 'archive-shelf.show',
-        'store' => 'archive-shelf.create-submit',
-        'edit' => 'archive-shelf.edit',
-        'update' => 'archive-shelf.edit-submit',
-        'destroy' => 'archive-shelf.delete',
+    Route::resource('/archive-storage-location', ArchiveStorageLocationController::class)->names([
+        'index' => 'archive-storage-location.index',
+        'create' => 'archive-storage-location.create',
+        'show' => 'archive-storage-location.show',
+        'store' => 'archive-storage-location.create-submit',
+        'edit' => 'archive-storage-location.edit',
+        'update' => 'archive-storage-location.edit-submit',
+        'destroy' => 'archive-storage-location.delete',
     ]);
 
 

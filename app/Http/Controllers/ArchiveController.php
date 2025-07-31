@@ -19,6 +19,7 @@ use App\Models\ArchiveShelf;
 use App\Models\ArchiveShelfRow;
 use App\Models\ArchiveBox;
 use App\Models\ArchiveFolder;
+use App\Models\ArchiveStorageLocation;
 use App\Models\ArchiveSubType;
 use App\Models\ArchiveType;
 use App\Models\Period;
@@ -52,7 +53,7 @@ class ArchiveController extends Controller
         if ($request->status_id == $musnahId) {
             // Reset lokasi arsip jadi null karena status musnah
             $archive->building_id = null;
-            $archive->cabinet_id = null;
+            $archive->storage_location_id = null;
             $archive->shelf_id = null;
             $archive->shelf_row_id = null;
             $archive->archive_box_id = null;
@@ -281,8 +282,7 @@ class ArchiveController extends Controller
         $archiveAccessLevels = ArchiveAccessLevel::get(['id', 'name']);
         $periods = Period::get(['id', 'name']);
         $buildings = ArchiveBuilding::get(['id', 'name']);
-        $cabinets = ArchiveCabinet::get(['id', 'name']);
-        $shelves = ArchiveShelf::get(['id', 'name']);
+        $storageLocations = ArchiveStorageLocation::get(['id', 'name']);
         $shelfRows = ArchiveShelfRow::get(['id', 'name']);
         $boxes = ArchiveBox::get(['id', 'name']);
         $folders = ArchiveFolder::get(['id', 'name']);
@@ -312,8 +312,7 @@ class ArchiveController extends Controller
             "archiveAccessLevels",
             "periods",
             "buildings",
-            "cabinets",
-            "shelves",
+            "storageLocations",
             "shelfRows",
             "boxes",
             "folders",
@@ -351,8 +350,7 @@ class ArchiveController extends Controller
             'period_id' => '',
             'year_period' => '',
             'archive_building_id' => '',
-            'archive_cabinet_id' => '',
-            'archive_shelf_id' => '',
+            'archive_storage_location_id' => '',
             'archive_shelf_row_id' => '',
             'archive_box_id' => '',
             'archive_folder_id' => '',
@@ -386,7 +384,7 @@ class ArchiveController extends Controller
             'period.required' => 'Periode Arsip field is required!',
             'year_period.required' => 'Tahun Periode Arsip field is required!',
             'archive_building_id.required' => 'Gedung Arsip field is required!',
-            'archive_cabinet_id.required' => 'Lemari Arsip field is required!',
+            'archive_storage_location_id.required' => 'Lokasi Penyimpanan Arsip field is required!',
             'archive_shelf_id.required' => 'Rak Arsip field is required!',
             'archive_shelf_row_id.required' => 'Baris Rak Arsip field is required!',
             'archive_box_id.required' => 'Boks Arsip field is required!',
@@ -419,8 +417,7 @@ class ArchiveController extends Controller
         $archiveAccessLevels = ArchiveAccessLevel::get(['id', 'name']);
         $periods = Period::get(['id', 'name']);
         $buildings = ArchiveBuilding::get(['id', 'name']);
-        $cabinets = ArchiveCabinet::get(['id', 'name']);
-        $shelves = ArchiveShelf::get(['id', 'name']);
+        $storageLocations = ArchiveStorageLocation::get(['id', 'name']);
         $shelfRows = ArchiveShelfRow::get(['id', 'name']);
         $boxes = ArchiveBox::get(['id', 'name']);
         $folders = ArchiveFolder::get(['id', 'name']);
@@ -446,8 +443,7 @@ class ArchiveController extends Controller
             "archiveAccessLevels",
             "periods",
             "buildings",
-            "cabinets",
-            "shelves",
+            "storageLocations",
             "shelfRows",
             "boxes",
             "folders",
@@ -485,8 +481,7 @@ class ArchiveController extends Controller
             'period_id' => '',
             'year_period' => '',
             'archive_building_id' => '',
-            'archive_cabinet_id' => '',
-            'archive_shelf_id' => '',
+            'archive_storage_location_id' => '',
             'archive_shelf_row_id' => '',
             'archive_box_id' => '',
             'archive_folder_id' => '',
@@ -520,7 +515,7 @@ class ArchiveController extends Controller
             'period.required' => 'Periode Arsip field is required!',
             'year_period.required' => 'Tahun Periode Arsip field is required!',
             'archive_building_id.required' => 'Gedung Arsip field is required!',
-            'archive_cabinet_id.required' => 'Lemari Arsip field is required!',
+            'archive_storage_location_id.required' => 'Lokasi Penyimpanan Arsip field is required!',
             'archive_shelf_id.required' => 'Rak Arsip field is required!',
             'archive_shelf_row_id.required' => 'Baris Rak Arsip field is required!',
             'archive_box_id.required' => 'Boks Arsip field is required!',

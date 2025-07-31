@@ -37,8 +37,7 @@ class Archive extends Model
         'period_id',
         'year_period',
         'archive_building_id',
-        'archive_cabinet_id',
-        'archive_shelf_id',
+        'archive_storage_location_id',
         'archive_shelf_row_id',
         'archive_box_id',
         'archive_folder_id',
@@ -198,19 +197,11 @@ class Archive extends Model
     }
 
     /**
-     * * Relationship from Archive to Cabinet*
+     * * Relationship from Archive to Storage Location*
      */
-    public function cabinet(): BelongsTo
+    public function storage_location(): BelongsTo
     {
-        return $this->belongsTo(ArchiveCabinet::class);
-    }
-
-    /**
-     * * Relationship from Archive to Shelf*
-     */
-    public function shelf(): BelongsTo
-    {
-        return $this->belongsTo(ArchiveShelf::class);
+        return $this->belongsTo(ArchiveStorageLocation::class);
     }
 
     /**

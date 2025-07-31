@@ -165,23 +165,16 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {{ request()->segment(2) === 'archive-cabinet' ? 'active' : '' }}" href="{{route('archive-cabinet.index') }}">
+            <a class="nav-link {{ request()->segment(2) === 'archive-storage-location' ? 'active' : '' }}" href="{{route('archive-storage-location.index') }}">
                 <i class="bi bi-grid"></i>
-                <span>Jenis Penyimpanan Arsip</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link {{ request()->segment(2) === 'archive-shelf' ? 'active' : '' }}" href="{{route('archive-shelf.index') }}">
-                <i class="bi bi-grid"></i>
-                <span>Rak Lemari Arsip</span>
+                <span>Lokasi Penyimpanan Arsip</span>
             </a>
         </li>
 
         <li class="nav-item">
             <a class="nav-link {{ request()->segment(2) === 'archive-shelf-row' ? 'active' : '' }}" href="{{route('archive-shelf-row.index') }}">
                 <i class="bi bi-grid"></i>
-                <span>Baris Rak Lemari Arsip</span>
+                <span>Baris Lokasi Penyimpanan Arsip</span>
             </a>
         </li>
 

@@ -4,28 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Models\ArchiveBox;
 use App\Models\ArchiveFolder;
+use App\Models\ArchiveStorageLocation;
 use Illuminate\Http\Request;
 
 class ArchiveFolderController extends Controller
 {
     public function index(){
-        $archiveFolders = ArchiveFolder::with('archive_box')->get(['id', 'archive_box_id', 'name']);
+        $archiveFolders = ArchiveFolder::with('archive_storage_location')->get(['id', 'archive_storage_location_id', 'name']);
         
         return view('apps.archive-folder.index', compact('archiveFolders'));
     }
 
     public function create(){
-        $archiveBoxes = ArchiveBox::get(['id', 'name']);
+        $archiveStorageLocations = ArchiveStorageLocation::get(['id', 'name']);
 
-        return view('apps.archive-folder.create', compact('archiveBoxes'));
+        return view('apps.archive-folder.create', compact('archiveStorageLocations'));
     }
 
     public function store(Request $request){
          $validated = $request->validate([
-             'archive_box_id' => 'required',
+             'archive_storage_location_id' => 'required',
              'name' => 'required'
          ],[
-            'archive_box_id.required' => 'Box Arsip field is required!',
+            'archive_storage_location_id.required' => 'Lokasi Penyimpanan Arsip field is required!',
             'name.required' => 'Nama Folder Arsip field is required!',
          ]
         );
@@ -37,17 +38,17 @@ class ArchiveFolderController extends Controller
     }
 
     public function edit(ArchiveFolder $archive_folder){
-        $archiveBoxes = ArchiveBox::get(['id', 'name']);
+        $archiveStorageLocations = ArchiveStorageLocation::get(['id', 'name']);
 
-        return view('apps.archive-folder.edit', compact('archive_folder', 'archiveBoxes'));
+        return view('apps.archive-folder.edit', compact('archive_folder', 'archiveStorageLocations'));
     }
 
     public function update(Request $request, ArchiveFolder $archive_folder){
          $validated = $request->validate([
-             'archive_box_id' => 'required',
+             'archive_storage_location_id' => 'required',
              'name' => 'required'
          ],[
-            'archive_box_id.required' => 'Box Arsip field is required!',
+            'archive_storage_location_id.required' => 'Lokasi Penyimpanan Arsip field is required!',
             'name.required' => 'Nama Folder Arsip field is required!',
          ]
         );

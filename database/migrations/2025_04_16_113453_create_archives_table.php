@@ -32,8 +32,7 @@ return new class extends Migration
             $table->foreignId('archive_quantity_unit_id')->nullable(true);
             $table->foreignId('period_id')->nullable(true);
             $table->foreignId('archive_building_id')->nullable(true);
-            $table->foreignId('archive_cabinet_id')->nullable(true);
-            $table->foreignId('archive_shelf_id')->nullable(true);
+            $table->foreignId('archive_storage_location_id')->nullable(true);
             $table->foreignId('archive_shelf_row_id')->nullable(true);
             $table->foreignId('archive_box_id')->nullable(true);
             $table->foreignId('archive_folder_id')->nullable(true);

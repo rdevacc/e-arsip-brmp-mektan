@@ -11,9 +11,9 @@ use App\Models\ArchiveDevelopmentLevel;
 use App\Models\ArchiveFolder;
 use App\Models\ArchiveMedia;
 use App\Models\ArchiveQuantityUnit;
-use App\Models\ArchiveShelf;
 use App\Models\ArchiveShelfRow;
 use App\Models\ArchiveStatus;
+use App\Models\ArchiveStorageLocation;
 use App\Models\ArchiveSubType;
 use App\Models\ArchiveType;
 use App\Models\Period;
@@ -70,7 +70,7 @@ class ImportArchiveController extends Controller
                 'period_id' => $this->getId(Period::class, $this->toNull($row[9] ?? null)), // Periode
                 'year_period' => $this->toNull($row[10] ?? null),
                 'archive_building_id' => $this->getId(ArchiveBuilding::class, $this->toNull($row[11] ?? null)),
-                'archive_shelf_id' => $this->getId(ArchiveShelf::class, $this->toNull($row[12] ?? null)),
+                'archive_storage_location_id' => $this->getId(ArchiveStorageLocation::class, $this->toNull($row[12] ?? null)),
                 'archive_shelf_row_id' => $this->getId(ArchiveShelfRow::class, $this->toNull($row[13] ?? null)),
                 'archive_box_id' => $this->getId(ArchiveBox::class, $this->toNull($row[14] ?? null)),
                 'archive_folder_id' => $this->getId(ArchiveFolder::class, $this->toNull($row[15] ?? null)),

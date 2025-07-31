@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('archive_cabinets', function (Blueprint $table) {
+        Schema::create('archive_storage_locations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('archive_building_id')->nullable(true);
             $table->string('name');
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('archive_cabinets');
+        Schema::dropIfExists('archive_storage_locations');
     }
 };

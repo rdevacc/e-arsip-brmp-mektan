@@ -4,7 +4,7 @@
     <main id="main" class="main">
         <section class="section quantity-unit">
             <div class="pagetitle">
-                <h1>Baris Rak Lemari Arsip</h1>
+                <h1>Baris Lokasi Penyimpanan Arsip</h1>
             </div>
              <!-- Session Alert -->
             @if (session('success'))
@@ -30,8 +30,8 @@
                         <table class="table">
                             <thead class="table-primary">
                                 <th>#</th>
-                                <th>Nama Baris Rak Lemari Arsip</th>
-                                <th>Nama Lemari Arsip</th>
+                                <th>Nama Baris Lokasi Penyimpanan Arsip</th>
+                                <th>Nama Lokasi Penyimpanan Arsip</th>
                                 <th>Action</th>
                             </thead>
                             <tbody>
@@ -39,13 +39,13 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $archiveShelfRow->name }}</td>
-                                        <td>{{ $archiveShelfRow->archive_shelf->name }}</td>
+                                        <td>{{ $archiveShelfRow->archive_storage_location->name }}</td>
                                         <td class="d-flex">
                                             <a class="btn btn-warning mx-1" href="{{ route('archive-shelf-row.edit', $archiveShelfRow->id) }}"
                                                 data-bs-toggle="tooltip"
                                                 data-bs-placement="top"
                                                 data-bs-custom-class="custom-tooltip"
-                                                data-bs-title="Edit Baris Rak Lemari Arsip">
+                                                data-bs-title="Edit Baris Lokasi Penyimpanan Arsip">
                                                 <i class="bi bi-pencil"></i>
                                             </a>
 
@@ -56,7 +56,7 @@
                                                     data-id="{{ $archiveShelfRow->id }}"
                                                     data-url="{{ route('archive-shelf-row.delete', $archiveShelfRow->id) }}"
                                                     data-bs-toggle="tooltip"
-                                                    title="Hapus Baris Rak Lemari Arsip">
+                                                    title="Hapus Baris Lokasi Penyimpanan Arsip">
                                                     <i class="bi bi-trash text-body-secondary"></i>
                                                 </button>
                                             </form>
