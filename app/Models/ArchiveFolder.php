@@ -19,7 +19,7 @@ class ArchiveFolder extends Model
    /**
      * * Relationship from ShelfRow to Archive Storage Place *
      */
-    public function archive_place_location(): BelongsTo
+    public function archive_storage_place(): BelongsTo
     {
         return $this->belongsTo(ArchiveStoragePlace::class);
     }
