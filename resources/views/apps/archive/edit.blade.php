@@ -465,63 +465,42 @@
                                     <h5 class="card-title">Lokasi Penyimpanan Arsip</h5>
 
                                     <div class="col-12 mb-3">
-                                        <label for="archive_building_id" class="form-label">Gedung Arsip</label>
-                                        <select name="archive_building_id" id="archive_building_id"
-                                            class="form-select @error('archive_building_id') is-invalid @enderror">
-                                            <option selected disabled>Pilih Gedung Arsip</option>
-                                            @foreach ($buildings as $building)
-                                                @if (old('archive_building_id', $archive->archive_building_id) == $building->id)
-                                                    <option value="{{ $building->id }}" selected>
-                                                        {{ $building->name }}
+                                        <label for="archive_storage_location_id" class="form-label">Lokasi Penyimpanan Arsip</label>
+                                        <select name="archive_storage_location_id" id="archive_storage_location_id"
+                                            class="form-select @error('archive_storage_location_id') is-invalid @enderror">
+                                            <option selected disabled>Pilih Lokasi Penyimpanan Arsip</option>
+                                            @foreach ($storageLocations as $storageLocation)
+                                                @if (old('archive_storage_location_id', $archive->archive_storage_location_id) == $storageLocation->id)
+                                                    <option value="{{ $storageLocation->id }}" selected>
+                                                        {{ $storageLocation->name }}
                                                     </option>
                                                 @else
-                                                    <option value="{{ $building->id }}">{{ $building->name }}</option>
+                                                    <option value="{{ $storageLocation->id }}">{{ $storageLocation->name }}</option>
                                                 @endif
                                             @endforeach
                                         </select>
-                                        @error('archive_building_id')
+                                        @error('archive_storage_location_id')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="archive_cabinet_id" class="form-label">Lemari Arsip</label>
-                                        <select name="archive_cabinet_id" id="archive_cabinet_id"
-                                            class="form-select @error('archive_cabinet_id') is-invalid @enderror">
-                                            <option selected disabled>Pilih Lemari Arsip</option>
-                                            @foreach ($cabinets as $cabinet)
-                                                @if (old('archive_cabinet_id', $archive->archive_cabinet_id) == $cabinet->id)
-                                                    <option value="{{ $cabinet->id }}" selected>
-                                                        {{ $cabinet->name }}
+                                        <label for="archive_storage_place_id" class="form-label">Tempat Penyimpanan Arsip</label>
+                                        <select name="archive_storage_place_id" id="archive_storage_place_id"
+                                            class="form-select @error('archive_storage_place_id') is-invalid @enderror">
+                                            <option selected disabled>Pilih Tempat Penyimpanan Arsip</option>
+                                            @foreach ($storagePlaces as $storagePlace)
+                                                @if (old('archive_storage_place_id', $archive->archive_storage_place_id) == $storagePlace->id)
+                                                    <option value="{{ $storagePlace->id }}" selected>
+                                                        {{ $storagePlace->name }}
                                                     </option>
                                                 @else
-                                                    <option value="{{ $cabinet->id }}">{{ $cabinet->name }}</option>
+                                                    <option value="{{ $storagePlace->id }}">{{ $storagePlace->name }}</option>
                                                 @endif
                                             @endforeach
                                         </select>
-                                        @error('archive_cabinet_id')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-12 mb-3">
-                                        <label for="archive_shelf_id" class="form-label">Rak Arsip</label>
-                                        <select name="archive_shelf_id" id="archive_shelf_id"
-                                            class="form-select @error('archive_shelf_id') is-invalid @enderror">
-                                            <option selected disabled>Pilih Rak Arsip</option>
-                                            @foreach ($shelves as $shelf)
-                                                @if (old('archive_shelf_id', $archive->archive_shelf_id) == $shelf->id)
-                                                    <option value="{{ $shelf->id }}" selected>
-                                                        {{ $shelf->name }}
-                                                    </option>
-                                                @else
-                                                    <option value="{{ $shelf->id }}">{{ $shelf->name }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                        @error('archive_shelf_id')
+                                        @error('archive_storage_place_id')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
