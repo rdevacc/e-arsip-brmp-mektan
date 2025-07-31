@@ -6,29 +6,39 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ArchiveBuildingSeeder extends Seeder
+class ArchiveStoragePlaceSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
-    {
-        DB::table('archive_buildings')->insert([
+     {
+        DB::table('archive_storage_places')->insert([
             [
                 'id' => 1,
-                'name' => 'Unit Kearsipan Ruang 1',
+                'archive_storage_location_id' => '1',
+                'name' => 'Lemari',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'id' => 2,
-                'name' => 'Unit Kearsipan Ruang 2',
+                'archive_storage_location_id' => '1',
+                'name' => 'Rak',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'id' => 3,
-                'name' => 'Unit Kearsipan Ruang 3',
+                'archive_storage_location_id' => '1',
+                'name' => 'Kardex',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 4,
+                'archive_storage_location_id' => '1',
+                'name' => 'Lemari Kaca',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

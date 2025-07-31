@@ -12,13 +12,11 @@ use App\Http\Controllers\ArchiveQuantityUnitController;
 use App\Http\Controllers\ArchiveRetentionController;
 use App\Http\Controllers\ArchiveSecurityClassificationController;
 use App\Http\Controllers\ArchiveStatusController;
-use App\Http\Controllers\ArchiveBuildingController;
-use App\Http\Controllers\ArchiveCabinetController;
 use App\Http\Controllers\ArchiveFolderController;
 use App\Http\Controllers\ArchiveReportController;
-use App\Http\Controllers\ArchiveShelfController;
 use App\Http\Controllers\ArchiveShelfRowController;
 use App\Http\Controllers\ArchiveStorageLocationController;
+use App\Http\Controllers\ArchiveStoragePlaceController;
 use App\Http\Controllers\ArchiveSubTypeController;
 use App\Http\Controllers\ArchiveTypeController;
 use App\Http\Controllers\DashboardController;
@@ -29,8 +27,6 @@ use App\Http\Controllers\WorkGroupController;
 use App\Http\Controllers\WorkTeamClassificationController;
 use App\Http\Controllers\WorkTeamController;
 use App\Http\Controllers\WorkUnitController;
-use App\Models\ArchiveStorageLocation;
-use App\Models\ArchiveSubType;
 use App\Models\WorkTeamClassification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -342,20 +338,6 @@ Route::prefix('/app')->group(function (){
 
 
     /**
-     * * Archive Building Routes *
-     */
-    Route::resource('/archive-building', ArchiveBuildingController::class)->names([
-        'index' => 'archive-building.index',
-        'create' => 'archive-building.create',
-        'show' => 'archive-building.show',
-        'store' => 'archive-building.create-submit',
-        'edit' => 'archive-building.edit',
-        'update' => 'archive-building.edit-submit',
-        'destroy' => 'archive-building.delete',
-    ]);
-
-
-    /**
      * * Archive Storage Location Routes *
      */
     Route::resource('/archive-storage-location', ArchiveStorageLocationController::class)->names([
@@ -366,6 +348,20 @@ Route::prefix('/app')->group(function (){
         'edit' => 'archive-storage-location.edit',
         'update' => 'archive-storage-location.edit-submit',
         'destroy' => 'archive-storage-location.delete',
+    ]);
+
+
+    /**
+     * * Archive Storage Place Routes *
+     */
+    Route::resource('/archive-storage-place', ArchiveStoragePlaceController::class)->names([
+        'index' => 'archive-storage-place.index',
+        'create' => 'archive-storage-place.create',
+        'show' => 'archive-storage-place.show',
+        'store' => 'archive-storage-place.create-submit',
+        'edit' => 'archive-storage-place.edit',
+        'update' => 'archive-storage-place.edit-submit',
+        'destroy' => 'archive-storage-place.delete',
     ]);
 
 

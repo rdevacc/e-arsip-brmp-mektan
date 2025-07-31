@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('archive_storage_locations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('archive_building_id')->nullable(true);
             $table->string('name');
             $table->timestamps();
         });

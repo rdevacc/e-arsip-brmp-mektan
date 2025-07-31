@@ -2,31 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ArchiveBox;
+
 use App\Models\ArchiveFolder;
-use App\Models\ArchiveStorageLocation;
+use App\Models\ArchiveStoragePlace;
 use Illuminate\Http\Request;
 
 class ArchiveFolderController extends Controller
 {
     public function index(){
-        $archiveFolders = ArchiveFolder::with('archive_storage_location')->get(['id', 'archive_storage_location_id', 'name']);
+        $archiveFolders = ArchiveFolder::with('archive_storage_place')->get(['id', 'archive_storage_place_id', 'name']);
         
         return view('apps.archive-folder.index', compact('archiveFolders'));
     }
 
     public function create(){
-        $archiveStorageLocations = ArchiveStorageLocation::get(['id', 'name']);
+        $archiveStoragePlaces = ArchiveStoragePlace::get(['id', 'name']);
 
-        return view('apps.archive-folder.create', compact('archiveStorageLocations'));
+        return view('apps.archive-folder.create', compact('archiveStoragePlaces'));
     }
 
     public function store(Request $request){
          $validated = $request->validate([
-             'archive_storage_location_id' => 'required',
+             'archive_storage_place_id' => 'required',
              'name' => 'required'
          ],[
-            'archive_storage_location_id.required' => 'Lokasi Penyimpanan Arsip field is required!',
+            'archive_storage_place_id.required' => 'Tempat Penyimpanan Arsip field is required!',
             'name.required' => 'Nama Folder Arsip field is required!',
          ]
         );
@@ -38,17 +38,17 @@ class ArchiveFolderController extends Controller
     }
 
     public function edit(ArchiveFolder $archive_folder){
-        $archiveStorageLocations = ArchiveStorageLocation::get(['id', 'name']);
+        $archiveStoragePlaces = ArchiveStoragePlace::get(['id', 'name']);
 
-        return view('apps.archive-folder.edit', compact('archive_folder', 'archiveStorageLocations'));
+        return view('apps.archive-folder.edit', compact('archive_folder', 'archiveStoragePlaces'));
     }
 
     public function update(Request $request, ArchiveFolder $archive_folder){
          $validated = $request->validate([
-             'archive_storage_location_id' => 'required',
+             'archive_storage_place_id' => 'required',
              'name' => 'required'
          ],[
-            'archive_storage_location_id.required' => 'Lokasi Penyimpanan Arsip field is required!',
+            'archive_storage_place_id.required' => 'Tempat Penyimpanan Arsip field is required!',
             'name.required' => 'Nama Folder Arsip field is required!',
          ]
         );

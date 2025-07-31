@@ -12,40 +12,29 @@ class ArchiveStorageLocationSeeder extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-     {
+    {
         DB::table('archive_storage_locations')->insert([
             [
                 'id' => 1,
-                'archive_building_id' => '1',
-                'name' => 'Lemari',
+                'name' => 'Unit Kearsipan',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'id' => 2,
-                'archive_building_id' => '1',
-                'name' => 'Rak',
+                'name' => 'Ruang Keuangan',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'id' => 3,
-                'archive_building_id' => '1',
-                'name' => 'Kardex',
+                'name' => 'Ruang RTP',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'id' => 4,
-                'archive_building_id' => '1',
-                'name' => 'Lemari Kaca',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 5,
-                'archive_building_id' => '1',
-                'name' => 'Dll',
+                'name' => 'Ruang Kepegawaian',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

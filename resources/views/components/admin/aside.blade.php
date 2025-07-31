@@ -158,13 +158,6 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {{ request()->segment(2) === 'archive-building' ? 'active' : '' }}" href="{{route('archive-building.index') }}">
-                <i class="bi bi-grid"></i>
-                <span>Gedung Arsip</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
             <a class="nav-link {{ request()->segment(2) === 'archive-storage-location' ? 'active' : '' }}" href="{{route('archive-storage-location.index') }}">
                 <i class="bi bi-grid"></i>
                 <span>Lokasi Penyimpanan Arsip</span>
@@ -172,9 +165,16 @@
         </li>
 
         <li class="nav-item">
+            <a class="nav-link {{ request()->segment(2) === 'archive-storage-place' ? 'active' : '' }}" href="{{route('archive-storage-place.index') }}">
+                <i class="bi bi-grid"></i>
+                <span>Tempat Penyimpanan Arsip</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link {{ request()->segment(2) === 'archive-shelf-row' ? 'active' : '' }}" href="{{route('archive-shelf-row.index') }}">
                 <i class="bi bi-grid"></i>
-                <span>Baris Lokasi Penyimpanan Arsip</span>
+                <span>Baris Tempat Penyimpanan Arsip</span>
             </a>
         </li>
 

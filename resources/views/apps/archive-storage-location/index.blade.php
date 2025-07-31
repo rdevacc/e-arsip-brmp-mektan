@@ -31,17 +31,15 @@
                             <thead class="table-primary">
                                 <th>#</th>
                                 <th>Nama Lokasi Penyimpanan Arsip</th>
-                                <th>Nama Gedung Arsip</th>
                                 <th>Action</th>
                             </thead>
                             <tbody>
-                                @foreach ( $archiveStorageLocations as $archiveStorageLocation )
+                                @foreach ( $archive_storage_locations as $archive_storage_location )
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $archiveStorageLocation->name }}</td>
-                                        <td>{{ $archiveStorageLocation->archive_building->name }}</td>
+                                        <td>{{ $archive_storage_location->name }}</td>
                                         <td class="d-flex">
-                                            <a class="btn btn-warning mx-1" href="{{ route('archive-storage-location.edit', $archiveStorageLocation->id) }}"
+                                            <a class="btn btn-warning mx-1" href="{{ route('archive-storage-location.edit', $archive_storage_location->id) }}"
                                                 data-bs-toggle="tooltip"
                                                 data-bs-placement="top"
                                                 data-bs-custom-class="custom-tooltip"
@@ -49,12 +47,12 @@
                                                 <i class="bi bi-pencil"></i>
                                             </a>
 
-                                            <form action="{{ route('archive-storage-location.delete', $archiveStorageLocation->id) }}" method="POST" class="form-delete">
+                                            <form action="{{ route('archive-storage-location.delete', $archive_storage_location->id) }}" method="POST" class="form-delete">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-delete"
-                                                    data-id="{{ $archiveStorageLocation->id }}"
-                                                    data-url="{{ route('archive-storage-location.delete', $archiveStorageLocation->id) }}"
+                                                    data-id="{{ $archive_storage_location->id }}"
+                                                    data-url="{{ route('archive-storage-location.delete', $archive_storage_location->id) }}"
                                                     data-bs-toggle="tooltip"
                                                     title="Hapus Lokasi Penyimpanan Arsip">
                                                     <i class="bi bi-trash text-body-secondary"></i>

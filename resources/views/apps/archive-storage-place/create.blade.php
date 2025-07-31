@@ -7,7 +7,7 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Edit Data Gedung Arsip</h5>
+                            <h5 class="card-title">Tambah Tempat Penyimpanan Arsip</h5>
 
                              @if ($errors->any())
                                 <div class="alert alert-danger">
@@ -27,14 +27,29 @@
                                 </div>
                             @endif
 
-                            <form method="POST" action="{{ route('archive-building.edit-submit', $archive_building->id) }}">
+                            <form method="POST" action="{{ route('archive-storage-place.create-submit') }}">
                                 @csrf
-                                @method('PUT')
                                 <div class="row">
                                     <div class="col-12 mb-3">
-                                        <label for="name" class="form-label">Nama Gedung Arsip <span class="text-danger">*</span></label>
+                                        <label for="archive_storage_location_id" class="form-label">Lokasi Penyimpanan Arsip <span class="text-danger">*</span></label>
+                                        <select name="archive_storage_location_id" id="archive_storage_location_id"
+                                            class="form-select @error('archive_storage_location_id') is-invalid @enderror">
+                                            <option selected disabled>Pilih Lokasi Penyimpanan Arsip</option>
+                                            @foreach ($archiveBuildings as $archiveBuilding)
+                                                <option value="{{ $archiveBuilding->id }}" @selected(old('archive_storage_location_id') == $archiveBuilding->id)>
+                                                    {{ $archiveBuilding->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('archive_storage_location_id')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label for="name" class="form-label">Nama Tempat Penyimpanan Arsip <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                            id="name" name="name" value="{{ $archive_building->name ?:old('name') }}">
+                                            id="name" name="name" value="{{ old('name') ?: '' }}">
                                         @error('name')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -45,7 +60,7 @@
 
                                 <!-- Button -->
                                 <div class="mt-5 mb-2 me-2 text-end">
-                                    <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ route('archive-building.index') }}'">Kembali</button>
+                                    <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ route('archive-storage-place.index') }}'">Kembali</button>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </form>

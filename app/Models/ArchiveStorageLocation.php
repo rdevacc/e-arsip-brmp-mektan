@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ArchiveStorageLocation extends Model
@@ -12,37 +11,17 @@ class ArchiveStorageLocation extends Model
     use HasFactory;
                 
     protected $fillable = [
-        'archive_building_id',
         'name'
     ];
 
 
     /**
-     * * Relationship from Archive Storage Location to Building*
+     * * Relationship from Archive Storage Location to Storage Places*
      */
-    public function archive_building(): BelongsTo
+    public function archive_storage_places(): HasMany
     {
-        return $this->belongsTo(ArchiveShelfRow::class);
+        return $this->hasMany(ArchiveStoragePlace::class);
     }
-
-
-    /**
-     * * Relationship from Archive Storage Location to ShelfRow*
-     */
-    public function archive_shelfRows(): HasMany
-    {
-        return $this->hasMany(ArchiveShelfRow::class);
-    }
-
-
-    /**
-     * * Relationship from Archive Storage Location to Folder*
-     */
-    public function archive_folders(): HasMany
-    {
-        return $this->hasMany(ArchiveFolder::class);
-    }
-
 
      /**
      * * Relationship from Archive Storage Location to Archive *

@@ -31,16 +31,16 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 mb-3">
-                                        <label for="archive_storage_location_id" class="form-label">Lokasi Penyimpanan Arsip <span class="text-danger">*</span></label>
-                                        <select name="archive_storage_location_id" id="archive_storage_location_id"
-                                            class="form-select @error('archive_storage_location_id') is-invalid @enderror">
-                                            <option selected disabled>Pilih Lokasi Penyimpanan Arsip</option>
-                                            @foreach ($archiveStorageLocations as $archiveStorageLocation)
-                                                <option value="{{ $archiveStorageLocation->id }}" @selected(old('archive_storage_location_id') == $archiveStorageLocation->id)>
-                                                    {{ $archiveStorageLocation->name }}</option>
+                                        <label for="archive_storage_place_id" class="form-label">Tempat Penyimpanan Arsip <span class="text-danger">*</span></label>
+                                        <select name="archive_storage_place_id" id="archive_storage_place_id"
+                                            class="form-select @error('archive_storage_place_id') is-invalid @enderror">
+                                            <option selected disabled>Pilih Tempat Penyimpanan Arsip</option>
+                                            @foreach ($archiveStoragePlaces as $archiveStoragePlace)
+                                                <option value="{{ $archiveStoragePlace->id }}" @selected(old('archive_storage_place_id') == $archiveStoragePlace->id)>
+                                                    {{ $archiveStoragePlace->name }}</option>
                                             @endforeach
                                         </select>
-                                        @error('archive_storage_location_id')
+                                        @error('archive_storage_place_id')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>

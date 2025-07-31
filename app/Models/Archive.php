@@ -36,8 +36,8 @@ class Archive extends Model
         'archive_input_date',
         'period_id',
         'year_period',
-        'archive_building_id',
         'archive_storage_location_id',
+        'archive_storage_place_id',
         'archive_shelf_row_id',
         'archive_box_id',
         'archive_folder_id',
@@ -189,11 +189,11 @@ class Archive extends Model
     }
 
     /**
-     * * Relationship from Archive to Building*
+     * * Relationship from Archive to Storage Place*
      */
-    public function building(): BelongsTo
+    public function storage_place(): BelongsTo
     {
-        return $this->belongsTo(ArchiveBuilding::class);
+        return $this->belongsTo(ArchiveStoragePlace::class);
     }
 
     /**
