@@ -42,6 +42,20 @@ class ArchiveStoragePlaceSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'id' => 5,
+                'archive_storage_location_id' => '5',
+                'name' => 'Lemari Kaca 3',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 6,
+                'archive_storage_location_id' => '5',
+                'name' => 'Rak 2',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

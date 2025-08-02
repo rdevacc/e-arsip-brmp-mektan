@@ -32,6 +32,12 @@ class ArchiveQuantityUnitSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'id' => 4,
+                'name' => 'Jilid',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

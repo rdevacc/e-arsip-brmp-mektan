@@ -16,7 +16,7 @@ class ArchiveStatusSeeder extends Seeder
         DB::table('archive_statuses')->insert([
             [
                 'id' => 1,
-                'name' => 'Disimpan',
+                'name' => 'Simpan',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

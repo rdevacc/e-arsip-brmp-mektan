@@ -18,7 +18,7 @@
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('archive-report*') ? 'active' : '' }}" href="{{route('archive-report.index')}}">
                 <i class="bi bi-file-earmark-text"></i>
-                <span>Laporan</span>
+                <span>Cetak Laporan Arsip</span>
             </a>
         </li>
 

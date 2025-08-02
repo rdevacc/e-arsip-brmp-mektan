@@ -44,14 +44,14 @@ class ArchiveShelfRowSeeder extends Seeder
             ],
             [
                 'id' => 5,
-                'archive_storage_place_id' => '2',
+                'archive_storage_place_id' => '5',
                 'name' => 'Baris 2',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'id' => 6,
-                'archive_storage_place_id' => '2',
+                'archive_storage_place_id' => '5',
                 'name' => 'Baris 3',
                 'created_at' => now(),
                 'updated_at' => now(),
