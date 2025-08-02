@@ -164,6 +164,10 @@ class ArchiveController extends Controller
                 $archives->where('archives.archive_lifespan', $request->archive_lifespan);
             }
 
+            if ($request->textSearch) {
+                $archives->where('archives.archive_description', 'like', '%' . $request->textSearch . '%');
+            }
+
             // Tangani sorting manual berdasarkan kolom yang diklik
             if ($request->order) {
                 $columnIndex = $request->order[0]['column'];
@@ -192,7 +196,6 @@ class ArchiveController extends Controller
                         ->orderByDesc('archive_lifespan');
             }
 
-            
             return DataTables::eloquent($archives)
                 ->addIndexColumn()
                 ->addColumn('work_team_classification', fn($archive) => $archive->work_team_classification_code ?? '-')
@@ -227,6 +230,22 @@ class ArchiveController extends Controller
                                     ->sortByDesc('id')
                                     ->values();
 
+        $archiveTypeList = Archive::with('archive_type')
+                                    ->whereNotNull('archive_type_id')
+                                    ->get()
+                                    ->pluck('archive_type')
+                                    ->unique('id')
+                                    ->sortByDesc('id')
+                                    ->values();
+
+        $archiveSubTypeList = Archive::with('archive_subtype')
+                                    ->whereNotNull('archive_subtype_id')
+                                    ->get()
+                                    ->pluck('archive_subtype')
+                                    ->unique('id')
+                                    ->sortByDesc('id')
+                                    ->values();
+
         $archiveStatusList = Archive::with('archive_status')
                                     ->whereNotNull('archive_status_id')
                                     ->get()
@@ -251,6 +270,8 @@ class ArchiveController extends Controller
 
         return view('apps.archive.index', compact([
             'workTeamClassificationList',
+            'archiveTypeList',
+            'archiveSubTypeList',
             'archiveStatusList',
             'lifespanList',
             'periodList',

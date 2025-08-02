@@ -151,7 +151,7 @@ class Archive extends Model
     /**
      * * Relationship from Archive to Archive Type*
      */
-    public function archive_types(): BelongsTo
+    public function archive_type(): BelongsTo
     {
         return $this->belongsTo(ArchiveType::class);
     }
@@ -159,7 +159,7 @@ class Archive extends Model
     /**
      * * Relationship from Archive to Archive Type*
      */
-    public function archive_subtypes(): BelongsTo
+    public function archive_subtype(): BelongsTo
     {
         return $this->belongsTo(ArchiveSubType::class);
     }
