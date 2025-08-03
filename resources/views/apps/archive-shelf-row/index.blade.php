@@ -31,6 +31,7 @@
                             <thead class="table-primary">
                                 <th>#</th>
                                 <th>Nama Baris Lokasi Penyimpanan Arsip</th>
+                                <th>Nama Tempat Penyimpanan Arsip</th>
                                 <th>Nama Lokasi Penyimpanan Arsip</th>
                                 <th>Action</th>
                             </thead>
@@ -39,7 +40,8 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $archiveShelfRow->name }}</td>
-                                        <td>{{ $archiveShelfRow->archive_storage_location->name }}</td>
+                                        <td>{{ $archiveShelfRow->archive_storage_place->name }}</td>
+                                        <td>{{ $archiveShelfRow->archive_storage_place->archive_storage_location->name }}</td>
                                         <td class="d-flex">
                                             <a class="btn btn-warning mx-1" href="{{ route('archive-shelf-row.edit', $archiveShelfRow->id) }}"
                                                 data-bs-toggle="tooltip"

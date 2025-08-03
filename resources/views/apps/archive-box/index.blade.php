@@ -31,7 +31,8 @@
                             <thead class="table-primary">
                                 <th>#</th>
                                 <th>Nama Box Arsip</th>
-                                <th>Nama Rak Lemari Arsip</th>
+                                <th>Nama Baris Arsip</th>
+                                <th>Nama Tempat Penyimpanan Arsip</th>
                                 <th>Action</th>
                             </thead>
                             <tbody>
@@ -40,6 +41,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $archiveBox->name }}</td>
                                         <td>{{ $archiveBox->archive_shelf_row->name }}</td>
+                                        <td>{{ $archiveBox->archive_shelf_row->archive_storage_place->name }}</td>
                                         <td class="d-flex">
                                             <a class="btn btn-warning mx-1" href="{{ route('archive-box.edit', $archiveBox->id) }}"
                                                 data-bs-toggle="tooltip"

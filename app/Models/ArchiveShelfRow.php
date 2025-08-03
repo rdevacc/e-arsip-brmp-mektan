@@ -12,16 +12,16 @@ class ArchiveShelfRow extends Model
     use HasFactory;
                  
     protected $fillable = [
-        'archive_storage_location_id',
+        'archive_storage_place_id',
         'name'
     ];
 
     /**
-     * * Relationship from ShelfRow to Archive Storage Location *
+     * * Relationship from ShelfRow to Archive Storage Place *
      */
-    public function archive_storage_location(): BelongsTo
+    public function archive_storage_place(): BelongsTo
     {
-        return $this->belongsTo(ArchiveStorageLocation::class);
+        return $this->belongsTo(ArchiveStoragePlace::class);
     }
 
     /**

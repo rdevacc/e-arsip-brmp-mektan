@@ -4,7 +4,7 @@
     <main id="main" class="main">
         <section class="section quantity-unit">
             <div class="pagetitle">
-                <h1>Status Arsip</h1>
+                <h1>Jenis Arsip</h1>
             </div>
              <!-- Session Alert -->
             @if (session('success'))
@@ -30,16 +30,16 @@
                         <table class="table">
                             <thead class="table-primary">
                                 <th>#</th>
-                                <th>Nama Status Arsip</th>
+                                <th>Nama Jenis Arsip</th>
                                 <th>Action</th>
                             </thead>
                             <tbody>
-                                @foreach ( $archiveStatuses as $archiveStatus )
+                                @foreach ( $archiveTypes as $archiveType )
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $archiveStatus->name }}</td>
+                                        <td>{{ $archiveType->name }}</td>
                                         <td class="d-flex">
-                                            <a class="btn btn-warning mx-1" href="{{ route('archive-status.edit', $archiveStatus->id) }}"
+                                            <a class="btn btn-warning mx-1" href="{{ route('archive-status.edit', $archiveType->id) }}"
                                                 data-bs-toggle="tooltip"
                                                 data-bs-placement="top"
                                                 data-bs-custom-class="custom-tooltip"
@@ -47,12 +47,12 @@
                                                 <i class="bi bi-pencil"></i>
                                             </a>
 
-                                            <form action="{{ route('archive-status.delete', $archiveStatus->id) }}" method="POST" class="form-delete">
+                                            <form action="{{ route('archive-status.delete', $archiveType->id) }}" method="POST" class="form-delete">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-delete"
-                                                    data-id="{{ $archiveStatus->id }}"
-                                                    data-url="{{ route('archive-status.delete', $archiveStatus->id) }}"
+                                                    data-id="{{ $archiveType->id }}"
+                                                    data-url="{{ route('archive-status.delete', $archiveType->id) }}"
                                                     data-bs-toggle="tooltip"
                                                     title="Hapus Status Arsip">
                                                     <i class="bi bi-trash text-body-secondary"></i>
