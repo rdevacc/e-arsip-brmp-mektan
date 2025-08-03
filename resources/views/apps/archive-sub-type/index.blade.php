@@ -35,13 +35,13 @@
                                 <th>Action</th>
                             </thead>
                             <tbody>
-                                @foreach ( $archiveShelfRows as $archiveShelfRow )
+                                @foreach ( $archiveSubTypes as $archiveSubType )
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $archiveShelfRow->name }}</td>
-                                        <td>{{ $archiveShelfRow->archive_shelf->name }}</td>
+                                        <td>{{ $archiveSubType->name }}</td>
+                                        <td>{{ $archiveSubType->archive_shelf->name }}</td>
                                         <td class="d-flex">
-                                            <a class="btn btn-warning mx-1" href="{{ route('archive-shelf-row.edit', $archiveShelfRow->id) }}"
+                                            <a class="btn btn-warning mx-1" href="{{ route('archive-shelf-row.edit', $archiveSubType->id) }}"
                                                 data-bs-toggle="tooltip"
                                                 data-bs-placement="top"
                                                 data-bs-custom-class="custom-tooltip"
@@ -49,12 +49,12 @@
                                                 <i class="bi bi-pencil"></i>
                                             </a>
 
-                                            <form action="{{ route('archive-shelf-row.delete', $archiveShelfRow->id) }}" method="POST" class="form-delete">
+                                            <form action="{{ route('archive-shelf-row.delete', $archiveSubType->id) }}" method="POST" class="form-delete">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-delete"
-                                                    data-id="{{ $archiveShelfRow->id }}"
-                                                    data-url="{{ route('archive-shelf-row.delete', $archiveShelfRow->id) }}"
+                                                    data-id="{{ $archiveSubType->id }}"
+                                                    data-url="{{ route('archive-shelf-row.delete', $archiveSubType->id) }}"
                                                     data-bs-toggle="tooltip"
                                                     title="Hapus Sub Jenis Arsip">
                                                     <i class="bi bi-trash text-body-secondary"></i>
