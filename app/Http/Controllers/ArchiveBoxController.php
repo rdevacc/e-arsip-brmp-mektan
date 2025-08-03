@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\ArchiveBox;
 use App\Models\ArchiveShelfRow;
+use App\Models\ArchiveStorageLocation;
+use App\Models\ArchiveStoragePlace;
 use Illuminate\Http\Request;
 
 class ArchiveBoxController extends Controller
@@ -15,7 +17,7 @@ class ArchiveBoxController extends Controller
     }
 
     public function create(){
-        $archiveShelfRows = ArchiveShelfRow::get(['id', 'name']);
+        $archiveShelfRows = ArchiveShelfRow::get(['id', 'archive_storage_place_id', 'name']);
 
         return view('apps.archive-box.create', compact('archiveShelfRows'));
     }
@@ -37,7 +39,7 @@ class ArchiveBoxController extends Controller
     }
 
     public function edit(ArchiveBox $archive_box){
-        $archiveShelfRows = ArchiveShelfRow::get(['id', 'name']);
+        $archiveShelfRows = ArchiveShelfRow::get(['id', 'archive_storage_place_id', 'name']);
 
         return view('apps.archive-box.edit', compact('archive_box', 'archiveShelfRows'));
     }

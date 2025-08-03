@@ -7,7 +7,7 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Tambah Data Baris Rak Lemari Arsip</h5>
+                            <h5 class="card-title">Tambah Data Sub Jenis Arsip</h5>
 
                              @if ($errors->any())
                                 <div class="alert alert-danger">
@@ -27,27 +27,27 @@
                                 </div>
                             @endif
 
-                            <form method="POST" action="{{ route('archive-shelf-row.create-submit') }}">
+                            <form method="POST" action="{{ route('archive-subtype.create-submit') }}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 mb-3">
-                                        <label for="archive_shelf_id" class="form-label">Rak Lemari Arsip <span class="text-danger">*</span></label>
-                                        <select name="archive_shelf_id" id="archive_shelf_id"
-                                            class="form-select @error('archive_shelf_id') is-invalid @enderror">
-                                            <option selected disabled>Pilih Rak Lemari Arsip</option>
-                                            @foreach ($archiveShelves as $archiveShelf)
-                                                <option value="{{ $archiveShelf->id }}" @selected(old('archive_shelf_id') == $archiveShelf->id)>
-                                                    {{ $archiveShelf->name }}</option>
+                                        <label for="archive_type_id" class="form-label">Jenis Arsip <span class="text-danger">*</span></label>
+                                        <select name="archive_type_id" id="archive_type_id"
+                                            class="form-select @error('archive_type_id') is-invalid @enderror">
+                                            <option selected disabled>Pilih Jenis Arsip</option>
+                                            @foreach ($archiveTypes as $archiveType)
+                                                <option value="{{ $archiveType->id }}" @selected(old('archive_type_id') == $archiveType->id)>
+                                                    {{ $archiveType->name }}</option>
                                             @endforeach
                                         </select>
-                                        @error('archive_shelf_id')
+                                        @error('archive_type_id')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="name" class="form-label">Nama Baris Rak Lemari Arsip <span class="text-danger">*</span></label>
+                                        <label for="name" class="form-label">Nama Sub Jenis Arsip <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
                                             id="name" name="name" value="{{ old('name') ?: '' }}">
                                         @error('name')
@@ -60,7 +60,7 @@
 
                                 <!-- Button -->
                                 <div class="mt-5 mb-2 me-2 text-end">
-                                    <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ route('archive-shelf-row.index') }}'">Kembali</button>
+                                    <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ route('archive-subtype.index') }}'">Kembali</button>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </form>

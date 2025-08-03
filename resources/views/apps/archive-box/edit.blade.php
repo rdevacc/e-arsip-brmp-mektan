@@ -32,14 +32,14 @@
                                 @method('PUT')
                                 <div class="row">
                                     <div class="col-12 mb-3">
-                                        <label for="archive_shelf_row_id" class="form-label">Lemari Arsip <span class="text-danger">*</span></label>
+                                        <label for="archive_shelf_row_id" class="form-label">Baris Tempat Penyimpanan Arsip <span class="text-danger">*</span></label>
                                         <select name="archive_shelf_row_id" id="archive_shelf_row_id"
                                             class="form-select @error('archive_shelf_row_id') is-invalid @enderror">
-                                            <option selected disabled>Pilih Lemari Arsip</option>
+                                            <option selected disabled>Pilih Baris Tempat Penyimpanan Arsip</option>
                                             @foreach ($archiveShelfRows as $archiveShelfRow)
                                                 <option value="{{ $archiveShelfRow->id }}"
                                                     {{ old('archive_shelf_row_id', $archive_box->archive_shelf_row_id) == $archiveShelfRow->id ? 'selected' : '' }}>
-                                                    {{ $archiveShelfRow->name }}
+                                                   {{ $archiveShelfRow->name }} - {{ $archiveShelfRow->archive_storage_place->name }} - {{ $archiveShelfRow->archive_storage_place->archive_storage_location->name }}
                                                 </option>
                                             @endforeach
                                         </select>

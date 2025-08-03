@@ -18,6 +18,8 @@ class DashboardController extends Controller
         $dynamicArchive = Archive::where('archive_type_id',1)->count();
         $proposedForDestructionArchive = Archive::where('archive_status_id', 3)->count();
         $destructionArchive = Archive::where('archive_status_id', 4)->count();
+        $savedArchive = Archive::where('archive_status_id', 1)->count();
+        $submittedArchive = Archive::where('archive_status_id', 2)->count();
 
         $dynamicArchivePercentage = 0;
         $staticArchivePercentage = 0;
@@ -69,6 +71,8 @@ class DashboardController extends Controller
             'staticArchivePercentage',
             'permanentArchivePercentage',
             'vitalArchivePercentage',
+            'savedArchive',
+            'submittedArchive',
         ]));
     }
 }

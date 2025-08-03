@@ -7,7 +7,7 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Edit Data Baris Rak Lemari Arsip</h5>
+                            <h5 class="card-title">Edit Data Sub Tipe Arsip</h5>
 
                              @if ($errors->any())
                                 <div class="alert alert-danger">
@@ -27,32 +27,32 @@
                                 </div>
                             @endif
 
-                            <form method="POST" action="{{ route('archive-shelf-row.edit-submit', $archive_shelf_row->id) }}">
+                            <form method="POST" action="{{ route('archive-subtype.edit-submit', $archive_subtype->id) }}">
                                 @csrf
                                 @method('PUT')
                                 <div class="row">
                                     <div class="col-12 mb-3">
-                                        <label for="archive_shelf_id" class="form-label">Lemari Arsip <span class="text-danger">*</span></label>
-                                        <select name="archive_shelf_id" id="archive_shelf_id"
-                                            class="form-select @error('archive_shelf_id') is-invalid @enderror">
-                                            <option selected disabled>Pilih Lemari Arsip</option>
-                                            @foreach ($archiveShelves as $archiveShelf)
-                                                <option value="{{ $archiveShelf->id }}"
-                                                    {{ old('archive_shelf_id', $archive_shelf_row->archive_shelf_id) == $archiveShelf->id ? 'selected' : '' }}>
-                                                    {{ $archiveShelf->name }}
+                                        <label for="archive_subtype_id" class="form-label">Tipe Arsip <span class="text-danger">*</span></label>
+                                        <select name="archive_subtype_id" id="archive_subtype_id"
+                                            class="form-select @error('archive_subtype_id') is-invalid @enderror">
+                                            <option selected disabled>Pilih Tipe Arsip</option>
+                                            @foreach ($archiveTypes as $archiveType)
+                                                <option value="{{ $archiveType->id }}"
+                                                    {{ old('archive_subtype_id', $archive_subtype->archive_subtype_id) == $archiveType->id ? 'selected' : '' }}>
+                                                    {{ $archiveType->name }}
                                                 </option>
                                             @endforeach
                                         </select>
-                                        @error('archive_shelf_id')
+                                        @error('archive_subtype_id')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="name" class="form-label">Nama Baris Rak Lemari Arsip <span class="text-danger">*</span></label>
+                                        <label for="name" class="form-label">Nama Baris Rak Sub Tipe Arsip <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                            id="name" name="name" value="{{ $archive_shelf_row->name ?:old('name') }}">
+                                            id="name" name="name" value="{{ $archive_subtype->name ?:old('name') }}">
                                         @error('name')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -63,7 +63,7 @@
 
                                 <!-- Button -->
                                 <div class="mt-5 mb-2 me-2 text-end">
-                                    <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ route('archive-shelf-row.index') }}'">Kembali</button>
+                                    <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ route('archive-subtype.index') }}'">Kembali</button>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </form>

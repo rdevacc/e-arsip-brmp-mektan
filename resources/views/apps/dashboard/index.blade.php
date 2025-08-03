@@ -190,12 +190,12 @@
                                         <h5 class="card-title">Arsip Diserahkan</h5>
                                         <div class="d-flex align-items-center">
                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                <a href="{{ $activeArchive != 0 ? route('archive-index', ['status' => 'Aktif']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
+                                                <a href="{{ $submittedArchive != 0 ? route('archive-index', ['status' => 'Aktif']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
                                                     <i class="bi bi-menu-button-wide"></i>
                                                 </a>
                                             </div>
                                             <div class="ps-3">
-                                                <h6>{{ $activeArchive }}</h6>
+                                                <h6>{{ $submittedArchive }}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -209,12 +209,12 @@
                                         <h5 class="card-title">Arsip Disimpan</h5>
                                         <div class="d-flex align-items-center">
                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                <a href="{{ $inactiveArchive != 0 ? route('archive-index', ['status' => 'Inaktif']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
+                                                <a href="{{ $savedArchive != 0 ? route('archive-index', ['status' => 'Inaktif']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
                                                     <i class="bi bi-menu-button-wide"></i>
                                                 </a>
                                             </div>
                                             <div class="ps-3">
-                                                <h6>{{ $inactiveArchive }}</h6>
+                                                <h6>{{ $savedArchive }}</h6>
                                             </div>
                                         </div>
                                     </div>

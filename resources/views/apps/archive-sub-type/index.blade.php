@@ -23,7 +23,7 @@
                     <!-- Tombol Tambah di kiri -->
                     <div class="row my-2 d-flex">
                         <div class="col-md-auto mb-2">
-                            <a href="{{ route('archive-shelf-row.create') }}" class="btn btn-primary w-100 w-md-auto">Tambah</a>
+                            <a href="{{ route('archive-subtype.create') }}" class="btn btn-primary w-100 w-md-auto">Tambah</a>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -39,9 +39,9 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $archiveSubType->name }}</td>
-                                        <td>{{ $archiveSubType->archive_shelf->name }}</td>
+                                        <td>{{ $archiveSubType->archive_type->name }}</td>
                                         <td class="d-flex">
-                                            <a class="btn btn-warning mx-1" href="{{ route('archive-shelf-row.edit', $archiveSubType->id) }}"
+                                            <a class="btn btn-warning mx-1" href="{{ route('archive-subtype.edit', $archiveSubType->id) }}"
                                                 data-bs-toggle="tooltip"
                                                 data-bs-placement="top"
                                                 data-bs-custom-class="custom-tooltip"
@@ -49,12 +49,12 @@
                                                 <i class="bi bi-pencil"></i>
                                             </a>
 
-                                            <form action="{{ route('archive-shelf-row.delete', $archiveSubType->id) }}" method="POST" class="form-delete">
+                                            <form action="{{ route('archive-subtype.delete', $archiveSubType->id) }}" method="POST" class="form-delete">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-delete"
                                                     data-id="{{ $archiveSubType->id }}"
-                                                    data-url="{{ route('archive-shelf-row.delete', $archiveSubType->id) }}"
+                                                    data-url="{{ route('archive-subtype.delete', $archiveSubType->id) }}"
                                                     data-bs-toggle="tooltip"
                                                     title="Hapus Sub Jenis Arsip">
                                                     <i class="bi bi-trash text-body-secondary"></i>
