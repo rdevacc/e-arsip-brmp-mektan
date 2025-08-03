@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @push('css')
@@ -134,15 +135,36 @@
                 });
 
                 this.on("success", function (file, response) {
-                    console.log(response);
-
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil',
-                        text: 'File berhasil diupload dan diproses!',
-                    }).then(() => {
-                        window.location.href = response.redirect;
-                    });
+                    if (response.success) {
+                        if (response.errors && response.errors.length > 0) {
+                            let errorList = response.errors.map(e => `<li>${e}</li>`).join('');
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Berhasil dengan Peringatan',
+                                html: `
+                                    <p>File berhasil diupload, namun ada beberapa masalah:</p>
+                                    <ul style="text-align: left;">${errorList}</ul>
+                                `,
+                                confirmButtonText: 'Lanjutkan'
+                            }).then(() => {
+                                window.location.href = response.redirect;
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: response.message || 'File berhasil diupload dan diproses!',
+                            }).then(() => {
+                                window.location.href = response.redirect;
+                            });
+                        }
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            text: response.message || 'Upload gagal!',
+                        });
+                    }
                 });
 
                 this.on("error", function (file, response) {

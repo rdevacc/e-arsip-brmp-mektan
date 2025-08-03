@@ -40,7 +40,13 @@ class ArchiveStorageLocationSeeder extends Seeder
             ],
             [
                 'id' => 5,
-                'name' => 'Ruang Kearsipan Ruang 3',
+                'name' => 'Unit Kearsipan Ruang 2',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 6,
+                'name' => 'Unit Kearsipan Ruang 3',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

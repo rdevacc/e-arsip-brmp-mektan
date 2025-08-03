@@ -84,6 +84,13 @@ class ArchiveBoxSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'id' => 11,
+                'archive_shelf_row_id' => '4',
+                'name' => 'Box 2',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

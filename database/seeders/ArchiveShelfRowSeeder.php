@@ -37,7 +37,7 @@ class ArchiveShelfRowSeeder extends Seeder
             ],
             [
                 'id' => 4,
-                'archive_storage_place_id' => '2',
+                'archive_storage_place_id' => '5',
                 'name' => 'Baris 1',
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -52,6 +52,27 @@ class ArchiveShelfRowSeeder extends Seeder
             [
                 'id' => 6,
                 'archive_storage_place_id' => '5',
+                'name' => 'Baris 3',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 7,
+                'archive_storage_place_id' => '6',
+                'name' => 'Baris 1',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 8,
+                'archive_storage_place_id' => '6',
+                'name' => 'Baris 2',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 9,
+                'archive_storage_place_id' => '6',
                 'name' => 'Baris 3',
                 'created_at' => now(),
                 'updated_at' => now(),
