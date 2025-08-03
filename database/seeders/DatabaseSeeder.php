@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
             ArchiveStoragePlaceSeeder::class,
             ArchiveShelfRowSeeder::class,
             ArchiveBoxSeeder::class,
-            ArchiveFolderSeeder::class,
+            // ArchiveFolderSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
             // ArchiveSeeder::class,

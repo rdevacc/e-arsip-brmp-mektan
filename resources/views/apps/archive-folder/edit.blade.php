@@ -32,18 +32,18 @@
                                 @method('PUT')
                                 <div class="row">
                                     <div class="col-12 mb-3">
-                                        <label for="archive_storage_location_id" class="form-label">Lokasi Penyimpanan Arsip <span class="text-danger">*</span></label>
-                                        <select name="archive_storage_location_id" id="archive_storage_location_id"
-                                            class="form-select @error('archive_storage_location_id') is-invalid @enderror">
+                                        <label for="archive_storage_place_id" class="form-label">Lokasi Penyimpanan Arsip <span class="text-danger">*</span></label>
+                                        <select name="archive_storage_place_id" id="archive_storage_place_id"
+                                            class="form-select @error('archive_storage_place_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Lokasi Penyimpanan Arsip</option>
-                                            @foreach ($archiveStorageLocations as $archiveStorageLocation)
-                                                <option value="{{ $archiveStorageLocation->id }}"
-                                                    {{ old('archive_storage_location_id', $archive_folder->archive_storage_location_id) == $archiveStorageLocation->id ? 'selected' : '' }}>
-                                                    {{ $archiveStorageLocation->name }}
+                                            @foreach ($archiveStoragePlaces as $archiveStoragePlace)
+                                                <option value="{{ $archiveStoragePlace->id }}"
+                                                    {{ old('archive_storage_place_id', $archive_folder->archive_storage_place_id) == $archiveStoragePlace->id ? 'selected' : '' }}>
+                                                    {{ $archiveStoragePlace->name }} - {{ $archiveStoragePlace->archive_storage_location->name }}
                                                 </option>
                                             @endforeach
                                         </select>
-                                        @error('archive_storage_location_id')
+                                        @error('archive_storage_place_id')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>

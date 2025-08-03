@@ -16,7 +16,7 @@ class ArchiveFolderController extends Controller
     }
 
     public function create(){
-        $archiveStoragePlaces = ArchiveStoragePlace::get(['id', 'name']);
+        $archiveStoragePlaces = ArchiveStoragePlace::get(['id', 'archive_storage_location_id', 'name']);
 
         return view('apps.archive-folder.create', compact('archiveStoragePlaces'));
     }
@@ -38,7 +38,7 @@ class ArchiveFolderController extends Controller
     }
 
     public function edit(ArchiveFolder $archive_folder){
-        $archiveStoragePlaces = ArchiveStoragePlace::get(['id', 'name']);
+        $archiveStoragePlaces = ArchiveStoragePlace::get(['id', 'archive_storage_location_id', 'name']);
 
         return view('apps.archive-folder.edit', compact('archive_folder', 'archiveStoragePlaces'));
     }

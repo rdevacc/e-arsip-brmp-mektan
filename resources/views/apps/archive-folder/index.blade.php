@@ -32,6 +32,7 @@
                                 <th>#</th>
                                 <th>Nama Folder Arsip</th>
                                 <th>Nama Tempat Penyimpanan Arsip</th>
+                                <th>Nama Lokasi Penyimpanan Arsip</th>
                                 <th>Action</th>
                             </thead>
                             <tbody>
@@ -40,6 +41,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $archiveFolder->name }}</td>
                                         <td>{{ $archiveFolder->archive_storage_place->name }}</td>
+                                        <td>{{ $archiveFolder->archive_storage_place->archive_storage_location->name }}</td>
                                         <td class="d-flex">
                                             <a class="btn btn-warning mx-1" href="{{ route('archive-folder.edit', $archiveFolder->id) }}"
                                                 data-bs-toggle="tooltip"
