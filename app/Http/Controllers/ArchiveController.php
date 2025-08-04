@@ -52,7 +52,6 @@ class ArchiveController extends Controller
             // Reset lokasi arsip jadi null karena status musnah
             $archive->storage_location_id = null;
             $archive->storage_place_id = null;
-            $archive->shelf_id = null;
             $archive->shelf_row_id = null;
             $archive->archive_box_id = null;
             $archive->archive_folder_id = null;

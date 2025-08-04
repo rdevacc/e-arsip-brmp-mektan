@@ -565,11 +565,13 @@
         });
     </script>
 
-    <!-- Catch data value status dari dashboard -->
+    <!-- Catch data value from dashboard -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const urlParams = new URLSearchParams(window.location.search);
             const statusParam = urlParams.get('status');
+            const typeParam = urlParams.get('archive_type');
+            const subTypeParam = urlParams.get('archive_subtype');
 
             if (statusParam) {
                 const select = document.getElementById('filterArchiveStatus');
@@ -577,6 +579,22 @@
 
                 // Trigger change event ke DataTable yg benar
                 $('#filterArchiveStatus').trigger('change');
+            }
+
+            if (typeParam) {
+                const select = document.getElementById('filterArchiveType');
+                select.value = typeParam;
+
+                // Trigger change event ke DataTable yg benar
+                $('#filterArchiveType').trigger('change');
+            }
+
+            if (subTypeParam) {
+                const select = document.getElementById('filterArchiveSubType');
+                select.value = subTypeParam;
+
+                // Trigger change event ke DataTable yg benar
+                $('#filterArchiveSubType').trigger('change');
             }
         });
 

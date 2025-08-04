@@ -69,7 +69,7 @@
                                 <h5 class="card-title">Arsip Dinamis</h5>
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <a href="{{ route('archive-index') }}" class="text-decoration-none" style="color: inherit;">
+                                        <a href="{{ $dynamicArchive != 0 ? route('archive-index', ['archive_type' => 'Dinamis']) : route('archive-index') }}" class="text-decoration-none" style="color: inherit;">
                                             <i class="bi bi-menu-button-wide"></i>
                                         </a>
                                     </div>
@@ -89,7 +89,7 @@
                                         <h5 class="card-title">Arsip Aktif</h5>
                                         <div class="d-flex align-items-center">
                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                <a href="{{ $activeArchive != 0 ? route('archive-index', ['status' => 'Aktif']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
+                                                <a href="{{ $activeArchive != 0 ? route('archive-index', ['archive_subtype' => 'Aktif']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
                                                     <i class="bi bi-menu-button-wide"></i>
                                                 </a>
                                             </div>
@@ -108,7 +108,7 @@
                                         <h5 class="card-title">Arsip Inaktif</h5>
                                         <div class="d-flex align-items-center">
                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                <a href="{{ $inactiveArchive != 0 ? route('archive-index', ['status' => 'Inaktif']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
+                                                <a href="{{ $inactiveArchive != 0 ? route('archive-index', ['archive_subtype' => 'Inaktif']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
                                                     <i class="bi bi-menu-button-wide"></i>
                                                 </a>
                                             </div>
@@ -170,7 +170,7 @@
                                 <h5 class="card-title">Arsip Statis</h5>
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <a href="{{ route('archive-index') }}" class="text-decoration-none" style="color: inherit;">
+                                        <a href="{{ $staticArchive != 0 ? route('archive-index', ['archive_type' => 'Statis']) : route('archive-index') }}" class="text-decoration-none" style="color: inherit;">
                                             <i class="bi bi-menu-button-wide"></i>
                                         </a>
                                     </div>
@@ -190,7 +190,7 @@
                                         <h5 class="card-title">Arsip Diserahkan</h5>
                                         <div class="d-flex align-items-center">
                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                <a href="{{ $submittedArchive != 0 ? route('archive-index', ['status' => 'Aktif']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
+                                                <a href="{{ $submittedArchive != 0 ? route('archive-index', ['status' => 'Diserahkan']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
                                                     <i class="bi bi-menu-button-wide"></i>
                                                 </a>
                                             </div>
@@ -209,7 +209,7 @@
                                         <h5 class="card-title">Arsip Disimpan</h5>
                                         <div class="d-flex align-items-center">
                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                <a href="{{ $savedArchive != 0 ? route('archive-index', ['status' => 'Inaktif']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
+                                                <a href="{{ $savedArchive != 0 ? route('archive-index', ['status' => 'Simpan']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
                                                     <i class="bi bi-menu-button-wide"></i>
                                                 </a>
                                             </div>
@@ -233,7 +233,7 @@
                                 <h5 class="card-title">Arsip Permanen</h5>
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <a href="{{ route('archive-index') }}" class="text-decoration-none" style="color: inherit;">
+                                        <a href="{{ $permanentArchive != 0 ? route('archive-index', ['archive_type' => 'Permanen']) : route('archive-index') }}" class="text-decoration-none" style="color: inherit;">
                                             <i class="bi bi-menu-button-wide"></i>
                                         </a>
                                     </div>
@@ -255,7 +255,7 @@
                                 <h5 class="card-title">Arsip Vital</h5>
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <a href="{{ route('archive-index') }}" class="text-decoration-none" style="color: inherit;">
+                                        <a href="{{ $vitalArchive != 0 ? route('archive-index', ['archive_type' => 'Vital']) : route('archive-index') }}" class="text-decoration-none" style="color: inherit;">
                                             <i class="bi bi-menu-button-wide"></i>
                                         </a>
                                     </div>
