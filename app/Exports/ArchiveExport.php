@@ -3,16 +3,16 @@
 namespace App\Exports;
 
 use App\Models\Archive;
-use Maatwebsite\Excel\Concerns\FromQuery; // ✅ PERUBAHAN
+use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
-use Maatwebsite\Excel\Concerns\WithMapping; // ✅ PERUBAHAN
+use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class ArchiveExport implements FromQuery, WithHeadings, WithStyles, WithEvents, WithMapping // ✅ PERUBAHAN
+class ArchiveExport implements FromQuery, WithHeadings, WithStyles, WithEvents, WithMapping
 {
     protected $filters;
 
@@ -21,20 +21,21 @@ class ArchiveExport implements FromQuery, WithHeadings, WithStyles, WithEvents, 
         $this->filters = $filters;
     }
 
-    // ✅ PERUBAHAN: gunakan FromQuery, bukan FromCollection
+    // PERUBAHAN: gunakan FromQuery, bukan FromCollection
     public function query()
     {
         $query = Archive::query()->with([
             'work_team_classification',
+            'archive_type',
             'archive_status',
-            'building',
-            'cabinet',
-            'shelf',
+            'storage_location',
+            'storage_place',
             'shelf_row',
+            'box',
             'folder'
         ]);
 
-        // 🔁 DIPINDAHKAN dari collection()
+        // DIPINDAHKAN dari collection()
         if (!empty($this->filters['text_search'])) {
             $query->where('archive_description', 'like', '%' . $this->filters['text_search'] . '%');
         }
@@ -45,6 +46,10 @@ class ArchiveExport implements FromQuery, WithHeadings, WithStyles, WithEvents, 
 
         if (!empty($this->filters['end_date'])) {
             $query->whereDate('created_at', '<=', $this->filters['end_date']);
+        }
+
+        if (!empty($this->filters['archive_type'])) {
+            $query->where('archive_type_id', $this->filters['archive_type']);
         }
 
         if (!empty($this->filters['archive_status'])) {
@@ -62,7 +67,7 @@ class ArchiveExport implements FromQuery, WithHeadings, WithStyles, WithEvents, 
         return $query;
     }
 
-    // ✅ PERUBAHAN: ganti dari map() di collection() ke method map() untuk WithMapping
+    // PERUBAHAN: ganti dari map() di collection() ke method map() untuk WithMapping
     public function map($item): array
     {
         static $index = 0;
@@ -74,9 +79,8 @@ class ArchiveExport implements FromQuery, WithHeadings, WithStyles, WithEvents, 
             $item->archive_description ?? '-',
             $item->archive_lifespan ?? '-',
             $item->archive_status->name ?? '-',
-            $item->building->name ?? '-',
-            $item->cabinet->name ?? '-',
-            $item->shelf->name ?? '-',
+            $item->storage_location->name ?? '-',
+            $item->storage_place->name ?? '-',
             $item->shelf_row->name ?? '-',
             $item->folder->name ?? '-',
         ];
@@ -88,7 +92,7 @@ class ArchiveExport implements FromQuery, WithHeadings, WithStyles, WithEvents, 
             // Baris pertama
             ['No', 'Kode Klasifikasi', 'Uraian Arsip', 'Kurun Waktu', 'Status Arsip', 'Lokasi Penyimpanan', '', '', '', ''],
             // Baris kedua
-            ['', '', '', '', '', 'Gedung', 'Lemari', 'Rak', 'Baris', 'Folder'],
+            ['', '', '', '', '', 'Lokasi Penyimpanan Arsip', 'Tempat Penyimpanan Arsip', 'Baris', 'Boks', 'Folder'],
         ];
     }
 

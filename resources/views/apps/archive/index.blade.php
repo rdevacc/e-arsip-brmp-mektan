@@ -199,10 +199,10 @@
                                                 Tahun Periode
                                             </th>
                                             <th class="text-center align-middle">
-                                                Tipe Arsip
+                                                Jenis Arsip
                                             </th>
                                             <th class="text-center align-middle">
-                                                Sub Tipe Arsip
+                                                Sub Jenis Arsip
                                             </th>
                                             <th class="text-center align-middle">
                                                 Status Arsip

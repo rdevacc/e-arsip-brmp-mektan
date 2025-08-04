@@ -24,6 +24,24 @@ class ArchiveReportController extends Controller
             ->sortByDesc('id')
             ->values();
 
+        // Ambil list archive_type yang punya arsip terkait
+        $archiveTypeList = Archive::with('archive_type')
+            ->whereNotNull('archive_type_id')
+            ->get()
+            ->pluck('archive_type')
+            ->unique('id')
+            ->sortByDesc('id')
+            ->values();
+
+        // Ambil list archive_type yang punya arsip terkait
+        $archiveTypeList = Archive::with('archive_subtype')
+            ->whereNotNull('archive_subtype_id')
+            ->get()
+            ->pluck('archive_subtype')
+            ->unique('id')
+            ->sortByDesc('id')
+            ->values();
+
         // Ambil list archive_status yang punya arsip terkait
         $archiveStatusList = Archive::with('archive_status')
             ->whereNotNull('archive_status_id')
@@ -33,6 +51,22 @@ class ArchiveReportController extends Controller
             ->sortByDesc('id')
             ->values();
 
+        // Ambil list period distinct dan order by numeric descending
+        $periodList = Archive::with('period')
+            ->whereNotNull('period_id')
+            ->get()
+            ->pluck('period')
+            ->unique('id')
+            ->sortByDesc('id')
+            ->values();
+
+        // Ambil list year_period distinct dan order by numeric descending
+        $yearPeriodList = Archive::select('year_period')
+            ->whereNotNull('year_period')
+            ->distinct()
+            ->orderByRaw('CAST(year_period AS UNSIGNED) DESC')
+            ->pluck('year_period');
+
         // Ambil list lifespan distinct dan order by numeric descending
         $lifespanList = Archive::select('archive_lifespan')
             ->whereNotNull('archive_lifespan')
@@ -40,13 +74,13 @@ class ArchiveReportController extends Controller
             ->orderByRaw('CAST(archive_lifespan AS UNSIGNED) DESC')
             ->pluck('archive_lifespan');
 
-        return view('apps.archive-report.index', compact('workTeamClassificationList', 'archiveStatusList', 'lifespanList'));
+        return view('apps.archive-report.index', compact('workTeamClassificationList', 'archiveTypeList', 'archiveStatusList', 'lifespanList', 'periodList', 'yearPeriodList'));
     }
 
     public function filter(Request $request)
     {
         try {
-            $query = Archive::with(['work_team_classification', 'archive_status']);
+            $query = Archive::with(['work_team_classification', 'archive_status', 'archive_type', 'archive_subtype', 'period']);
 
             $query->when($request->text_search, function ($q) use ($request) {
                 $q->where('archive_description', 'like', '%' . $request->text_search . '%');
@@ -60,19 +94,38 @@ class ArchiveReportController extends Controller
                 $q->whereDate('created_at', '<=', $request->end_date);
             });
 
+            $query->when($request->archive_type, function ($q) use ($request) {
+                // Filter by archive_type_id, which is sent as an ID from select option
+                $q->where('archive_type_id', $request->archive_type);
+            });
+
+            $query->when($request->archive_subtype, function ($q) use ($request) {
+                // Filter by archive_subtype_id, which is sent as an ID from select option
+                $q->where('archive_subtype_id', $request->archive_subtype);
+            });
+
             $query->when($request->archive_status, function ($q) use ($request) {
                 // Filter by archive_status_id, which is sent as an ID from select option
                 $q->where('archive_status_id', $request->archive_status);
             });
-
+            
             $query->when($request->classification, function ($q) use ($request) {
                 // Filter by work_team_classification_id
                 $q->where('work_team_classification_id', $request->classification);
+            });
+            
+            $query->when($request->period, function ($q) use ($request) {
+                // Filter by archive_period_id, which is sent as an ID from select option
+                $q->where('archive_period_id', $request->period);
             });
 
             $query->when($request->lifespan, function ($q) use ($request) {
                 $q->where('archive_lifespan', $request->lifespan);
             })->orderByDesc('archive_lifespan');
+
+            $query->when($request->year_period, function ($q) use ($request) {
+                $q->where('year_period', $request->year_period);
+            })->orderByDesc('year_period');
 
             return DataTables::eloquent($query)
                 ->addIndexColumn()
@@ -85,10 +138,22 @@ class ArchiveReportController extends Controller
                 ->addColumn('lifespan', function ($row) {
                     return $row->archive_lifespan ?? '-';
                 })
+                ->addColumn('period', function ($row) {
+                    return optional($row->period)->name ?? '-';
+                })
+                ->addColumn('year_period', function ($row) {
+                    return $row->year_period ?? '-';
+                })
+                ->addColumn('type', function ($row) {
+                    return optional($row->archive_type)->name ?? '-';
+                })
+                ->addColumn('subtype', function ($row) {
+                    return optional($row->archive_subtype)->name ?? '-';
+                })
                 ->addColumn('status', function ($row) {
                     return optional($row->archive_status)->name ?? '-';
                 })
-                ->rawColumns(['classification_code', 'description', 'lifespan', 'status'])
+                ->rawColumns(['classification_code', 'description', 'lifespan', 'period', 'year_period', 'type', 'subtype', 'status'])
                 ->make(true);
         } catch (\Throwable $e) {
             return response()->json([
@@ -105,9 +170,13 @@ class ArchiveReportController extends Controller
             'text_search',
             'start_date',
             'end_date',
+            'archive_type',
+            'archive_subtype',
             'archive_status',
             'classification',
             'lifespan',
+            'period',
+            'year_period',
         ]);
 
         return Excel::download(new ArchiveExport($filters), 'Laporan-Arsip.xlsx');

@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.0/css/dataTables.bootstrap5.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.0/css/buttons.bootstrap5.css">
+
+    <style>
+        .cool-mist {
+            background: #a8dadc;
+            color: #1d1d1d;    
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -28,7 +35,7 @@
             </div>
         @endif
 
-        <div class="card mb-4">
+        <div class="card cool-mist mb-4">
             <div class="card-body">
                 <div class="row mb-3">
                     <div class="input-group">
@@ -38,6 +45,24 @@
                 </div>
 
                 <div class="row mb-3">
+                    <div class="col-md-3">
+                        <label for="archive_type" class="form-label">Jenis Arsip</label>
+                        <select name="archive_type" id="archive_type" class="form-select">
+                            <option selected value="">Pilih Jenis Arsip</option>
+                            @foreach($archiveTypeList as $archiveType)
+                                <option value="{{ $archiveType->id }}">{{ $archiveType->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="archive_subtype" class="form-label">Sub Jenis Arsip</label>
+                        <select name="archive_subtype" id="archive_subtype" class="form-select">
+                            <option selected value="">Pilih Sub Jenis Arsip</option>
+                            @foreach($archiveTypeList as $archiveType)
+                                <option value="{{ $archiveType->id }}">{{ $archiveType->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="col-md-3">
                         <label for="archive_status" class="form-label">Status Arsip</label>
                         <select name="archive_status" id="archive_status" class="form-select">
@@ -56,12 +81,33 @@
                             @endforeach
                         </select>
                     </div>
+                </div>
+
+                <div class="row mb-3">
                     <div class="col-md-3">
                         <label for="archive_lifespan" class="form-label">Kurun Waktu Arsip</label>
                         <select name="archive_lifespan" id="archive_lifespan" class="form-select">
                             <option selected value="">Pilih Kurun Waktu Arsip</option>
                             @foreach ($lifespanList as $lifespan)
                                 <option value="{{ $lifespan }}">{{ $lifespan }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="archive_period" class="form-label">Periode Arsip</label>
+                        <select name="archive_period" id="archive_period" class="form-select">
+                            <option selected value="">Pilih Periode Arsip</option>
+                            @foreach ($periodList as $period)
+                                <option value="{{ $period->id }}">{{ $period->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="archive_year_period" class="form-label">Tahun Periode Arsip</label>
+                        <select name="archive_year_period" id="archive_year_period" class="form-select">
+                            <option selected value="">Pilih Tahun Periode Arsip</option>
+                            @foreach ($yearPeriodList as $yearPeriod)
+                                <option value="{{ $yearPeriod }}">{{ $yearPeriod }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -107,6 +153,10 @@
                                     <th class="text-center align-middle">Kode Klasifikasi</th>
                                     <th class="text-center align-middle" style="width: 250px;">Uraian</th>
                                     <th class="text-center align-middle">Kurun Waktu</th>
+                                    <th class="text-center align-middle">Periode</th>
+                                    <th class="text-center align-middle">Tahun Periode</th>
+                                    <th class="text-center align-middle">Jenis Arsip</th>
+                                    <th class="text-center align-middle">Sub Jenis Arsip</th>
                                     <th class="text-center align-middle">Status Arsip</th>
                                 </tr>
                             </thead>
@@ -138,9 +188,13 @@
                 text_search: $('#text_search').val(),
                 start_date: $('#start_date').val(),
                 end_date: $('#end_date').val(),
+                archive_type: $('#archive_type').val(),
+                archive_subtype: $('#archive_subtype').val(),
                 archive_status: $('#archive_status').val(),
                 classification: $('#filterWorkTeamClassification').val(),
-                lifespan: $('#archive_lifespan').val()
+                period: $('#archive_period').val(),
+                year_period: $('#archive_year_period').val(),
+                lifespan: $('#archive_lifespan').val(),
             }).toString();
         }
 
@@ -149,11 +203,15 @@
             const textSearch = $('#text_search').val();
             const startDate = $('#start_date').val();
             const endDate = $('#end_date').val();
+            const archiveType = $('#archive_type').val();
+            const archiveSubType = $('#archive_subtype').val();
             const archiveStatus = $('#archive_status').val();
             const classification = $('#filterWorkTeamClassification').val();
             const lifespan = $('#archive_lifespan').val();
+            const period = $('#archive_period').val();
+            const yearPeriod = $('#archive_year_period').val();
 
-            const hasFilter = textSearch || startDate || endDate || archiveStatus || classification || lifespan;
+            const hasFilter = textSearch || startDate || endDate || archiveType || archiveSubType || archiveStatus || classification || lifespan || period || yearPeriod;
 
             if (!hasFilter && !loadAll) {
                 $('#laporanCard').hide();
@@ -180,9 +238,13 @@
                         text_search: textSearch,
                         start_date: startDate,
                         end_date: endDate,
+                        archive_type: archiveType,
+                        archive_subtype: archiveSubType,
                         archive_status: archiveStatus,
                         classification: classification,
-                        lifespan: lifespan
+                        lifespan: lifespan,
+                        period: period,
+                        archive_year_period: yearPeriod
                     },
                     error: function (xhr) {
                         console.log(xhr.responseText);
@@ -196,7 +258,11 @@
                     { data: 'classification_code', name: 'classification_code' },
                     { data: 'description', name: 'description' },
                     { data: 'lifespan', name: 'lifespan' },
-                    { data: 'status', name: 'status' }
+                    { data: 'period', name: 'period' },
+                    { data: 'year_period', name: 'year_period' },
+                    { data: 'type', name: 'type' },
+                    { data: 'subtype', name: 'subtype' },
+                    { data: 'status', name: 'status' },
                 ],
                 drawCallback: function (settings) {
                     const rowCount = settings.json?.data?.length || 0;
@@ -210,9 +276,13 @@
             $('#text_search').val('');
             $('#start_date').val('');
             $('#end_date').val('');
+            $('#archive_type').val('');
+            $('#archive_subtype').val('');
             $('#archive_status').val('');
             $('#filterWorkTeamClassification').val('');
             $('#archive_lifespan').val('');
+            $('#archive_period').val('');
+            $('#archive_year_period').val('');
 
             // Tampilkan ulang semua data ke DataTable
             fetchLaporan(true);
@@ -228,7 +298,7 @@
         }
 
         // Event listener untuk semua filter input
-        $('#text_search, #start_date, #end_date, #archive_status, #filterWorkTeamClassification, #archive_lifespan')
+        $('#text_search, #start_date, #end_date, #archive_type, #archive_subtype, #archive_status, #filterWorkTeamClassification, #archive_lifespan, #archive_period, #archive_year_period')
             .on('change keyup', fetchLaporan);
 
         // Tombol Export Excel
