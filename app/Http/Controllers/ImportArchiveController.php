@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Archive;
 use App\Models\ArchiveBox;
+use App\Models\ArchiveCondition;
 use App\Models\ArchiveDevelopmentLevel;
 use App\Models\ArchiveFolder;
 use App\Models\ArchiveMedia;
@@ -118,6 +119,7 @@ class ImportArchiveController extends Controller
                     'archive_lifespan' => $this->toNull($row[4] ?? null),
                     'archive_development_level_id' => $this->getId(ArchiveDevelopmentLevel::class, $this->toNull($row[5] ?? null)),
                     'archive_media_id' => $this->getId(ArchiveMedia::class, $this->toNull($row[6] ?? null)),
+                    'archive_condition_id' => $this->getId(ArchiveCondition::class, $this->toNull($row[7] ?? null)),
                     'archive_number' => $jumlah,
                     'archive_quantity_unit_id' => $kuantitasUnitId,
                     'period_id' => $this->getId(Period::class, $this->toNull($row[9] ?? null)),

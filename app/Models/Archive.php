@@ -191,7 +191,7 @@ class Archive extends Model
     /**
      * * Relationship from Archive to Storage Place*
      */
-    public function storage_place(): BelongsTo
+    public function archive_storage_place(): BelongsTo
     {
         return $this->belongsTo(ArchiveStoragePlace::class);
     }
@@ -199,7 +199,7 @@ class Archive extends Model
     /**
      * * Relationship from Archive to Storage Location*
      */
-    public function storage_location(): BelongsTo
+    public function archive_storage_location(): BelongsTo
     {
         return $this->belongsTo(ArchiveStorageLocation::class);
     }
@@ -207,7 +207,7 @@ class Archive extends Model
     /**
      * * Relationship from Archive to Shelf Row*
      */
-    public function shelf_row(): BelongsTo
+    public function archive_shelf_row(): BelongsTo
     {
         return $this->belongsTo(ArchiveShelfRow::class);
     }
@@ -215,7 +215,7 @@ class Archive extends Model
     /**
      * * Relationship from Archive to Box*
      */
-    public function box(): BelongsTo
+    public function archive_box(): BelongsTo
     {
         return $this->belongsTo(ArchiveBox::class);
     }
@@ -223,7 +223,7 @@ class Archive extends Model
     /**
      * * Relationship from Archive to Folder*
      */
-    public function folder(): BelongsTo
+    public function archive_folder(): BelongsTo
     {
         return $this->belongsTo(ArchiveFolder::class);
     }

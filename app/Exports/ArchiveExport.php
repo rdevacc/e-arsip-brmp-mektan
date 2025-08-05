@@ -27,12 +27,18 @@ class ArchiveExport implements FromQuery, WithHeadings, WithStyles, WithEvents, 
         $query = Archive::query()->with([
             'work_team_classification',
             'archive_type',
+            'archive_subtype',
+            'archive_development_level',
+            'archive_media',
+            'archive_condition',
+            'archive_quantity_unit',
+            'period',
             'archive_status',
-            'storage_location',
-            'storage_place',
-            'shelf_row',
-            'box',
-            'folder'
+            'archive_storage_location',
+            'archive_storage_place',
+            'archive_shelf_row',
+            'archive_box',
+            'archive_folder'
         ]);
 
         // DIPINDAHKAN dari collection()
@@ -75,24 +81,44 @@ class ArchiveExport implements FromQuery, WithHeadings, WithStyles, WithEvents, 
 
         return [
             $index,
+            $item->work_unit->name ?? '-',
             $item->work_team_classification->code ?? '-',
             $item->archive_description ?? '-',
             $item->archive_lifespan ?? '-',
+            $item->archive_development_level->name ?? '-',
+            $item->archive_media->name ?? '-',
+            $item->archive_condition->name ?? '-',
+            ($item->archive_number ?? '-') . ' ' . ($item->archive_quantity_unit->name ?? '-'),
+            $item->period->name ?? '-',
+            $item->year_period ?? '-',
+            $item->archive_storage_location->name ?? '-',
+            $item->archive_storage_place->name ?? '-',
+            $item->archive_shelf_row->name ?? '-',
+            $item->archive_box->name ?? '-',
+            $item->archive_folder->name ?? '-',
+            $item->archive_type->name ?? '-',
+            $item->archive_subtype->name ?? '-',
             $item->archive_status->name ?? '-',
-            $item->storage_location->name ?? '-',
-            $item->storage_place->name ?? '-',
-            $item->shelf_row->name ?? '-',
-            $item->folder->name ?? '-',
         ];
     }
 
     public function headings(): array
     {
-        return [
-            // Baris pertama
-            ['No', 'Kode Klasifikasi', 'Uraian Arsip', 'Kurun Waktu', 'Status Arsip', 'Lokasi Penyimpanan', '', '', '', ''],
-            // Baris kedua
-            ['', '', '', '', '', 'Lokasi Penyimpanan Arsip', 'Tempat Penyimpanan Arsip', 'Baris', 'Boks', 'Folder'],
+       return [
+            [ // Baris 1
+                'No','Unit Kerja', 'Kode Klasifikasi', 'Uraian', 'Kurun Waktu',
+                'Tingkat Perkembangan', 'Media Arsip', 'Kondisi', 'Jumlah',
+                'Periode', 'Tahun Periode',
+                'Lokasi Penyimpanan', '', '', '', '',
+                'Jenis Arsip', 'Sub Jenis Arsip', 'Status'
+            ],
+            [ // Baris 2
+                '', '', '', '', '',
+                '', '', '', '',
+                '', '',
+                'Lokasi Penyimpanan Arsip', 'Tempat Penyimpanan Arsip', 'Baris', 'Boks', 'Folder',
+                '', '', ''
+            ]
         ];
     }
 
@@ -104,7 +130,16 @@ class ArchiveExport implements FromQuery, WithHeadings, WithStyles, WithEvents, 
         $sheet->mergeCells('C1:C2');
         $sheet->mergeCells('D1:D2');
         $sheet->mergeCells('E1:E2');
-        $sheet->mergeCells('F1:J1');
+        $sheet->mergeCells('F1:F2');
+        $sheet->mergeCells('G1:G2');
+        $sheet->mergeCells('H1:H2');
+        $sheet->mergeCells('I1:I2');
+        $sheet->mergeCells('J1:J2');
+        $sheet->mergeCells('K1:K2');
+        $sheet->mergeCells('L1:P1');
+        $sheet->mergeCells('Q1:Q2');
+        $sheet->mergeCells('R1:R2');
+        $sheet->mergeCells('S1:S2');
 
         return [
             1 => ['font' => ['bold' => true], 'alignment' => ['horizontal' => 'center', 'vertical' => 'center']],

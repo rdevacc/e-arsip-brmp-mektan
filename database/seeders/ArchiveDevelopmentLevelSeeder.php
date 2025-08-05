@@ -26,6 +26,12 @@ class ArchiveDevelopmentLevelSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'id' => 3,
+                'name' => 'Asli/Copy',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }
