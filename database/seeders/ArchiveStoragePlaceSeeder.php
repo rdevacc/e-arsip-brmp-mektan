@@ -79,6 +79,27 @@ class ArchiveStoragePlaceSeeder extends Seeder
             ],
             [
                 'id' => 10,
+                'archive_storage_location_id' => '5',
+                'name' => 'Roll O Pack',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 11,
+                'archive_storage_location_id' => '5',
+                'name' => 'Rak 1',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 12,
+                'archive_storage_location_id' => '5',
+                'name' => 'Rak 2',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'id' => 13,
                 'archive_storage_location_id' => '9',
                 'name' => 'Lainnya',
                 'created_at' => now(),

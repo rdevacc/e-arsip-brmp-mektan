@@ -79,7 +79,7 @@ class ArchiveShelfRowSeeder extends Seeder
             ],
             [
                 'id' => 10,
-                'archive_storage_place_id' => '10',
+                'archive_storage_place_id' => '13',
                 'name' => 'Lainnya',
                 'created_at' => now(),
                 'updated_at' => now(),
