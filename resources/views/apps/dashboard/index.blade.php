@@ -83,13 +83,13 @@
                     <div class="container-fluid">
                         <div class="row mt-3">
                             <!-- Card 1 -->
-                            <div class="col-12 col-md-3">
+                            <div class="col-12 col-md-6">
                                 <div class="card info-card total-archive-card">
-                                    <div class="card-body"> 
+                                    <div class="card-body">
                                         <h5 class="card-title">Arsip Aktif</h5>
                                         <div class="d-flex align-items-center">
                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                <a href="{{ $activeArchive != 0 ? route('archive-index', ['archive_subtype' => 'Aktif']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
+                                                <a href="{{ $activeArchive != 0 ? route('archive-index', ['status' => 'Diserahkan']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
                                                     <i class="bi bi-menu-button-wide"></i>
                                                 </a>
                                             </div>
@@ -102,18 +102,59 @@
                             </div>
 
                             <!-- Card 2 -->
-                            <div class="col-12 col-md-3">
+                            <div class="col-12 col-md-6">
                                 <div class="card info-card total-archive-card">
                                     <div class="card-body">
                                         <h5 class="card-title">Arsip Inaktif</h5>
                                         <div class="d-flex align-items-center">
                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                <a href="{{ $inactiveArchive != 0 ? route('archive-index', ['archive_subtype' => 'Inaktif']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
+                                                <a href="{{ $inactiveArchive != 0 ? route('archive-index', ['status' => 'Simpan']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
                                                     <i class="bi bi-menu-button-wide"></i>
                                                 </a>
                                             </div>
                                             <div class="ps-3">
                                                 <h6>{{ $inactiveArchive }}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="container-fluid">
+                        <div class="row mt-3">
+                            <!-- Card 1 -->
+                            <div class="col-12 col-md-3">
+                                <div class="card info-card total-archive-card">
+                                    <div class="card-body"> 
+                                        <h5 class="card-title">Arsip Diserahkan</h5>
+                                        <div class="d-flex align-items-center">
+                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <a href="{{ $submittedDynamicArchive != 0 ? route('archive-index', ['archive_subtype' => 'Aktif']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
+                                                    <i class="bi bi-menu-button-wide"></i>
+                                                </a>
+                                            </div>
+                                            <div class="ps-3">
+                                                <h6>{{ $submittedDynamicArchive }}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="col-12 col-md-3">
+                                <div class="card info-card total-archive-card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Arsip Disimpan</h5>
+                                        <div class="d-flex align-items-center">
+                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <a href="{{ $savedDynamicArchive != 0 ? route('archive-index', ['archive_subtype' => 'Inaktif']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
+                                                    <i class="bi bi-menu-button-wide"></i>
+                                                </a>
+                                            </div>
+                                            <div class="ps-3">
+                                                <h6>{{ $savedDynamicArchive }}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -190,12 +231,12 @@
                                         <h5 class="card-title">Arsip Diserahkan</h5>
                                         <div class="d-flex align-items-center">
                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                <a href="{{ $submittedArchive != 0 ? route('archive-index', ['status' => 'Diserahkan']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
+                                                <a href="{{ $submittedStaticArchive != 0 ? route('archive-index', ['status' => 'Diserahkan']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
                                                     <i class="bi bi-menu-button-wide"></i>
                                                 </a>
                                             </div>
                                             <div class="ps-3">
-                                                <h6>{{ $submittedArchive }}</h6>
+                                                <h6>{{ $submittedStaticArchive }}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -209,12 +250,12 @@
                                         <h5 class="card-title">Arsip Disimpan</h5>
                                         <div class="d-flex align-items-center">
                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                <a href="{{ $savedArchive != 0 ? route('archive-index', ['status' => 'Simpan']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
+                                                <a href="{{ $savedStaticArchive != 0 ? route('archive-index', ['status' => 'Simpan']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
                                                     <i class="bi bi-menu-button-wide"></i>
                                                 </a>
                                             </div>
                                             <div class="ps-3">
-                                                <h6>{{ $savedArchive }}</h6>
+                                                <h6>{{ $savedStaticArchive }}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -244,6 +285,47 @@
                             </div>
                         </div>
                     </div>
+                    <div class="container-fluid">
+                        <div class="row mt-3">
+                            <!-- Card 1 -->
+                            <div class="col-12 col-md-6">
+                                <div class="card info-card total-archive-card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Arsip Diserahkan</h5>
+                                        <div class="d-flex align-items-center">
+                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <a href="{{ $submittedPermanentArchive != 0 ? route('archive-index', ['status' => 'Diserahkan']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
+                                                    <i class="bi bi-menu-button-wide"></i>
+                                                </a>
+                                            </div>
+                                            <div class="ps-3">
+                                                <h6>{{ $submittedPermanentArchive }}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="col-12 col-md-6">
+                                <div class="card info-card total-archive-card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Arsip Disimpan</h5>
+                                        <div class="d-flex align-items-center">
+                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <a href="{{ $savedPermanentArchive != 0 ? route('archive-index', ['status' => 'Simpan']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
+                                                    <i class="bi bi-menu-button-wide"></i>
+                                                </a>
+                                            </div>
+                                            <div class="ps-3">
+                                                <h6>{{ $savedPermanentArchive }}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
                 </div>
             </div>
             
@@ -265,6 +347,47 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="container-fluid">
+                        <div class="row mt-3">
+                            <!-- Card 1 -->
+                            <div class="col-12 col-md-6">
+                                <div class="card info-card total-archive-card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Arsip Diserahkan</h5>
+                                        <div class="d-flex align-items-center">
+                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <a href="{{ $submittedVitalArchive != 0 ? route('archive-index', ['status' => 'Diserahkan']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
+                                                    <i class="bi bi-menu-button-wide"></i>
+                                                </a>
+                                            </div>
+                                            <div class="ps-3">
+                                                <h6>{{ $submittedVitalArchive }}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="col-12 col-md-6">
+                                <div class="card info-card total-archive-card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Arsip Disimpan</h5>
+                                        <div class="d-flex align-items-center">
+                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <a href="{{ $savedVitalArchive != 0 ? route('archive-index', ['status' => 'Simpan']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
+                                                    <i class="bi bi-menu-button-wide"></i>
+                                                </a>
+                                            </div>
+                                            <div class="ps-3">
+                                                <h6>{{ $savedVitalArchive }}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
                     </div>
                 </div>
             </div>

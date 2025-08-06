@@ -27,13 +27,13 @@ class ArchiveStorageLocationController extends Controller
 
         ArchiveStorageLocation::create($validated);
 
-        return redirect()->route('archive-building.index')->with('success', 'Data Lokasi Penyimpanan Arsip Baru Berhasil Ditambahkan');
+        return redirect()->route('archive-storage-location.index')->with('success', 'Data Lokasi Penyimpanan Arsip Baru Berhasil Ditambahkan');
 
     }
 
     public function edit(ArchiveStorageLocation $archive_storage_location){
 
-        return view('apps.archive-storage-location.edit', compact('archive_storage-location'));
+        return view('apps.archive-storage-location.edit', compact('archive_storage_location'));
     }
 
     public function update(Request $request, ArchiveStorageLocation $archive_storage_location){

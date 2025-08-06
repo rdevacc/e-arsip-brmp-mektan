@@ -4,7 +4,7 @@
     <main id="main" class="main">
         <section class="section quantity-unit">
             <div class="pagetitle">
-                <h1>Lokasi Penyimpanan Arsip</h1>
+                <h1>Tempat Penyimpanan Arsip</h1>
             </div>
              <!-- Session Alert -->
             @if (session('success'))
@@ -23,15 +23,15 @@
                     <!-- Tombol Tambah di kiri -->
                     <div class="row my-2 d-flex">
                         <div class="col-md-auto mb-2">
-                            <a href="{{ route('archive-storage-location.create') }}" class="btn btn-primary w-100 w-md-auto">Tambah</a>
+                            <a href="{{ route('archive-storage-place.create') }}" class="btn btn-primary w-100 w-md-auto">Tambah</a>
                         </div>
                     </div>
                     <div class="table-responsive">
                         <table class="table">
                             <thead class="table-primary">
                                 <th>#</th>
+                                <th>Nama Tempat Penyimpanan Arsip</th>
                                 <th>Nama Lokasi Penyimpanan Arsip</th>
-                                <th>Nama Gedung Arsip</th>
                                 <th>Action</th>
                             </thead>
                             <tbody>
@@ -41,7 +41,7 @@
                                         <td>{{ $archiveStoragePlace->name }}</td>
                                         <td>{{ $archiveStoragePlace->archive_storage_location->name }}</td>
                                         <td class="d-flex">
-                                            <a class="btn btn-warning mx-1" href="{{ route('archive-storage-location.edit', $archiveStoragePlace->id) }}"
+                                            <a class="btn btn-warning mx-1" href="{{ route('archive-storage-place.edit', $archiveStoragePlace->id) }}"
                                                 data-bs-toggle="tooltip"
                                                 data-bs-placement="top"
                                                 data-bs-custom-class="custom-tooltip"
@@ -49,12 +49,12 @@
                                                 <i class="bi bi-pencil"></i>
                                             </a>
 
-                                            <form action="{{ route('archive-storage-location.delete', $archiveStoragePlace->id) }}" method="POST" class="form-delete">
+                                            <form action="{{ route('archive-storage-place.delete', $archiveStoragePlace->id) }}" method="POST" class="form-delete">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-delete"
                                                     data-id="{{ $archiveStoragePlace->id }}"
-                                                    data-url="{{ route('archive-storage-location.delete', $archiveStoragePlace->id) }}"
+                                                    data-url="{{ route('archive-storage-place.delete', $archiveStoragePlace->id) }}"
                                                     data-bs-toggle="tooltip"
                                                     title="Hapus Lokasi Penyimpanan Arsip">
                                                     <i class="bi bi-trash text-body-secondary"></i>

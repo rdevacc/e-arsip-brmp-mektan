@@ -14,12 +14,18 @@ class DashboardController extends Controller
         $inactiveArchive = Archive::where('archive_subtype_id', 2)->count();
         $vitalArchive = Archive::where('archive_type_id', 4)->count();
         $permanentArchive = Archive::where('archive_type_id', 5)->count();
-        $staticArchive = Archive::where('archive_type_id',2)->count();
-        $dynamicArchive = Archive::where('archive_type_id',1)->count();
+        $staticArchive = Archive::where('archive_type_id', 2)->count();
+        $dynamicArchive = Archive::where('archive_type_id', 1)->count();
         $proposedForDestructionArchive = Archive::where('archive_status_id', 3)->count();
         $destructionArchive = Archive::where('archive_status_id', 4)->count();
-        $savedArchive = Archive::where('archive_status_id', 1)->count();
-        $submittedArchive = Archive::where('archive_status_id', 2)->count();
+        $savedDynamicArchive = Archive::where('archive_type_id', 1)->where('archive_status_id', 1)->count();
+        $savedStaticArchive = Archive::where('archive_type_id', 2)->where('archive_status_id', 1)->count();
+        $savedPermanentArchive = Archive::where('archive_type_id', 5)->where('archive_status_id', 1)->count();
+        $savedVitalArchive = Archive::where('archive_type_id', 4)->where('archive_status_id', 1)->count();
+        $submittedDynamicArchive = Archive::where('archive_type_id', 1)->where('archive_status_id', 2)->count();
+        $submittedStaticArchive = Archive::where('archive_type_id', 2)->where('archive_status_id', 2)->count();
+        $submittedPermanentArchive = Archive::where('archive_type_id', 5)->where('archive_status_id', 2)->count();
+        $submittedVitalArchive = Archive::where('archive_type_id', 4)->where('archive_status_id', 2)->count();
 
         $dynamicArchivePercentage = 0;
         $staticArchivePercentage = 0;
@@ -71,8 +77,14 @@ class DashboardController extends Controller
             'staticArchivePercentage',
             'permanentArchivePercentage',
             'vitalArchivePercentage',
-            'savedArchive',
-            'submittedArchive',
+            'savedDynamicArchive',
+            'savedStaticArchive',
+            'savedPermanentArchive',
+            'savedVitalArchive',
+            'submittedDynamicArchive',
+            'submittedStaticArchive',
+            'submittedPermanentArchive',
+            'submittedVitalArchive',
         ]));
     }
 }

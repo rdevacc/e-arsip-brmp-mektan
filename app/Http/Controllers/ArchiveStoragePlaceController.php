@@ -15,7 +15,7 @@ class ArchiveStoragePlaceController extends Controller
     }
 
     public function create(){
-        $archiveStorageLocations = ArchiveStorageLocation::get(['id', 'name']);
+        $archiveStorageLocations = ArchiveStorageLocation::get(['id',  'name']);
 
         return view('apps.archive-storage-place.create', compact('archiveStorageLocations'));
     }
@@ -30,19 +30,19 @@ class ArchiveStoragePlaceController extends Controller
          ]
         );
 
-        ArchiveStorageLocation::create($validated);
+        ArchiveStoragePlace::create($validated);
 
-        return redirect()->route('archive-storage-location.index')->with('success', 'Data Tempat Penyimpanan Arsip Baru Berhasil Ditambahkan');
+        return redirect()->route('archive-storage-place.index')->with('success', 'Data Tempat Penyimpanan Arsip Baru Berhasil Ditambahkan');
 
     }
 
-    public function edit(ArchiveStorageLocation $archive_storage_location){
+    public function edit(ArchiveStoragePlace $archive_storage_place){
         $archiveStorageLocations = archiveStorageLocation::get(['id', 'name']);
 
-        return view('apps.archive-storage-place.edit', compact('archive_storage_location', 'archiveStorageLocations'));
+        return view('apps.archive-storage-place.edit', compact('archive_storage_place', 'archiveStorageLocations'));
     }
 
-    public function update(Request $request, ArchiveStorageLocation $archive_storage_location){
+    public function update(Request $request, ArchiveStoragePlace $archive_storage_place){
          $validated = $request->validate([
              'archive_storage_location_id' => 'required',
              'name' => 'required'
@@ -52,15 +52,15 @@ class ArchiveStoragePlaceController extends Controller
          ]
         );
 
-        ArchiveStorageLocation::where('id', $archive_storage_location->id)->update($validated);
+        ArchiveStoragePlace::where('id', $archive_storage_place->id)->update($validated);
 
-        return redirect()->route('archive-storage-location.index')->with('success', 'Data Tempat Penyimpanan Arsip Berhasil Diupdate');
+        return redirect()->route('archive-storage-place.index')->with('success', 'Data Tempat Penyimpanan Arsip Berhasil Diupdate');
     }
 
-    public function destroy(ArchiveStorageLocation $archive_storage_location){
+    public function destroy(ArchiveStoragePlace $archive_storage_place){
         // Destroy data by id
-        ArchiveStorageLocation::destroy($archive_storage_location->id);
+        ArchiveStorageLocation::destroy($archive_storage_place->id);
 
-        return redirect()->route('archive-storage-location.index')->with('success', 'Data Tempat Penyimpanan Arsip Berhasil Dihapus');
+        return redirect()->route('archive-storage-place.index')->with('success', 'Data Tempat Penyimpanan Arsip Berhasil Dihapus');
     }
 }

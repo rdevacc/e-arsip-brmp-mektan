@@ -35,9 +35,9 @@
                                         <select name="archive_storage_location_id" id="archive_storage_location_id"
                                             class="form-select @error('archive_storage_location_id') is-invalid @enderror">
                                             <option selected disabled>Pilih Lokasi Penyimpanan Arsip</option>
-                                            @foreach ($archiveBuildings as $archiveBuilding)
-                                                <option value="{{ $archiveBuilding->id }}" @selected(old('archive_storage_location_id') == $archiveBuilding->id)>
-                                                    {{ $archiveBuilding->name }}</option>
+                                            @foreach ($archiveStorageLocations as $archiveStorageLocation)
+                                                <option value="{{ $archiveStorageLocation->id }}" @selected(old('archive_storage_location_id') == $archiveStorageLocation->id)>
+                                                    {{ $archiveStorageLocation->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('archive_storage_location_id')

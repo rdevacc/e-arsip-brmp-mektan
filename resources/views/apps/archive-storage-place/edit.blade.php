@@ -27,32 +27,32 @@
                                 </div>
                             @endif
 
-                            <form method="POST" action="{{ route('archive-storage-location.edit-submit', $archive_storage_location->id) }}">
+                            <form method="POST" action="{{ route('archive-storage-place.edit-submit', $archive_storage_place->id) }}">
                                 @csrf
                                 @method('PUT')
                                 <div class="row">
                                     <div class="col-12 mb-3">
-                                        <label for="archive_building_id" class="form-label">Gedung Arsip <span class="text-danger">*</span></label>
-                                        <select name="archive_building_id" id="archive_building_id"
-                                            class="form-select @error('archive_building_id') is-invalid @enderror">
-                                            <option selected disabled>Pilih Gedung Arsip</option>
-                                            @foreach ($archiveBuildings as $archiveBuilding)
-                                                <option value="{{ $archiveBuilding->id }}"
-                                                    {{ old('archive_building_id', $archive_storage_location->archive_building_id) == $archiveBuilding->id ? 'selected' : '' }}>
-                                                    {{ $archiveBuilding->name }}
+                                        <label for="archive_storage_location_id" class="form-label">Lokasi Penyimpanan Arsip <span class="text-danger">*</span></label>
+                                        <select name="archive_storage_location_id" id="archive_storage_location_id"
+                                            class="form-select @error('archive_storage_location_id') is-invalid @enderror">
+                                            <option selected disabled>Pilih Lokasi Penyimpanan Arsip</option>
+                                            @foreach ($archiveStorageLocations as $archiveStorageLocation)
+                                                <option value="{{ $archiveStorageLocation->id }}"
+                                                    {{ old('archive_storage_location_id', $archive_storage_place->archive_storage_location_id) == $archiveStorageLocation->id ? 'selected' : '' }}>
+                                                    {{ $archiveStorageLocation->name }}
                                                 </option>
                                             @endforeach
                                         </select>
-                                        @error('archive_building_id')
+                                        @error('archive_storage_location_id')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="name" class="form-label">Nama Lokasi Penyimpanan Arsip <span class="text-danger">*</span></label>
+                                        <label for="name" class="form-label">Nama Tempat Penyimpanan Arsip <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                            id="name" name="name" value="{{ $archive_storage_location->name ?:old('name') }}">
+                                            id="name" name="name" value="{{ $archive_storage_place->name ?:old('name') }}">
                                         @error('name')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -63,7 +63,7 @@
 
                                 <!-- Button -->
                                 <div class="mt-5 mb-2 me-2 text-end">
-                                    <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ route('archive-storage-location.index') }}'">Kembali</button>
+                                    <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ route('archive-storage-place.index') }}'">Kembali</button>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </form>
