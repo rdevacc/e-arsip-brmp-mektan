@@ -43,7 +43,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('archive-index');
 });
 
 
@@ -415,13 +415,13 @@ Route::prefix('/app')->group(function (){
     /**
      * * Export Routes *
      */
-    Route::get('/app/export-excel', [ArchiveReportController::class, 'exportExcel'])->name('archive-report.export.excel');
-    Route::get('/app/export-pdf', [ArchiveReportController::class, 'generatePdf'])->name('archive-report.export.pdf');
+    Route::get('export-excel', [ArchiveReportController::class, 'exportExcel'])->name('archive-report.export.excel');
+    Route::get('export-pdf', [ArchiveReportController::class, 'generatePdf'])->name('archive-report.export.pdf');
 
     /**
      * * Import Excel Routes *
      */
-    Route::get('/app/import-excel', [ImportArchiveController::class, 'index'])->name('import-excel.index');
-    Route::post('/app/import-excel', [ImportArchiveController::class, 'upload'])->name('import-excel.upload');
+    Route::get('import-excel', [ImportArchiveController::class, 'index'])->name('import-excel.index');
+    Route::post('import-excel', [ImportArchiveController::class, 'upload'])->name('import-excel.upload');
 });
 
