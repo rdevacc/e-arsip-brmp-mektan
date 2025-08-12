@@ -136,14 +136,24 @@
 
                 this.on("success", function (file, response) {
                     if (response.success) {
-                        if (response.errors && response.errors.length > 0) {
-                            let errorList = response.errors.map(e => `<li>${e}</li>`).join('');
+                        let jumlahData = response.jumlah_data_terinsert || 0;
+                        let logInfo = response.log_info || '';
+                        let warnings = response.warnings || [];
+                        let errors = response.errors || [];
+
+
+                        if (errors.length > 0 || warnings.length > 0) {
+                            let warningList = warnings.map(w => `<li>${w}</li>`).join('');
+                            let errorList = errors.map(e => `<li>${e}</li>`).join('');
+
                             Swal.fire({
                                 icon: 'warning',
                                 title: 'Berhasil dengan Peringatan',
                                 html: `
-                                    <p>File berhasil diupload, namun ada beberapa masalah:</p>
-                                    <ul style="text-align: left;">${errorList}</ul>
+                                    <p>File berhasil diupload (${jumlahData} data dimasukkan), namun ada beberapa masalah:</p>
+                                    ${warnings.length > 0 ? `<p><strong>Peringatan:</strong></p><ul style="text-align: left;">${warningList}</ul>` : ''}
+                                    ${errors.length > 0 ? `<p><strong>Error:</strong></p><ul style="text-align: left;">${errorList}</ul>` : ''}
+                                    ${logInfo ? `<hr><pre>${logInfo}</pre>` : ''}
                                 `,
                                 confirmButtonText: 'Lanjutkan'
                             }).then(() => {
@@ -153,25 +163,53 @@
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Berhasil',
-                                text: response.message || 'File berhasil diupload dan diproses!',
+                                html: `
+                                    File berhasil diupload dan diproses!<br>
+                                    <strong>${jumlahData}</strong> data berhasil dimasukkan.
+                                    ${logInfo ? `<hr><pre>${logInfo}</pre>` : ''}
+                                `,
                             }).then(() => {
                                 window.location.href = response.redirect;
                             });
                         }
                     } else {
+                        let errorHtml = `<p>${response.message || 'Upload gagal!'}</p>`;
+                        if (response.error_detail) {
+                            errorHtml += `<p><strong>Detail:</strong> ${response.error_detail}</p>`;
+                        }
+                        if (response.errors && response.errors.length > 0) {
+                            let errorList = response.errors.map(e => `<li>${e}</li>`).join('');
+                            errorHtml += `<ul style="text-align: left;">${errorList}</ul>`;
+                        }
                         Swal.fire({
                             icon: 'error',
                             title: 'Gagal',
-                            text: response.message || 'Upload gagal!',
-                        });
+                            html: errorHtml
+                        });                    
                     }
                 });
 
                 this.on("error", function (file, response) {
+                    let message = 'Terjadi kesalahan saat upload. Pastikan file sesuai format!';
+                    let detail = '';
+
+                    if (typeof response === 'object') {
+                        if (response.message) message = response.message;
+                        if (response.error_detail) detail = `<br><strong>Detail:</strong> ${response.error_detail}`;
+                    } else if (typeof response === 'string') {  
+                        try {
+                            let parsed = JSON.parse(response);
+                            if (parsed.message) message = parsed.message;
+                            if (parsed.error_detail) detail = `<br><strong>Detail:</strong> ${parsed.error_detail}`;
+                        } catch (e) {
+                            message = response;
+                        }
+                    }
+
                     Swal.fire({
                         icon: 'error',
                         title: 'Gagal',
-                        text: 'Terjadi kesalahan saat upload. Pastikan file sesuai format!',
+                        text: message + detail,
                     });
                 });
             }

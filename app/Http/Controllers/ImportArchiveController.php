@@ -59,93 +59,111 @@ class ImportArchiveController extends Controller
             $insertData = [];
             $this->lookupCache = [];
             $errorLogs = [];
+            $warnings = [];
 
             foreach (array_slice($data, 2) as $rowIndex => $row) {
+                $baris = $rowIndex + 3;
+
                 if (!isset($row[0]) || trim((string)$row[0]) == '') {
-                    Log::info("Baris ke-" . ($rowIndex + 3) . " dilewatkan karena kosong");
+                    Log::info("Baris ke-$baris dilewatkan karena kosong");
                     continue;
                 }
 
-                $jumlah = null;
-                $kuantitasUnitId = null;
-                if (isset($row[8]) && $this->toNull($row[8])) {
-                    preg_match('/(\d+)\s*(.*)/', $row[8], $matches);
-                    $jumlah = isset($matches[1]) ? (int)$matches[1] : null;
-                    $kuantitasUnitId = $this->getId(ArchiveQuantityUnit::class, $this->toNull($matches[2] ?? null));
-                }
+                // Parsing jumlah dan unit
+                [$jumlah, $kuantitasUnitId] = $this->parseJumlahDanUnit($row[8] ?? null);
 
-                $storagePlaceName = $this->toNull($row[12] ?? null);
-                $shelfRowName = $this->toNull($row[13] ?? null);
-                $boxName = $this->toNull($row[14] ?? null);
+                // Validasi kolom terkait lokasi penyimpanan
+                $storagePlaceId = $this->validateModel(ArchiveStoragePlace::class, $this->toNull($row[12] ?? null), "Tempat Penyimpanan", $baris, $errorLogs);
+                $shelfRowId     = $this->validateModel(ArchiveShelfRow::class, $this->toNull($row[13] ?? null), "Rak", $baris, $errorLogs, ['archive_storage_place_id' => $storagePlaceId]);
+                $boxId          = $this->validateModel(ArchiveBox::class, $this->toNull($row[14] ?? null), "Box", $baris, $errorLogs, ['archive_shelf_row_id' => $shelfRowId]);
 
-                $storagePlaceId = $this->getModelId(ArchiveStoragePlace::class, $storagePlaceName);
-                if (!$storagePlaceId && $storagePlaceName) {
-                    $message = "Tempat Penyimpanan '$storagePlaceName' tidak ditemukan (baris " . ($rowIndex + 3) . ")";
-                    $errorLogs[] = "Baris " . ($rowIndex + 3) . ": $message";
-                    Log::warning($message);
-                }
-
-                $shelfRowId = null;
-                if ($storagePlaceId && $shelfRowName) {
-                    $shelfRowId = $this->getModelId(ArchiveShelfRow::class, $shelfRowName, [
-                        'archive_storage_place_id' => $storagePlaceId,
-                    ]);
-
-                    if (!$shelfRowId) {
-                        $message = "Rak '$shelfRowName' tidak ditemukan di Tempat Penyimpanan ID $storagePlaceId (baris " . ($rowIndex + 3) . ")";
-                        $errorLogs[] = "Baris " . ($rowIndex + 3) . ": $message";
-                        Log::warning($message);
-                    }
-                }
-
-                $boxId = null;
-                if ($shelfRowId && $boxName) {
-                    $boxId = $this->getModelId(ArchiveBox::class, $boxName, [
-                        'archive_shelf_row_id' => $shelfRowId,
-                    ]);
-
-                    if (!$boxId) {
-                        $message = "Box '$boxName' tidak ditemukan di Rak ID $shelfRowId (baris " . ($rowIndex + 3) . ")";
-                        $errorLogs[] = "Baris " . ($rowIndex + 3) . ": $message";
-                        Log::warning($message);
-                    }
-                }
+                 // Validasi semua kolom lain
+                $workTeamClassificationId = $this->validateModel(WorkTeamClassification::class, $this->toNull($row[2] ?? null), "Klasifikasi Tim Kerja", $baris, $errorLogs, [], 'code');
+                $archiveDevelopmentLevelId = $this->validateModel(ArchiveDevelopmentLevel::class, $this->toNull($row[5] ?? null), "Tingkat Perkembangan Arsip", $baris, $errorLogs);
+                $archiveMediaId = $this->validateModel(ArchiveMedia::class, $this->toNull($row[6] ?? null), "Media Arsip", $baris, $errorLogs);
+                $archiveConditionId = $this->validateModel(ArchiveCondition::class, $this->toNull($row[7] ?? null), "Kondisi Arsip", $baris, $errorLogs);
+                $periodId = $this->validateModel(Period::class, $this->toNull($row[9] ?? null), "Periode", $baris, $errorLogs);
+                $archiveStorageLocationId = $this->validateModel(ArchiveStorageLocation::class, $this->toNull($row[11] ?? null), "Lokasi Penyimpanan", $baris, $errorLogs);
+                $archiveFolderId = $this->validateModel(ArchiveFolder::class, $this->toNull($row[15] ?? null), "Folder", $baris, $errorLogs);
+                $archiveTypeId = $this->validateModel(ArchiveType::class, $this->toNull($row[16] ?? null), "Tipe Arsip", $baris, $errorLogs);
+                $archiveSubTypeId = $this->validateModel(ArchiveSubType::class, $this->toNull($row[17] ?? null), "Sub Tipe Arsip", $baris, $errorLogs);
+                $archiveStatusId = $this->validateModel(ArchiveStatus::class, $this->toNull($row[18] ?? null), "Status Arsip", $baris, $errorLogs);
 
                 $insertData[] = [
                     'user_id' => auth()->id() ?? 1,
                     'work_unit_id' => 1,
-                    'work_team_classification_id' => $this->getId(WorkTeamClassification::class, $this->toNull($row[2] ?? null), 'code'),
+                    'work_team_classification_id' => $workTeamClassificationId,
                     'archive_description' => $this->toNull($row[3] ?? null),
                     'archive_lifespan' => $this->toNull($row[4] ?? null),
-                    'archive_development_level_id' => $this->getId(ArchiveDevelopmentLevel::class, $this->toNull($row[5] ?? null)),
-                    'archive_media_id' => $this->getId(ArchiveMedia::class, $this->toNull($row[6] ?? null)),
-                    'archive_condition_id' => $this->getId(ArchiveCondition::class, $this->toNull($row[7] ?? null)),
+                    'archive_development_level_id' => $archiveDevelopmentLevelId,
+                    'archive_media_id' => $archiveMediaId,
+                    'archive_condition_id' => $archiveConditionId,
                     'archive_number' => $jumlah,
                     'archive_quantity_unit_id' => $kuantitasUnitId,
-                    'period_id' => $this->getId(Period::class, $this->toNull($row[9] ?? null)),
+                    'period_id' => $periodId,
                     'year_period' => $this->toNull($row[10] ?? null),
-                    'archive_storage_location_id' => $this->getId(ArchiveStorageLocation::class, $this->toNull($row[11] ?? null)),
+                    'archive_storage_location_id' => $archiveStorageLocationId,
                     'archive_storage_place_id' => $storagePlaceId,
                     'archive_shelf_row_id' => $shelfRowId,
                     'archive_box_id' => $boxId,
-                    'archive_folder_id' => $this->getId(ArchiveFolder::class, $this->toNull($row[15] ?? null)),
-                    'archive_type_id' => $this->getId(ArchiveType::class, $this->toNull($row[16] ?? null)),
-                    'archive_subtype_id' => $this->getId(ArchiveSubType::class, $this->toNull($row[17] ?? null)),
-                    'archive_status_id' => $this->getId(ArchiveStatus::class, $this->toNull($row[18] ?? null)),
+                    'archive_folder_id' => $archiveFolderId,
+                    'archive_type_id' => $archiveTypeId,
+                    'archive_subtype_id' => $archiveSubTypeId,
+                    'archive_status_id' => $archiveStatusId,
                     'archive_input_date' => now()->format('Y-m-d'),
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
             }
 
-            if (count($insertData) > 0) {
-                Archive::insert($insertData);
-
-                Log::info('Berhasil insert data arsip', [
-                    'user_id' => auth()->id(),
-                    'jumlah_data' => count($insertData),
-                    'error_logs' => $errorLogs,
+            // Stop insert kalau ada error di keseluruhan proses
+            if (!empty($errorLogs)) {
+                Storage::delete($path);
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Terdapat error pada data, upload dibatalkan.',
+                    'errors' => $errorLogs
                 ]);
+            }
+
+            if (!empty($warnings)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Upload dibatalkan karena ada data yang tidak valid',
+                    'warnings' => $warnings
+                ], 422);
+            }
+
+            $totalInserted = 0;
+            // Insert Data
+            if (count($insertData) > 0) {
+                $batchSize = 200; // aman untuk banyak kolom
+                $chunks = array_chunk($insertData, $batchSize);
+
+
+                foreach ($chunks as $chunkIndex => $chunk) {
+                    try {
+                        Archive::insert($chunk);    
+                        $totalInserted += count($chunk);
+                        Log::info("Berhasil insert batch {$chunkIndex}", [
+                            'user_id' => auth()->id(),
+                            'jumlah_data' => count($chunk),
+                        ]);
+                    } catch (\Throwable $e) {
+                       Log::error("Gagal insert batch {$chunkIndex}", [
+                            'user_id' => auth()->id(),
+                            'error' => $e->getMessage(),
+                        ]);
+
+                        Storage::delete($path);
+
+                        return response()->json([
+                            'success' => false,
+                            'message' => "Gagal upload pada batch {$chunkIndex}",
+                            'errors' => [$e->getMessage()]
+                        ], 500);
+                    }
+                }
             }
 
             Storage::delete($path);
@@ -153,7 +171,9 @@ class ImportArchiveController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Data berhasil diupload dan diproses',
-                'errors' => $errorLogs,
+                'total_baris' => count($data) - 2,
+                'jumlah_data_terinsert' => $totalInserted,
+                'errors' => $errorLogs ?? [],
                 'redirect' => route('archive-index')
             ]);
         } catch (\Exception $e) {
@@ -163,7 +183,11 @@ class ImportArchiveController extends Controller
                 'trace' => $e->getTraceAsString(),
             ]);
 
-            return response()->json(['success' => false, 'message' => 'Terjadi kesalahan saat mengunggah file']);
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat mengunggah file',
+                'errors' => !empty($errorLogs) ? $errorLogs : [$e->getMessage()]
+            ], 500);
         }
     }
 
@@ -194,21 +218,21 @@ class ImportArchiveController extends Controller
         return $id;
     }
 
-    private function getModelId(string $modelClass, ?string $name, array $filters = []): ?int
+    private function getModelId(string $modelClass, ?string $name, array $filters = [], string $column = 'name'): ?int
     {
         $name = $this->toNull($name);
         if (is_null($name)) return null;
 
-        $cacheKey = $modelClass . ':' . $name . ':' . md5(json_encode($filters));
+        $cacheKey = $modelClass . ':' . $column . ':' . $name . ':' . md5(json_encode($filters));
         if (isset($this->lookupCache[$cacheKey])) {
             return $this->lookupCache[$cacheKey];
         }
 
         $query = $modelClass::query()
-            ->whereRaw('LOWER(TRIM(name)) = ?', [strtolower(trim($name))]);
+            ->whereRaw("LOWER(TRIM($column)) = ?", [strtolower(trim($name))]);
 
-        foreach ($filters as $column => $value) {
-            $query->where($column, $value);
+        foreach ($filters as $col => $val) {
+            $query->where($col, $val);
         }
 
         $id = $query->value('id');
@@ -216,4 +240,36 @@ class ImportArchiveController extends Controller
 
         return $id;
     }
+
+    private function parseJumlahDanUnit($value)
+    {
+        $jumlah = null;
+        $kuantitasUnitId = null;
+
+        if ($this->toNull($value)) {
+            preg_match('/(\d+)\s*(.*)/', $value, $matches);
+            $jumlah = isset($matches[1]) ? (int)$matches[1] : null;
+            $kuantitasUnitId = $this->getId(ArchiveQuantityUnit::class, $this->toNull($matches[2] ?? null));
+        }
+
+        return [$jumlah, $kuantitasUnitId];
+    }
+
+    private function validateModel($modelClass, $value, $label, $baris, &$errorLogs, $where = [], $column = 'name')
+    {
+        if (!$value) {
+            return null;
+        }
+
+        $id = $this->getModelId($modelClass, $value, $where, $column);
+
+        if (!$id) {
+            $message = "$label '$value' tidak ditemukan (baris $baris)";
+            $errorLogs[] = "Baris $baris: $message";
+            Log::warning($message);
+        }
+
+        return $id;
+    }
+
 }

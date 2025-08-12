@@ -3374,6 +3374,13 @@ class WorkTeamClassificationSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ],
+        [
+            'id' => 490,
+            'name' => 'Kode TU Lama',
+            'code' => 'TU',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ],
         ]);
     }
 }
