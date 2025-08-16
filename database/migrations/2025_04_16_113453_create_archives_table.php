@@ -43,6 +43,7 @@ return new class extends Migration
             $table->integer('archive_lifespan')->nullable(true);
             $table->integer('archive_number')->nullable(true);
             $table->date('archive_input_date')->nullable(true);
+            $table->string('additional_information')->nullable(true);
             $table->timestamps();
         });
     }

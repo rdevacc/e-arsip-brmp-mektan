@@ -438,6 +438,20 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row mb-3">
+                                        <label for="additional_information" class="col-sm-3 col-form-label">Keterangan Tambahan</label>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control bg-highlight @error('additional_information') is-invalid @enderror"
+                                            id="additional_information"
+                                            name="additional_information"
+                                            placeholder="Isi Keterangan Tambahan Arsip">{{ old('additional_information') ?: '' }}</textarea>
+                                            @error('additional_information')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
 
                                     <h5 class="card-title">Lokasi Penyimpanan Arsip</h5>
 
@@ -467,7 +481,7 @@
                                                 <option selected disabled>Pilih Tempat Penyimpanan Arsip</option>
                                                 @foreach ($storagePlaces as $storagePlace)
                                                     <option value="{{ $storagePlace->id }}" @selected(old('archive_storage_place_id') == $storagePlace->id)>
-                                                        {{ $storagePlace->name }}</option>
+                                                        {{ $storagePlace->name }} - {{ $storagePlace->archive_storage_location->name }}</option>
                                                 @endforeach
                                             </select>
                                             @error('archive_storage_place_id')
@@ -485,7 +499,7 @@
                                                 <option selected disabled>Pilih Baris Penyimpanan Arsip</option>
                                                 @foreach ($shelfRows as $shelfRow)
                                                     <option value="{{ $shelfRow->id }}" @selected(old('archive_shelf_row_id') == $shelfRow->id)>
-                                                        {{ $shelfRow->name }}</option>
+                                                        {{ $shelfRow->name }} - {{ $shelfRow->archive_storage_place->name }}</option>
                                                 @endforeach
                                             </select>
                                             @error('archive_shelf_row_id')

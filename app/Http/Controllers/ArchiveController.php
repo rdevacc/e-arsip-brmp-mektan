@@ -300,8 +300,8 @@ class ArchiveController extends Controller
         $archiveAccessLevels = ArchiveAccessLevel::get(['id', 'name']);
         $periods = Period::get(['id', 'name']);
         $storageLocations = ArchiveStorageLocation::get(['id', 'name']);
-        $storagePlaces = ArchiveStoragePlace::get(['id', 'name']);
-        $shelfRows = ArchiveShelfRow::get(['id', 'name']);
+        $storagePlaces = ArchiveStoragePlace::get(['id', 'archive_storage_location_id', 'name']);
+        $shelfRows = ArchiveShelfRow::get(['id', 'archive_storage_place_id', 'name']);
         $boxes = ArchiveBox::get(['id', 'name']);
         $folders = ArchiveFolder::get(['id', 'name']);
 
@@ -367,6 +367,7 @@ class ArchiveController extends Controller
             'archive_input_date' => '',
             'period_id' => '',
             'year_period' => '',
+            'additional_information' => '',
             'archive_storage_location_id' => '',
             'archive_storage_place_id' => '',
             'archive_shelf_row_id' => '',
@@ -397,6 +398,7 @@ class ArchiveController extends Controller
             'archive_lifespan.digits' => 'Kurun Waktu Arsip field must 4 digits!',
             'archive_lifespan.min' => 'Kurun Waktu Arsip field min 1900!',
             'archive_lifespan.max' => 'Kurun Waktu Arsip field max 2100!',
+            'additional_information.required' => 'Keterangan Tambahan Arsip field is required!',
             'archive_number.required' => 'Jumlah Arsip field is required!',
             'archive_input_date.required' => 'Tanggal Input Arsip field is required!',
             'period.required' => 'Periode Arsip field is required!',
@@ -435,8 +437,8 @@ class ArchiveController extends Controller
         $archiveAccessLevels = ArchiveAccessLevel::get(['id', 'name']);
         $periods = Period::get(['id', 'name']);
         $storageLocations = ArchiveStorageLocation::get(['id', 'name']);
-        $storagePlaces = ArchiveStoragePlace::get(['id', 'name']);
-        $shelfRows = ArchiveShelfRow::get(['id', 'name']);
+        $storagePlaces = ArchiveStoragePlace::get(['id', 'archive_storage_location_id', 'name']);
+        $shelfRows = ArchiveShelfRow::get(['id',  'archive_storage_place_id', 'name']);
         $boxes = ArchiveBox::get(['id', 'name']);
         $folders = ArchiveFolder::get(['id', 'name']);
 
@@ -498,6 +500,7 @@ class ArchiveController extends Controller
             'archive_input_date' => '',
             'period_id' => '',
             'year_period' => '',
+            'additional_information' => '',
             'archive_storage_location_id' => '',
             'archive_storage_place_id' => '',
             'archive_shelf_row_id' => '',
@@ -528,6 +531,7 @@ class ArchiveController extends Controller
             'archive_lifespan.digits' => 'Kurun Waktu Arsip field must 4 digits!',
             'archive_lifespan.min' => 'Kurun Waktu Arsip field min 1900!',
             'archive_lifespan.max' => 'Kurun Waktu Arsip field max 2100!',
+            'additional_information.required' => 'Keterangan Tambahan Arsip field is required!',
             'archive_number.required' => 'Jumlah Arsip field is required!',
             'archive_input_date.required' => 'Tanggal Input Arsip field is required!',
             'period.required' => 'Periode Arsip field is required!',

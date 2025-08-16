@@ -36,6 +36,7 @@ class Archive extends Model
         'archive_input_date',
         'period_id',
         'year_period',
+        'additional_information',
         'archive_storage_location_id',
         'archive_storage_place_id',
         'archive_shelf_row_id',
