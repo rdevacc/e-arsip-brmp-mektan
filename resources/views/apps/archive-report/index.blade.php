@@ -244,7 +244,7 @@
                         classification: classification,
                         lifespan: lifespan,
                         period: period,
-                        archive_year_period: yearPeriod
+                        year_period: yearPeriod
                     },
                     error: function (xhr) {
                         console.log(xhr.responseText);
