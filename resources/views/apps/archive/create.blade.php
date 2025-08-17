@@ -216,8 +216,10 @@
                                     <div class="row mb-3">
                                         <label for="archive_description" class="col-sm-3 col-form-label">Uraian Arsip <span class="text-danger">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control bg-highlight @error('archive_description') is-invalid @enderror"
-                                                id="archive_description" name="archive_description" value="{{ old('archive_description') ?: '' }}">
+                                            <textarea class="form-control bg-highlight @error('archive_description') is-invalid @enderror"
+                                            id="archive_description"
+                                            name="archive_description"
+                                            placeholder="Isi Uraian Arsip">{{ old('archive_description') ?: '' }}</textarea>
                                             @error('archive_description')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -359,24 +361,6 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="archive_public_access_level_id" class="col-sm-3 col-form-label">Tingkat Akses Publik Arsip <span class="text-danger">*</span></label>
-                                        <div class="col-sm-9">
-                                            <select name="archive_public_access_level_id" id="archive_public_access_level_id"
-                                                class="form-select bg-highlight @error('archive_public_access_level_id') is-invalid @enderror">
-                                                <option selected disabled>Pilih Tingkat Akses Publik Arsip</option>
-                                                @foreach ($archivePublicAccessLevels as $archivePublicAccessLevel)
-                                                    <option value="{{ $archivePublicAccessLevel->id }}" @selected(old('archive_public_access_level_id') == $archivePublicAccessLevel->id)>
-                                                        {{ $archivePublicAccessLevel->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('archive_public_access_level_id')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
                                         <label for="archive_access_level_id" class="col-sm-3 col-form-label">Akses Level Arsip <span class="text-danger">*</span></label>
                                         <div class="col-sm-9">
                                             <select name="archive_access_level_id" id="archive_access_level_id"
@@ -388,6 +372,24 @@
                                                 @endforeach
                                             </select>
                                             @error('archive_access_level_id')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="archive_public_access_level_id" class="col-sm-3 col-form-label">Tingkat Akses Publik Arsip <span class="text-danger">*</span></label>
+                                        <div class="col-sm-9">
+                                            <select name="archive_public_access_level_id" id="archive_public_access_level_id"
+                                                class="form-select bg-highlight @error('archive_public_access_level_id') is-invalid @enderror">
+                                                <option selected disabled>Pilih Tingkat Akses Publik Arsip</option>
+                                                @foreach ($archivePublicAccessLevels as $archivePublicAccessLevel)
+                                                    <option value="{{ $archivePublicAccessLevel->id }}" @selected(old('archive_public_access_level_id') == $archivePublicAccessLevel->id)>
+                                                        {{ $archivePublicAccessLevel->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('archive_public_access_level_id')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>

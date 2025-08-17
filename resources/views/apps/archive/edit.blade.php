@@ -256,9 +256,10 @@
                                     <div class="row mb-3">
                                         <label for="archive_description" class="col-sm-3 form-label">Uraian Arsip <span class="text-danger">*</span></label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control bg-highlight @error('archive_description') is-invalid @enderror"
-                                                id="archive_description" name="archive_description"
-                                                value="{{ $archive->archive_description ?:old('archive_description') }}">
+                                            <textarea class="form-control bg-highlight @error('archive_description') is-invalid @enderror"
+                                            id="archive_description"
+                                            name="archive_description"
+                                            placeholder="Isi Uraian Arsip">{{ $archive->archive_description ?:old('archive_description') }}</textarea>
                                             @error('archive_description')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}

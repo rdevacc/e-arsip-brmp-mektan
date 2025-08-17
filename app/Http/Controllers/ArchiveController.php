@@ -279,6 +279,12 @@ class ArchiveController extends Controller
         ]));
     }
 
+    public function show(Archive $archive){
+
+        // return dd($archive);
+
+        return view('apps.archive.show', compact('archive'));
+    }
 
     public function create(){
         
