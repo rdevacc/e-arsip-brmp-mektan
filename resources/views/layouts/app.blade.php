@@ -122,6 +122,21 @@
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/moment/min/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+    <!-- Fix Bootstrap Dropdown Conflict -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Paksa bind event dropdown
+        document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(function (el) {
+            el.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const dropdown = new bootstrap.Dropdown(el);
+                dropdown.toggle();
+            });
+        });
+    });
+    </script>
     
     @stack('scripts')
 

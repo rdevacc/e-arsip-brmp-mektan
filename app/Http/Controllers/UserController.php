@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 class UserController extends Controller
 {
     public function index(){
-        $users = User::get(['id', 'role_id', 'name', 'email']);
+        $users = User::get(['id', 'role_id', 'name', 'email'])->sortBy('role_id');
 
         return view('apps.user.index', compact('users'));
     }

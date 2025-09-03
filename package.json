@@ -11,6 +11,7 @@
         "vite": "^6.3.1"
     },
     "dependencies": {
+        "@popperjs/core": "^2.11.8",
         "laravel-datatables-vite": "^0.6.1"
     }
 }

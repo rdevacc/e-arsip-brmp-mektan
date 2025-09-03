@@ -146,6 +146,7 @@
                             let warningList = warnings.map(w => `<li>${w}</li>`).join('');
                             let errorList = errors.map(e => `<li>${e}</li>`).join('');
 
+                            btnUpload.disabled = true;
                             Swal.fire({
                                 icon: 'warning',
                                 title: 'Berhasil dengan Peringatan',
@@ -160,6 +161,7 @@
                                 window.location.href = response.redirect;
                             });
                         } else {
+                            btnUpload.disabled = true;
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Berhasil',

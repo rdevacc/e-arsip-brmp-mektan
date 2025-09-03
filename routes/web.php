@@ -21,6 +21,7 @@ use App\Http\Controllers\ArchiveSubTypeController;
 use App\Http\Controllers\ArchiveTypeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ImportArchiveController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkGroupController;
@@ -43,11 +44,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('archive-index');
+    return redirect()->route('dashboard');
 });
 
+/**
+ * * Login Routes *
+*/
+Route::get('/app/login', [LoginController::class, 'login'])->name('login')->middleware('guest');
+Route::post('/app/login', [LoginController::class, 'authenticate'])->name('submit-login');
+Route::post('/app/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
-Route::prefix('/app')->group(function (){
+Route::prefix('/app')->middleware('auth')->group(function (){
     /**
      * * Archive Routes *
      */

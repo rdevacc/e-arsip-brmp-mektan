@@ -168,14 +168,8 @@
                                             <th class="text-center align-middle" style="width: 550px;">
                                                 Uraian
                                             </th>
-                                           <th class="text-center align-middle">
+                                            <th class="text-center align-middle">
                                                 Kurun Waktu
-                                            </th>
-                                           <th class="text-center align-middle">
-                                                Periode
-                                            </th>
-                                           <th class="text-center align-middle">
-                                                Tahun Periode
                                             </th>
                                             <th class="text-center align-middle">
                                                 Jenis Arsip
@@ -185,6 +179,9 @@
                                             </th>
                                             <th class="text-center align-middle">
                                                 Status Arsip
+                                            </th>
+                                            <th class="text-center align-middle">
+                                                Periode
                                             </th>
                                             <th class="text-center align-middle" style="width: 100px;">
                                                 Action
@@ -292,11 +289,12 @@
                     { data: 'work_team_classification', name: 'work_team_classification_code' },
                     { data: 'archive_description', name: 'archive_description', orderable: false },
                     { data: 'archive_lifespan', name: 'archive_lifespan' },
-                    { data: 'period_name', name: 'period_name' },
-                    { data: 'year_period', name: 'year_period_name' },
+                    // { data: 'period_name', name: 'period_name' },
+                    // { data: 'year_period', name: 'year_period_name' },
                     { data: 'archive_type', name: 'archive_type_name' },
                     { data: 'archive_subtype', name: 'archive_subtype_name' },
                     { data: 'archive_status', name: 'archive_status_name' },
+                    { data: 'period', name: 'period' },
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ]
             });
