@@ -210,7 +210,9 @@
                                 <div class="row">
                                     <div class="mt-3 mb-2 me-2 text-end">
                                         <a href="{{ route('archive-index') }}" class="btn btn-secondary">Kembali</a>
+                                        @can('super-admin')
                                         <a href="{{ route('archive-edit', $archive->id) }}" class="btn btn-warning">Edit</a>
+                                        @endcan
                                     </div>
                                 </div>
                             </div>

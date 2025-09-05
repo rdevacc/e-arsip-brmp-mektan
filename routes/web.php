@@ -28,6 +28,7 @@ use App\Http\Controllers\WorkGroupController;
 use App\Http\Controllers\WorkTeamClassificationController;
 use App\Http\Controllers\WorkTeamController;
 use App\Http\Controllers\WorkUnitController;
+use App\Models\Archive;
 use App\Models\WorkTeamClassification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -58,19 +59,29 @@ Route::post('/app/forgot-password', [LoginController::class, 'send_reset_link'])
 Route::get('/app/password-reset/{token}', [LoginController::class, 'password_reset'])->middleware('guest')->name('password.reset');
 Route::post('/app/password-reset', [LoginController::class, 'update_password'])->name('password.update');
 
+/**
+ * * Dashboard Routes *
+ */
+Route::get('/app/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+/**
+ * * Dashboard Index Archive *
+ */
+Route::get('/app/archive', [ArchiveController::class, 'index'])->name('archive-index');
+
+
 Route::prefix('/app')->middleware('auth')->group(function (){
     /**
      * * Archive Routes *
      */
     Route::resource('/archive', ArchiveController::class)->names([
-        'index' => 'archive-index',
         'create' => 'archive-create',
         'show' => 'archive-show',
         'store' => 'archive-create-submit',
         'edit' => 'archive-edit',
         'update' => 'archive-edit-submit',
         'destroy' => 'archive-delete',
-    ]);
+    ])->except(['index']);
 
     Route::get('/archive/work-teams/{work_group_id}', [ArchiveController::class, 'getWorkTeams'])->name('archive-get-work-teams');
     Route::get('/archive/team-classifications/{work_team_id}', [ArchiveController::class, 'getTeamClassifications'])->name('archive-get-work-team-classifications');
@@ -90,10 +101,6 @@ Route::prefix('/app')->middleware('auth')->group(function (){
     Route::post('/app/archive/bulk-delete', [ArchiveController::class, 'bulkDelete'])->name('archive-bulk-delete');
 
 
-    /**
-     * * Dashboard Routes *
-     */
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 
     /**

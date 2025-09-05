@@ -26,6 +26,7 @@ use App\Models\WorkTeam;
 use App\Models\WorkTeamClassification;
 use App\Models\WorkUnit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -39,6 +40,8 @@ class ArchiveController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
+        abort_if(Gate::denies('super-admin'), 403);
+
         $request->validate([
             'status_id' => 'required|exists:archive_statuses,id',
         ]);
@@ -64,6 +67,8 @@ class ArchiveController extends Controller
 
     public function bulkUpdate(Request $request)
     {
+        abort_if(Gate::denies('super-admin'), 403);
+
         $request->validate([
             'ids' => 'required|array',
             'status_id' => 'nullable|integer|exists:archive_statuses,id',
@@ -98,6 +103,9 @@ class ArchiveController extends Controller
 
     public function bulkDelete(Request $request)
     {
+
+        abort_if(Gate::denies('super-admin'), 403);
+        
         $ids = $request->input('ids');
 
         if (!$ids || !is_array($ids)) {
@@ -208,7 +216,7 @@ class ArchiveController extends Controller
                 ->addColumn('period', function ($archive){
                     $period = $archive->period_name ?? '-';
                     $year = $archive->year_period ?? '-';
-                    return "Tahun {$year} - {$period}";
+                    return "{$period} - Tahun {$year}";
                 })
                 ->addColumn('action', function ($archive) use ($statuses) {
                     return view('components.admin.button', compact('archive', 'statuses'))->render();
@@ -286,13 +294,15 @@ class ArchiveController extends Controller
 
     public function show(Archive $archive){
 
-        // return dd($archive);
+        // abort_if(Gate::denies('archive-action', $archive), 403);
 
         return view('apps.archive.show', compact('archive'));
     }
 
     public function create(){
         
+        abort_if(Gate::denies('create-archive'), 403);
+
         // Initiate Data
         $workUnits = WorkUnit::get(['id', 'name']);
         $workGroups = WorkGroup::get(['id', 'name']);
@@ -314,7 +324,7 @@ class ArchiveController extends Controller
         $storagePlaces = ArchiveStoragePlace::get(['id', 'archive_storage_location_id', 'name']);
         $shelfRows = ArchiveShelfRow::get(['id', 'archive_storage_place_id', 'name']);
         $boxes = ArchiveBox::get(['id', 'name']);
-        $folders = ArchiveFolder::get(['id', 'name']);
+        $folders = ArchiveFolder::get(['id', 'archive_storage_place_id', 'name']);
 
         if (old('work_team_classification_id')) {
             $selected = WorkTeamClassification::find(old('work_team_classification_id'));
@@ -349,6 +359,9 @@ class ArchiveController extends Controller
     }
 
     public function store(Request $request){
+        
+        abort_if(Gate::denies('create-archive'), 403);
+        
         // Validate Data
         $validated = $request->validate([
             'user_id' => '',
@@ -429,6 +442,8 @@ class ArchiveController extends Controller
 
     public function edit(Archive $archive){
         
+        abort_if(Gate::denies('edit-archive', $archive), 403);
+
         // Initiate Data
         $workUnits = WorkUnit::get(['id', 'name']);
         $workGroups = WorkGroup::get(['id', 'name']);
@@ -482,6 +497,8 @@ class ArchiveController extends Controller
     }
 
     public function update(Request $request, Archive $archive){
+      
+        abort_if(Gate::denies('edit-archive', $archive), 403);
          // Validate Data
          $validated = $request->validate([
             'user_id' => '',
@@ -561,6 +578,7 @@ class ArchiveController extends Controller
     }
 
     public function destroy(Archive $archive){
+        abort_if(Gate::denies('super-admin'), 403);
         // Destroy data by id
         Archive::destroy($archive->id);
 

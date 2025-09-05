@@ -78,7 +78,10 @@
                                             @enderror
                                         </div>
                                         <div class="col-12">
-                                            <button class="btn btn-primary w-100" type="submit">Login</button>
+                                            <button id="resetButton" class="btn btn-primary w-100" type="submit">
+                                                <span id="buttonText">Login</span>
+                                                <span id="loadingSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                            </button>
                                         </div>
                                         <div class="col-12">
                                             <p class="small mb-0"><a href="{{ route('password.request') }}">Lupa Password ?</a></p>
@@ -110,6 +113,26 @@
 
         <!-- Template Main JS File -->
         <script src="{{ asset('admin/assets/js/main.js') }}"></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const form = document.querySelector("form");
+                const resetButton = document.getElementById("resetButton");
+                const buttonText = document.getElementById("buttonText");
+                const loadingSpinner = document.getElementById("loadingSpinner");
+
+                form.addEventListener("submit", function() {
+                    // Disable Button
+                    resetButton.disabled = true
+
+                    // Ubah teks tombol jadi "Login..."
+                    buttonText.textContent = "Login...";
+
+                    // Tampilkan spinner
+                    loadingSpinner.classList.remove("d-none");
+                });
+            });
+        </script>
 
 </body>
 

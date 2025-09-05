@@ -47,7 +47,7 @@
                             <form method="POST" action="{{ route('archive-create-submit') }}">
                                 @csrf
                                 <div class="row px-5">
-                                    <input type="hidden" value="1" class="form-control bg-highlight" for="user_id" name="user_id"
+                                    <input type="hidden" value="{{ auth()->user()->id }}" class="form-control bg-highlight" for="user_id" name="user_id"
                                         id="user_id">
                                     <div class="row mb-3">
                                         <label for="work_unit_id" class="col-sm-3 col-form-label">Unit Kerja <span class="text-danger">*</span></label>

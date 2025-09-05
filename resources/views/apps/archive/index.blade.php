@@ -62,15 +62,21 @@
             @endif
             <div class="card cool-mist mb-4">
                 <div class="card-body">
+                    @auth
                     <div class="row mx-1 py-2 d-flex justify-content-between align-items-center">
                         <!-- Tombol Tambah & Ubah Status di kiri -->
-                        <div class="col-md-auto d-flex gap-2 mb-2">
-                            <a href="{{ route('archive-create') }}" class="btn btn-primary">Tambah</a>
-                            <a href="{{ route('import-excel.index') }}" class="btn btn-success">Upload Excel</a>
-                            <button class="btn btn-warning" id="bulk-edit-btn" disabled>Ubah Massal</button>
-                            <button class="btn btn-danger" id="bulk-delete-btn" disabled>Delete Massal</button>
+                        @canany(['pengguna', 'super-admin'])
+                            <div class="col-md-auto d-flex gap-2 mb-2">
+                                <a href="{{ route('archive-create') }}" class="btn btn-primary">Tambah</a>
+                                @can('super-admin')
+                                    <a href="{{ route('import-excel.index') }}" class="btn btn-success">Upload Excel</a>
+                                    <button class="btn btn-warning" id="bulk-edit-btn" disabled>Ubah Massal</button>
+                                    <button class="btn btn-danger" id="bulk-delete-btn" disabled>Delete Massal</button>
+                                @endcan
+                            </div>
+                        @endcanany
                         </div>
-                    </div>
+                    @endauth
                     <div class="row mx-1 mb-3">
                         <div class="col-md-3">
                             <label for="filterLifespan" class="form-label">Kurun Waktu</label>
@@ -169,7 +175,7 @@
                                                 Uraian
                                             </th>
                                             <th class="text-center align-middle">
-                                                Kurun Waktu
+                                                Tahun Pembuatan
                                             </th>
                                             <th class="text-center align-middle">
                                                 Jenis Arsip
@@ -183,9 +189,11 @@
                                             <th class="text-center align-middle">
                                                 Periode
                                             </th>
+                                            @auth
                                             <th class="text-center align-middle" style="width: 100px;">
                                                 Action
                                             </th>
+                                            @endauth
                                         </tr>
                                     </thead>
                                     <tbody>

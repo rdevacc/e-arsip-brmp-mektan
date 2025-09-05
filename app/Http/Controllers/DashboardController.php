@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Archive;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {

@@ -50,7 +50,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'id' => 4,
-                'role_id' => 2,
+                'role_id' => 3,
                 'name' => 'Kartini',
                 'email' => 'kartini@gmail.com',
                 'email_verified_at' => now(),
