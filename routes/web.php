@@ -50,9 +50,13 @@ Route::get('/', function () {
 /**
  * * Login Routes *
 */
-Route::get('/app/login', [LoginController::class, 'login'])->name('login')->middleware('guest');
+Route::get('/app/login', [LoginController::class, 'login'])->middleware('guest')->name('login');
 Route::post('/app/login', [LoginController::class, 'authenticate'])->name('submit-login');
-Route::post('/app/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
+Route::post('/app/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
+Route::get('/app/forgot-password', [LoginController::class, 'forgot_password'])->middleware('guest')->name('password.request');
+Route::post('/app/forgot-password', [LoginController::class, 'send_reset_link'])->name('password.email');
+Route::get('/app/password-reset/{token}', [LoginController::class, 'password_reset'])->middleware('guest')->name('password.reset');
+Route::post('/app/password-reset', [LoginController::class, 'update_password'])->name('password.update');
 
 Route::prefix('/app')->middleware('auth')->group(function (){
     /**

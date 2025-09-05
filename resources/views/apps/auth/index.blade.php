@@ -48,6 +48,11 @@
                                     {{ session('loginError') }}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
+                            @elseif (session()->has('status'))
+                            <div class="col-12 alert alert-success alert-dismissible fade show text-center" role="alert">
+                                    {{ session('status') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
                             @endif
                             <div class="card mb-3">
                                 <div class="card-body">
@@ -76,7 +81,7 @@
                                             <button class="btn btn-primary w-100" type="submit">Login</button>
                                         </div>
                                         <div class="col-12">
-                                            <p class="small mb-0"><a href="pages-register.html">Lupa Password ?</a></p>
+                                            <p class="small mb-0"><a href="{{ route('password.request') }}">Lupa Password ?</a></p>
                                         </div>
                                     </form>
                                 </div>
