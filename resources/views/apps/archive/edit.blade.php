@@ -156,11 +156,11 @@
                                                 <option selected disabled>Pilih Retensi Arsip</option>
                                                 @foreach ($archiveRetentions as $archiveRetention)
                                                     @if (old('archive_retention_id', $archive->archive_retention_id ) == $archiveRetention->id)
-                                                        <option value="{{ $archiveRetention->id }}"  selected>
-                                                            {{ $archiveRetention->range }} Tahun
+                                                        <option value="{{ $archiveRetention->id }}" selected>
+                                                            {{ $archiveRetention->range_value }} Tahun
                                                         </option>
                                                     @else
-                                                        <option value="{{ $archiveRetention->id }}">{{ $archiveRetention->range }} Tahun</option>
+                                                        <option value="{{ $archiveRetention->id }}">{{ $archiveRetention->range_value }} Tahun</option>
                                                     @endif
                                                 @endforeach
                                             </select>
