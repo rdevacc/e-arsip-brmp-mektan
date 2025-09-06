@@ -24,6 +24,7 @@ use App\Http\Controllers\ImportArchiveController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\WorkGroupController;
 use App\Http\Controllers\WorkTeamClassificationController;
 use App\Http\Controllers\WorkTeamController;
@@ -64,11 +65,6 @@ Route::post('/app/password-reset', [LoginController::class, 'update_password'])-
  */
 Route::get('/app/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-/**
- * * Dashboard Index Archive *
- */
-Route::get('/app/archive', [ArchiveController::class, 'index'])->name('archive-index');
-
 
 Route::prefix('/app')->middleware('auth')->group(function (){
     /**
@@ -99,8 +95,6 @@ Route::prefix('/app')->middleware('auth')->group(function (){
     Route::post('/archive/{id}/update-status', [ArchiveController::class, 'updateStatus'])->name('archives.update-status');
     Route::post('/app/archive/bulk-update', [ArchiveController::class, 'bulkUpdate'])->name('archive-bulk-update');
     Route::post('/app/archive/bulk-delete', [ArchiveController::class, 'bulkDelete'])->name('archive-bulk-delete');
-
-
 
 
     /**
@@ -441,5 +435,28 @@ Route::prefix('/app')->middleware('auth')->group(function (){
      */
     Route::get('import-excel', [ImportArchiveController::class, 'index'])->name('import-excel.index');
     Route::post('import-excel', [ImportArchiveController::class, 'upload'])->name('import-excel.upload');
+
+    
+    /**
+     * * Monitoring Visitor Routes *
+     */
+    // View monitoring
+    Route::get('/monitoring', function () {
+        return view('apps.monitoring.index');
+    })->name('monitoring.index');
+
+    // Route untuk tracking otomatis
+    Route::post('/visitor/track', [VisitorController::class, 'track'])->name('visitor.track');
+
+    // Route untuk ambil total visitor
+    Route::get('/visitor/count', [VisitorController::class, 'count'])->name('visitor.count');
+
+    // Route untuk ambil visitor hari ini
+    Route::get('/visitor/today', [VisitorController::class, 'today'])->name('visitor.today');
+
+    /**
+     * * Dashboard Index Archive *
+     */
+    Route::get('/app/archive', [ArchiveController::class, 'index'])->name('archive-index');
 });
 

@@ -34,6 +34,13 @@
             <li class="nav-heading">Super Admin</li>
 
             <li class="nav-item">
+                <a class="nav-link {{ request()->segment(2) === 'monitoring' ? 'active' : '' }}" href="{{route('monitoring.index') }}">
+                    <i class="bi bi-grid"></i>
+                    <span>Monitoring Pengunjung</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link {{ request()->segment(2) === 'user' ? 'active' : '' }}" href="{{route('user.index') }}">
                     <i class="bi bi-grid"></i>
                     <span>Users</span>
