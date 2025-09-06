@@ -29,7 +29,13 @@ class DashboardController extends Controller
         $staticArchivePercentage = 0;
         $permanentArchivePercentage = 0;
         $vitalArchivePercentage = 0;
-       
+        
+        $dynamicActivePercentage = 0;
+        $dynamicInctivePercentage = 0;
+        
+        $staticSavedPercentage = 0;
+        $staticSubmittedPercentage = 0;
+      
 
         if ($totalArchive > 0) {
             // Perhitungan Persentase Arsip Dinamis
@@ -43,20 +49,39 @@ class DashboardController extends Controller
 
             // Perhitungan Persentase Arsip Vital
             $vitalArchivePercentage = round(($vitalArchive / $totalArchive) * 100, 2);
-        } else {
-            $dynamicArchivePercentage = 0;
-            $staticArchivePercentage = 0;
-            $permanentArchivePercentage = 0;
-            $vitalArchivePercentage = 0;
-        }
+        } 
+        
+        if (($dynamicArchive ?? 0) > 0) {
+            $dynamicActivePercentage   = round((($activeArchive   ?? 0) / $dynamicArchive) * 100, 2);
+            $dynamicInactivePercentage = round((($inactiveArchive ?? 0) / $dynamicArchive) * 100, 2);
+        } 
+        
+        if (($staticArchive ?? 0) > 0) {
+            $staticSavedPercentage   = round((($savedStaticArchive   ?? 0) / $staticArchive) * 100, 2);
+            $staticSubmittedPercentage = round((($submittedStaticArchive ?? 0) / $staticArchive) * 100, 2);
+        } 
+        
 
 
-        $chartLabels = ['Dinamis', 'Statis', 'Permanen', 'Vital'];
-        $chartData = [
+
+        $chartLabels1 = ['Dinamis', 'Statis', 'Permanen', 'Vital'];
+        $chartData1 = [
             $dynamicArchive,
             $staticArchive,
             $permanentArchive,
             $vitalArchive,
+        ];
+
+        $chartLabels2 = ['Aktif', 'Inaktif'];
+        $chartData2 = [
+            $activeArchive,
+            $inactiveArchive,
+        ];
+
+        $chartLabels3 = ['Disimpan', 'Diserahkan'];
+        $chartData3 = [
+            $savedStaticArchive,
+            $submittedStaticArchive,
         ];
 
         return view('apps.dashboard.index', compact([
@@ -69,11 +94,19 @@ class DashboardController extends Controller
             'permanentArchive',
             'proposedForDestructionArchive',
             'destructionArchive',
-            'chartLabels',
-            'chartData',
+            'chartLabels1',
+            'chartData1',
+            'chartLabels2',
+            'chartData2',
+            'chartLabels3',
+            'chartData3',
             'dynamicArchivePercentage',
             'staticArchivePercentage',
             'permanentArchivePercentage',
+            'dynamicActivePercentage',
+            'dynamicInactivePercentage',
+            'staticSavedPercentage',
+            'staticSubmittedPercentage',
             'vitalArchivePercentage',
             'savedDynamicArchive',
             'savedStaticArchive',
