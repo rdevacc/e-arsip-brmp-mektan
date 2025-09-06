@@ -31,7 +31,7 @@ class DashboardController extends Controller
         $vitalArchivePercentage = 0;
         
         $dynamicActivePercentage = 0;
-        $dynamicInctivePercentage = 0;
+        $dynamicInactivePercentage = 0;
         
         $staticSavedPercentage = 0;
         $staticSubmittedPercentage = 0;

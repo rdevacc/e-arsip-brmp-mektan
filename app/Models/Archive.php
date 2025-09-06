@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
 
 class Archive extends Model
 {
@@ -42,7 +43,30 @@ class Archive extends Model
         'archive_shelf_row_id',
         'archive_box_id',
         'archive_folder_id',
+        'created_by',
+        'updated_by',
     ];
+
+    /**
+     * * Event untuk otomatis mengisi created_by dan updated_by *
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($archive) {
+            if (Auth::check()) {
+                $archive->created_by = Auth::id();
+                $archive->updated_by = Auth::id();
+            }
+        });
+
+        static::updating(function ($archive) {
+            if (Auth::check()) {
+                $archive->updated_by = Auth::id();
+            }
+        });
+    }
 
     /**
      * * Relationship from Archive to User*
@@ -50,6 +74,22 @@ class Archive extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Relasi ke user yang membuat arsip
+     */
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    /**
+     * Relasi ke user yang terakhir mengupdate arsip
+     */
+    public function updater(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 
     /**

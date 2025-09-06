@@ -437,6 +437,10 @@ class ArchiveController extends Controller
             'archive_folder_id.required' => 'Folder Arsip field is required!',
         ]);
 
+        $validated['created_by'] = auth()->id();
+        $validated['updated_by'] = auth()->id();
+        $validated['user_id'] = auth()->id();
+
         Archive::create($validated);
 
         return redirect()->route('archive-index')->with('success', 'Data Arsip Baru Berhasil Ditambahkan');
@@ -575,6 +579,8 @@ class ArchiveController extends Controller
             'archive_box_id.required' => 'Boks Arsip field is required!',
             'archive_folder_id.required' => 'Folder Arsip field is required!',
         ]);
+
+        $validated['updated_by'] = auth()->id();
 
         Archive::where('id', $archive->id)->update($validated);
 

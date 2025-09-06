@@ -111,6 +111,8 @@ class ImportArchiveController extends Controller
                     'archive_subtype_id' => $archiveSubTypeId,
                     'archive_status_id' => $archiveStatusId,
                     'archive_input_date' => now()->format('Y-m-d'),
+                    'created_by' => auth()->id() ?? 1,
+                    'updated_by' => auth()->id() ?? 1,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];

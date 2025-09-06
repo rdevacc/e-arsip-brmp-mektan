@@ -206,6 +206,18 @@
                                         <p>{{ $archive->folder->name ?? "-" }}</p>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <span class="col-sm-4 fw-semibold">Dibuat Oleh</span>
+                                    <div class="col-sm-8">
+                                        <p>{{ $archive->creator->name ?? "-" }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <span class="col-sm-4 fw-semibold">Terakhir Diedit Oleh</span>
+                                    <div class="col-sm-8">
+                                        <p>{{ $archive->updater->name ?? "-" }}</p>
+                                    </div>
+                                </div>
 
                                 <div class="row">
                                     <div class="mt-3 mb-2 me-2 text-end">
