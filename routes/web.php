@@ -66,6 +66,12 @@ Route::post('/app/password-reset', [LoginController::class, 'update_password'])-
 Route::get('/app/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 
+/**
+ * * Dashboard Index Archive *
+ */
+Route::get('/app/archive', [ArchiveController::class, 'index'])->name('archive-index');
+
+
 Route::prefix('/app')->middleware('auth')->group(function (){
     /**
      * * Archive Routes *
@@ -441,22 +447,24 @@ Route::prefix('/app')->middleware('auth')->group(function (){
      * * Monitoring Visitor Routes *
      */
     // View monitoring
-    Route::get('/monitoring', function () {
-        return view('apps.monitoring.index');
-    })->name('monitoring.index');
+    Route::get('/monitoring', [VisitorController::class, 'index'])->name('monitoring.index');
 
     // Route untuk tracking otomatis
     Route::post('/visitor/track', [VisitorController::class, 'track'])->name('visitor.track');
 
-    // Route untuk ambil total visitor
-    Route::get('/visitor/count', [VisitorController::class, 'count'])->name('visitor.count');
-
-    // Route untuk ambil visitor hari ini
+    // Statistik pengunjung
+    Route::get('/visitor/total', [VisitorController::class, 'count'])->name('visitor.count');
     Route::get('/visitor/today', [VisitorController::class, 'today'])->name('visitor.today');
+    Route::get('/visitor/weekly', [VisitorController::class, 'weekly'])->name('visitor.weekly');
+    Route::get('/visitor/monthly', [VisitorController::class, 'monthly'])->name('visitor.monthly');
 
-    /**
-     * * Dashboard Index Archive *
-     */
-    Route::get('/app/archive', [ArchiveController::class, 'index'])->name('archive-index');
+    // Data user online
+    Route::get('/visitor/online-users', [VisitorController::class, 'onlineUsers'])->name('visitor.online');
+
+    // Data visitor terbaru (misalnya 10 terakhir)
+    Route::get('/visitor/latest', [VisitorController::class, 'latest'])->name('visitor.latest');
+
+    // Data visitor 7 hari terakhir untuk chart
+    Route::get('/visitor/chart', [VisitorController::class, 'chart'])->name('visitor.chart');
 });
 

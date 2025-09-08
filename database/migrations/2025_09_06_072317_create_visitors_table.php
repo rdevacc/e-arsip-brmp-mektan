@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('ip')->unique();
             $table->string('user_agent')->nullable();
+            $table->string('device')->nullable();
+            $table->string('browser')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
         });
     }

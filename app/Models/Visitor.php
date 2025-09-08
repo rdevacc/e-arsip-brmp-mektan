@@ -13,4 +13,9 @@ class Visitor extends Model
         'ip',
         'user_agent',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
