@@ -22,6 +22,7 @@ use App\Http\Controllers\ArchiveTypeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ImportArchiveController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MonitoringUserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisitorController;
@@ -447,7 +448,7 @@ Route::prefix('/app')->middleware('auth')->group(function (){
      * * Monitoring Visitor Routes *
      */
     // View monitoring
-    Route::get('/monitoring', [VisitorController::class, 'index'])->name('monitoring.index');
+    Route::get('/monitoring-visitor', [VisitorController::class, 'index'])->name('monitoring.visitor.index');
 
     // Route untuk tracking otomatis
     Route::post('/visitor/track', [VisitorController::class, 'track'])->name('visitor.track');
@@ -466,5 +467,12 @@ Route::prefix('/app')->middleware('auth')->group(function (){
 
     // Data visitor 7 hari terakhir untuk chart
     Route::get('/visitor/chart', [VisitorController::class, 'chart'])->name('visitor.chart');
+
+
+    /**
+     * * Monitoring Users Routes *
+     */
+    Route::get('/monitoring-users', [MonitoringUserController::class, 'index'])->name('monitoring.users.index');
+    Route::get('/monitoring-users/data', [MonitoringUserController::class, 'getData'])->name('monitoring.users.data');
 });
 

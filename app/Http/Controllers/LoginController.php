@@ -8,7 +8,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use App\Mail\ResetPasswordMail;
 use App\Models\User;
+use App\Models\UserLogin;
+use Exception;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class LoginController extends Controller
@@ -32,6 +35,30 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+
+            /** @var \App\Models\User $user */
+            $user = Auth::user();
+
+             // Update last_seen
+            try {
+                $user->last_seen = now();
+                $user->save();
+            } catch (\Exception $e) {
+                Log::error('Gagal update last_seen: ' . $e->getMessage());
+            }
+
+            // Simpan history login
+            try {
+                $login = new UserLogin();
+                $login->user_id = $user->id;
+                $login->ip_address = $request->ip();
+                $login->user_agent = $request->userAgent();
+                $login->logged_in_at = now();
+                $login->logged_out_at = null;
+                $login->save();
+            } catch (Exception $e) {
+                Log::error('Gagal menyimpan user login: ' . $e->getMessage());
+            }
  
             return redirect()->intended('/app/dashboard');
         }
@@ -44,6 +71,15 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
+        $lastLogin = UserLogin::where('user_id', Auth::id())
+                ->latest('logged_in_at')
+                ->first();
+
+        if($lastLogin) {
+            $lastLogin->logged_out_at = now();
+            $lastLogin->save();
+        }
+        
         Auth::logout();
     
         request()->session()->invalidate();
@@ -73,8 +109,12 @@ class LoginController extends Controller
             return back()->withErrors(['email', "Email tidak ditemukan."]);
         }
 
-         // Buat token reset password
-        $token = Password::broker()->createToken($user);
+        // Tambahkan PHPDoc supaya Intelephense tahu tipe $broker
+        /** @var \Illuminate\Auth\Passwords\PasswordBroker $broker */
+        $broker = Password::broker();
+
+        // Buat token reset password
+        $token = $broker->createToken($user);
 
         // Buat URL reset password + email
         $url = url("/app/password-reset/{$token}?email={$user->email}");

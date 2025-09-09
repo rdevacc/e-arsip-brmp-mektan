@@ -15,7 +15,7 @@ class VisitorController extends Controller
      */
     public function index()
     {
-        return view('apps.monitoring.index');
+        return view('apps.monitoring.visitors.index');
     }
 
     public function track(Request $request)
