@@ -110,6 +110,7 @@ class ImportArchiveController extends Controller
                     'archive_type_id' => $archiveTypeId,
                     'archive_subtype_id' => $archiveSubTypeId,
                     'archive_status_id' => $archiveStatusId,
+                    'archive_additional_information' => $this->toNull($row[19] ?? null),
                     'archive_input_date' => now()->format('Y-m-d'),
                     'created_by' => auth()->id() ?? 1,
                     'updated_by' => auth()->id() ?? 1,

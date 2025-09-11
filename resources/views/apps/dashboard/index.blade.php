@@ -118,82 +118,77 @@
                              <div class="row py-2">
                                  <div class="col-12 col-xl-12">
                                      <div class="card-body">
-                                         <div class="row">
-                                             <div class="col-12 col-xl-6">
-                                                 <div class="row pb-2">
-                                                     <div class="col-5 col-xl-6">
-                                                         <h5 class="card-title">Arsip Dinamis</h5>
-                                                     </div>
-                                                     <div class="col-3 col-xl-6">
-                                                         <div class="d-flex align-items-center">
-                                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                                 <a href="{{ $dynamicArchive != 0 ? route('archive-index', ['archive_type' => 'Dinamis']) : route('archive-index') }}" class="text-decoration-none" style="color: inherit;">
-                                                                     <i class="bi bi-menu-button-wide"></i>
-                                                                 </a>
-                                                             </div>
-                                                             <div class="ps-3">
-                                                                 <h6>{{ $dynamicArchive }}</h6>
-                                                             </div>
-                                                         </div>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                             <div class="col-12 col-xl-6">
-                                                <div class="row">
-                                                    <div class="col-5">
-                                                        <h5 class="card-title">Arsip Aktif</h5>
+                                        <div class="row g-3">
+                                            <!-- Kolom Arsip Dinamis -->
+                                            <div class="col-12 col-xl-6">
+                                                <div class="row align-items-center">
+                                                    <div class="col-6">
+                                                        <span class="card-title">Arsip Dinamis</span>
                                                     </div>
-                                                    <div class="col-7">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                                <a href="{{ $staticArchive != 0 ? route('archive-index', ['archive_subtype' => 'Aktif']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
-                                                                    <i class="bi bi-menu-button-wide"></i>
-                                                                </a>
-                                                            </div>
-                                                            <div class="ps-3">
-                                                                <h6>{{ $activeArchive }}</h6>
-                                                            </div>
-                                                        </div>
+                                                    <div class="col-6">
+                                                        <h6 class="mb-0">{{ $dynamicArchive }}</h6>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-5">
-                                                        <h5 class="card-title">Arsip Inaktif</h5>
+                                            </div>
+
+                                            <!-- Arsip Aktif -->
+                                            <div class="col-12 col-xl-6">
+                                                <!-- Arsip Aktif -->
+                                                <div class="row align-items-center mb-2">
+                                                    <div class="col-6">
+                                                        <h5 class="card-title mb-0">Arsip Aktif</h5>
                                                     </div>
-                                                    <div class="col-7">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                                <a href="{{ $staticArchive != 0 ? route('archive-index', ['archive_subtype' => 'Inaktif']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
-                                                                    <i class="bi bi-menu-button-wide"></i>
-                                                                </a>
-                                                            </div>
-                                                            <div class="ps-3">
-                                                                <h6>{{ $inactiveArchive }}</h6>
-                                                            </div>
-                                                        </div>
+                                                    <div class="col-6">
+                                                        <h6 class="mb-0">{{ $activeArchive }}</h6>
                                                     </div>
                                                 </div>
-                                             </div>
-                                         </div>
-                                     </div>
+
+                                                <!-- Arsip Inaktif -->
+                                                <div class="row align-items-center mb-2">
+                                                    <div class="col-6">
+                                                        <h5 class="card-title mb-0">Arsip Inaktif</h5>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <h6 class="mb-0">{{ $inactiveArchive }}</h6>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Arsip Permanen -->
+                                                <div class="row align-items-center mb-2">
+                                                    <div class="col-6">
+                                                        <h5 class="card-title mb-0">Arsip Permanen</h5>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <h6 class="mb-0">{{ $permanentArchive }}</h6>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Arsip Vital -->
+                                                <div class="row align-items-center">
+                                                    <div class="col-6">
+                                                        <h5 class="card-title mb-0">Arsip Vital</h5>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <h6 class="mb-0">{{ $vitalArchive }}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                  </div>
                              </div>
                          </div>
                     </div>
                 </div>
                 <div class="container-fluid">
-                    <div class="row justify-content-center px-2 mb-2">
+                    <div class="row justify-content-center text-center px-2 mb-2">
                         <!-- Card 1 -->
                         <div class="col-12 col-xl-3 pb-2">
                             <div class="card info-card total-archive-card">
                                 <div class="card-body">
                                     <h5 class="card-title text-xl-center">Disimpan</h5>
-                                    <div class="d-flex align-items-center">
-                                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <a href="{{ $savedDynamicArchive != 0 ? route('archive-index', ['archive_subtype' => 'Inaktif']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
-                                                <i class="bi bi-menu-button-wide"></i>
-                                            </a>
-                                        </div>
+                                    <div class="d-flex justify-content-center align-items-center">
                                         <div class="ps-3">
                                             <h6>{{ $savedDynamicArchive }}</h6>
                                         </div>
@@ -207,12 +202,7 @@
                             <div class="card info-card total-archive-card">
                                 <div class="card-body">
                                     <h5 class="card-title text-xl-center">Usul Musnah</h5>
-                                    <div class="d-flex align-items-center">
-                                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <a href="{{ $proposedForDestructionArchive != 0 ? route('archive-index', ['status' => 'Usul Musnah']) : route('archive-index') }}" class="text-decoration-none" style="color: inherit;">
-                                                <i class="bi bi-menu-button-wide"></i>
-                                            </a>
-                                        </div>
+                                    <div class="d-flex justify-content-center align-items-center">
                                         <div class="ps-3">
                                             <h6>{{ $proposedForDestructionArchive }}</h6>
                                         </div>
@@ -226,12 +216,7 @@
                             <div class="card info-card total-archive-card">
                                 <div class="card-body">
                                     <h5 class="card-title text-xl-center">Musnah</h5>
-                                    <div class="d-flex align-items-center">
-                                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <a href="{{ $destructionArchive != 0 ? route('archive-index', ['status' => 'Musnah']) : route('archive-index') }}" class="text-decoration-none" style="color: inherit;">
-                                                <i class="bi bi-menu-button-wide"></i>
-                                            </a>
-                                        </div>
+                                    <div class="d-flex justify-content-center align-items-center">
                                         <div class="ps-3">
                                             <h6>{{ $destructionArchive }}</h6>
                                         </div>
@@ -258,11 +243,6 @@
                                                      </div>
                                                      <div class="col-3 col-xl-6">
                                                          <div class="d-flex align-items-center">
-                                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                                 <a href="{{ $staticArchive != 0 ? route('archive-index', ['archive_type' => 'Statis']) : route('archive-index') }}" class="text-decoration-none" style="color: inherit;">
-                                                                     <i class="bi bi-menu-button-wide"></i>
-                                                                 </a>
-                                                             </div>
                                                              <div class="ps-3">
                                                                  <h6>{{ $staticArchive }}</h6>
                                                              </div>
@@ -277,11 +257,6 @@
                                                     </div>
                                                     <div class="col-7">
                                                         <div class="d-flex align-items-center">
-                                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                                <a href="{{ $submittedStaticArchive != 0 ? route('archive-index', ['status' => 'Diserahkan']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
-                                                                    <i class="bi bi-menu-button-wide"></i>
-                                                                </a>
-                                                            </div>
                                                             <div class="ps-3">
                                                                 <h6>{{ $submittedStaticArchive }}</h6>
                                                             </div>
@@ -294,11 +269,6 @@
                                                     </div>
                                                     <div class="col-7">
                                                         <div class="d-flex align-items-center">
-                                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                                <a href="{{ $savedStaticArchive != 0 ? route('archive-index', ['status' => 'Simpan']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
-                                                                    <i class="bi bi-menu-button-wide"></i>
-                                                                </a>
-                                                            </div>
                                                             <div class="ps-3">
                                                                 <h6>{{ $savedStaticArchive }}</h6>
                                                             </div>
@@ -315,151 +285,8 @@
                 </div>
             </div>
 
-            <div class="card autumn-beige mb-3">
-                <div class="card-body px-2 py-2 my-2">
-                    <div class="container-fluid">
-                         <div class="card info-card total-archive-card">
-                             <div class="row">
-                                 <div class="col-12 col-xl-12">
-                                     <div class="card-body">
-                                         <div class="row">
-                                             <div class="col-12 col-xl-6">
-                                                 <div class="row pb-2">
-                                                     <div class="col-5 col-xl-6">
-                                                         <h5 class="card-title">Arsip Permanen</h5>
-                                                     </div>
-                                                     <div class="col-3 col-xl-6">
-                                                         <div class="d-flex align-items-center">
-                                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                                 <a href="{{ $permanentArchive != 0 ? route('archive-index', ['archive_type' => 'Permanen']) : route('archive-index') }}" class="text-decoration-none" style="color: inherit;">
-                                                                     <i class="bi bi-menu-button-wide"></i>
-                                                                 </a>
-                                                             </div>
-                                                             <div class="ps-3">
-                                                                 <h6>{{ $permanentArchive }}</h6>
-                                                             </div>
-                                                         </div>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                             <div class="col-12 col-xl-6">
-                                                <div class="row pb-2">
-                                                    <div class="col-5">
-                                                        <h5 class="card-title">Diserahkan</h5>
-                                                    </div>
-                                                    <div class="col-7">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                                <a href="{{ $submittedPermanentArchive != 0 ? route('archive-index', ['status' => 'Diserahkan']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
-                                                                    <i class="bi bi-menu-button-wide"></i>
-                                                                </a>
-                                                            </div>
-                                                            <div class="ps-3">
-                                                                <h6>{{ $submittedPermanentArchive }}</h6>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-5">
-                                                        <h5 class="card-title">Disimpan</h5>
-                                                    </div>
-                                                    <div class="col-7">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                                <a href="{{ $savedPermanentArchive != 0 ? route('archive-index', ['status' => 'Simpan']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
-                                                                    <i class="bi bi-menu-button-wide"></i>
-                                                                </a>
-                                                            </div>
-                                                            <div class="ps-3">
-                                                                <h6>{{ $savedPermanentArchive }}</h6>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card muted-rose mb-3">
-                <div class="card-body px-2 py-2 my-2">
-                    <div class="container-fluid">
-                         <div class="card info-card total-archive-card">
-                             <div class="row">
-                                 <div class="col-12 col-xl-12">
-                                     <div class="card-body">
-                                         <div class="row">
-                                             <div class="col-12 col-xl-6">
-                                                 <div class="row pb-2">
-                                                     <div class="col-5 col-xl-6">
-                                                         <h5 class="card-title">Arsip Vital</h5>
-                                                     </div>
-                                                     <div class="col-3 col-xl-6">
-                                                         <div class="d-flex align-items-center">
-                                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                                 <a href="{{ $vitalArchive != 0 ? route('archive-index', ['archive_type' => 'Vital']) : route('archive-index') }}" class="text-decoration-none" style="color: inherit;">
-                                                                     <i class="bi bi-menu-button-wide"></i>
-                                                                 </a>
-                                                             </div>
-                                                             <div class="ps-3">
-                                                                 <h6>{{ $vitalArchive }}</h6>
-                                                             </div>
-                                                         </div>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                             <div class="col-12 col-xl-6">
-                                                <div class="row pb-2">
-                                                    <div class="col-5">
-                                                        <h5 class="card-title">Diserahkan</h5>
-                                                    </div>
-                                                    <div class="col-7">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                                <a href="{{ $submittedVitalArchive != 0 ? route('archive-index', ['status' => 'Diserahkan']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
-                                                                    <i class="bi bi-menu-button-wide"></i>
-                                                                </a>
-                                                            </div>
-                                                            <div class="ps-3">
-                                                                <h6>{{ $submittedVitalArchive }}</h6>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-5">
-                                                        <h5 class="card-title">Disimpan</h5>
-                                                    </div>
-                                                    <div class="col-7">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                                <a href="{{ $savedVitalArchive != 0 ? route('archive-index', ['status' => 'Simpan']) : route('archive-index') }}" class="card-icon rounded-circle d-flex align-items-center justify-content-center text-decoration-none" style="color: inherit;">
-                                                                    <i class="bi bi-menu-button-wide"></i>
-                                                                </a>
-                                                            </div>
-                                                            <div class="ps-3">
-                                                                <h6>{{ $savedVitalArchive }}</h6>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                    </div>
-                </div>
-            </div>
-
-            @include('apps.dashboard.pie-chart')
+            @include('apps.dashboard.bar-chart')
+            {{-- @include('apps.dashboard.pie-chart') --}}
             
         </section>
     </main>
@@ -467,7 +294,7 @@
 
 @push('scripts')
     <!-- Script Pie Chart-->
-    <script>
+    {{-- <script>
         // === FUNGSI GENERATE WARNA PASTEL ===
         function generatePastelColors(count) {
             let colors = [];
@@ -537,7 +364,68 @@
         createPieChart('archiveChart', labels1, data1);
         createPieChart('dynamicArchiveChart', labels2, data2);
         createPieChart('staticArchiveChart', labels3, data3);
+    </script> --}}
 
+    <script>
+        // Chart 1: Arsip per Kategori
+        const ctx1 = document.getElementById('chartBar1');
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: @json($chartBar1['labels']),
+                datasets: [{
+                    label: 'Jumlah Arsip',
+                    data: @json($chartBar1['data']),
+                    backgroundColor: ['#36A2EB', '#FF6384', '#4BC0C0', '#FFCE56'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        // Chart 2: Subtype Arsip
+        const ctx2 = document.getElementById('chartBar2');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: @json($chartBar2['labels']),
+                datasets: [{
+                    label: 'Arsip Dinamis',
+                    data: @json($chartBar2['data']),
+                    backgroundColor: ['#FF9F40', '#9966FF', '#36A2EB', '#FF6384'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        // Chart 3: Arsip Statis Disimpan vs Diserahkan
+        const ctx3 = document.getElementById('chartBar3');
+        new Chart(ctx3, {
+            type: 'bar',
+            data: {
+                labels: @json($chartBar3['labels']),
+                datasets: [{
+                    label: 'Arsip Statis',
+                    data: @json($chartBar3['data']),
+                    backgroundColor: ['#4BC0C0', '#FF6384'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
     </script>
 
 @endpush

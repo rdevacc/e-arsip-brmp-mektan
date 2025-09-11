@@ -99,6 +99,7 @@ class ArchiveExport implements FromQuery, WithHeadings, WithStyles, WithEvents, 
             $item->archive_type->name ?? '-',
             $item->archive_subtype->name ?? '-',
             $item->archive_status->name ?? '-',
+            $item->archive_additional_information ?? '-',
         ];
     }
 
@@ -110,7 +111,7 @@ class ArchiveExport implements FromQuery, WithHeadings, WithStyles, WithEvents, 
                 'Tingkat Perkembangan', 'Media Arsip', 'Kondisi', 'Jumlah',
                 'Periode', 'Tahun Periode',
                 'Lokasi Penyimpanan', '', '', '', '',
-                'Jenis Arsip', 'Sub Jenis Arsip', 'Status'
+                'Jenis Arsip', 'Sub Jenis Arsip', 'Status', 'Keterangan Tambahan Arsip'
             ],
             [ // Baris 2
                 '', '', '', '', '',
@@ -140,6 +141,7 @@ class ArchiveExport implements FromQuery, WithHeadings, WithStyles, WithEvents, 
         $sheet->mergeCells('Q1:Q2');
         $sheet->mergeCells('R1:R2');
         $sheet->mergeCells('S1:S2');
+        $sheet->mergeCells('T1:T2');
 
         return [
             1 => ['font' => ['bold' => true], 'alignment' => ['horizontal' => 'center', 'vertical' => 'center']],

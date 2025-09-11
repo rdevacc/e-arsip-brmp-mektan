@@ -162,9 +162,11 @@
                                 <table id="archives-table" class="table table-striped" style="width:100%">
                                     <thead>
                                         <tr>
-                                           <th style="width: 1%; white-space: nowrap;">
-                                                <input type="checkbox" id="select-all" style="margin: 0; transform: scale(1.2); vertical-align: middle;">
+                                            @can('super-admin')
+                                            <th style="width: 1%; white-space: nowrap;">
+                                                 <input type="checkbox" id="select-all" style="margin: 0; transform: scale(1.2); vertical-align: middle;">
                                             </th>
+                                            @endcan
                                             <th class="text-center align-middle">
                                                 #
                                             </th>
@@ -208,6 +210,7 @@
     </main>
     
     <!-- Modal Ubah Status Massal -->
+    @can('super-admin')
     <div class="modal fade" id="bulkEditModal" tabindex="-1" aria-labelledby="bulkEditModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <form id="bulk-edit-form">
@@ -247,8 +250,7 @@
             </form>
         </div>
     </div>
-
-
+    @endcan
 @endsection
 
 @push('scripts')
@@ -277,6 +279,7 @@
                     }
                 },
                 columns: [
+                    @can('super-admin')   
                     {
                         data: 'id',
                         orderable: false,
@@ -286,6 +289,7 @@
                             return `<input type="checkbox" class="row-checkbox" value="${data}" style="margin:0; transform: scale(1.2); vertical-align: middle;">`;
                         }
                     },
+                    @endcan
                     {
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
@@ -403,7 +407,7 @@
 
             // Submit Bulk Delete
             $('#bulk-delete-btn').on('click', function () {
-            const selectedIDs = $('.row-checkbox:checked').map(function () {
+                const selectedIDs = $('.row-checkbox:checked').map(function () {
                 return this.value;
             }).get();
 

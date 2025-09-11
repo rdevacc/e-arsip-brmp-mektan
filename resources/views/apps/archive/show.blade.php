@@ -173,7 +173,7 @@
                                 <div class="row">
                                     <span class="col-sm-4 fw-semibold">Keterangan Tambahan</span>
                                     <div class="col-sm-8">
-                                        <p>{{ $archive->additional_information ?? "-" }}</p>
+                                        <p>{{ $archive->archive_additional_information ?? "-" }}</p>
                                     </div>
                                 </div>
                                 <div class="row">

@@ -522,6 +522,20 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row mb-3">
+                                        <label for="archive_additional_information" class="col-sm-3 col-form-label">Keterangan Tambahan</label>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control bg-highlight @error('archive_additional_information') is-invalid @enderror"
+                                            id="archive_additional_information"
+                                            name="archive_additional_information"
+                                            placeholder="Isi Keterangan Tambahan Arsip">{{ $archive->archive_additional_information ?:old('archive_additional_information') }}</textarea>
+                                            @error('archive_additional_information')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
 
                                     <h5 class="card-title">Lokasi Penyimpanan Arsip</h5>
 

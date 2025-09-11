@@ -43,7 +43,7 @@ return new class extends Migration
             $table->integer('archive_lifespan')->nullable(true);
             $table->integer('archive_number')->nullable(true);
             $table->date('archive_input_date')->nullable(true);
-            $table->string('additional_information')->nullable(true);
+            $table->string('archive_additional_information')->nullable(true);
             $table->foreignId('created_by')->default(2)->nullable()->constrained('users')->onDelete('set null');
             $table->foreignId('updated_by')->default(2)->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();

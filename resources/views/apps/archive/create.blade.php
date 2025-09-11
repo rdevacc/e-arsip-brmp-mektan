@@ -445,13 +445,13 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="additional_information" class="col-sm-3 col-form-label">Keterangan Tambahan</label>
+                                        <label for="archive_additional_information" class="col-sm-3 col-form-label">Keterangan Tambahan</label>
                                         <div class="col-sm-9">
-                                            <textarea class="form-control bg-highlight @error('additional_information') is-invalid @enderror"
-                                            id="additional_information"
-                                            name="additional_information"
-                                            placeholder="Isi Keterangan Tambahan Arsip">{{ old('additional_information') ?: '' }}</textarea>
-                                            @error('additional_information')
+                                            <textarea class="form-control bg-highlight @error('archive_additional_information') is-invalid @enderror"
+                                            id="archive_additional_information"
+                                            name="archive_additional_information"
+                                            placeholder="Isi Keterangan Tambahan Arsip">{{ old('archive_additional_information') ?: '' }}</textarea>
+                                            @error('archive_additional_information')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
