@@ -120,10 +120,10 @@
                                      <div class="card-body">
                                         <div class="row g-3">
                                             <!-- Kolom Arsip Dinamis -->
-                                            <div class="col-12 col-xl-6">
+                                            <div class="col-12 col-xl-6 mt-0">
                                                 <div class="row align-items-center">
                                                     <div class="col-6">
-                                                        <span class="card-title">Arsip Dinamis</span>
+                                                        <h5 class="card-title">Arsip Dinamis</h5>
                                                     </div>
                                                     <div class="col-6">
                                                         <h6 class="mb-0">{{ $dynamicArchive }}</h6>
@@ -132,7 +132,7 @@
                                             </div>
 
                                             <!-- Arsip Aktif -->
-                                            <div class="col-12 col-xl-6">
+                                            <div class="col-12 col-xl-6 mt-0">
                                                 <!-- Arsip Aktif -->
                                                 <div class="row align-items-center mb-2">
                                                     <div class="col-6">
@@ -189,9 +189,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title text-xl-center">Disimpan</h5>
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <div class="ps-3">
-                                            <h6>{{ $savedDynamicArchive }}</h6>
-                                        </div>
+                                        <h6>{{ $savedDynamicArchive }}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -203,9 +201,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title text-xl-center">Usul Musnah</h5>
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <div class="ps-3">
-                                            <h6>{{ $proposedForDestructionArchive }}</h6>
-                                        </div>
+                                        <h6>{{ $proposedForDestructionArchive }}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -217,9 +213,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title text-xl-center">Musnah</h5>
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <div class="ps-3">
-                                            <h6>{{ $destructionArchive }}</h6>
-                                        </div>
+                                        <h6>{{ $destructionArchive }}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -235,44 +229,32 @@
                              <div class="row">
                                  <div class="col-12 col-xl-12">
                                      <div class="card-body">
-                                         <div class="row">
-                                             <div class="col-12 col-xl-6">
-                                                 <div class="row pb-2">
-                                                     <div class="col-5 col-xl-6">
+                                         <div class="row g-3">
+                                             <div class="col-12 col-xl-6 mt-0">
+                                                 <div class="row align-items-center">
+                                                     <div class="col-6">
                                                          <h5 class="card-title">Arsip Statis</h5>
                                                      </div>
-                                                     <div class="col-3 col-xl-6">
-                                                         <div class="d-flex align-items-center">
-                                                             <div class="ps-3">
-                                                                 <h6>{{ $staticArchive }}</h6>
-                                                             </div>
-                                                         </div>
+                                                     <div class="col-6">
+                                                        <h6 class="mb-0">{{ $staticArchive }}</h6>
                                                      </div>
                                                  </div>
                                              </div>
-                                             <div class="col-12 col-xl-6">
-                                                <div class="row pb-2">
-                                                    <div class="col-5">
+                                             <div class="col-12 col-xl-6 mt-0">
+                                                <div class="row align-items-center mb-2">
+                                                    <div class="col-6">
                                                         <h5 class="card-title">Diserahkan</h5>
                                                     </div>
-                                                    <div class="col-7">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="ps-3">
-                                                                <h6>{{ $submittedStaticArchive }}</h6>
-                                                            </div>
-                                                        </div>
+                                                    <div class="col-6">
+                                                        <h6 class="mb-0">{{ $submittedStaticArchive }}</h6>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-5">
+                                                <div class="row align-items-center mb-2">
+                                                    <div class="col-6">
                                                         <h5 class="card-title">Disimpan</h5>
                                                     </div>
-                                                    <div class="col-7">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="ps-3">
-                                                                <h6>{{ $savedStaticArchive }}</h6>
-                                                            </div>
-                                                        </div>
+                                                    <div class="col-6">
+                                                        <h6 class="mb-0">{{ $savedStaticArchive }}</h6>
                                                     </div>
                                                 </div>
                                              </div>
