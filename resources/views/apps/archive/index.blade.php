@@ -75,7 +75,7 @@
                                 @endcan
                             </div>
                         @endcanany
-                        </div>
+                    </div>
                     @endauth
                     <div class="row mx-1 mb-3">
                         <div class="col-md-3">
