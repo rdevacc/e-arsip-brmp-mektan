@@ -2,16 +2,28 @@
       <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-heading">Utama</li>
         <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('main.page') ? 'active' : '' }}" href="{{route('main.page')}}">
+                <i class="fa-solid fa-house"></i>
+                <span>Halaman Utama</span>
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{route('dashboard')}}">
-                <i class="bi bi-grid"></i>
+                <i class="fa-solid fa-gauge"></i>
                 <span>Dashboard</span>
             </a>
         </li>
 
         <li class="nav-item">
             <a class="nav-link {{ request()->segment(2) === 'archive' ? 'active' : '' }}" href="{{route('archive-index')}}">
-                <i class="bi bi-menu-button-wide"></i>
+                <i class="fa-solid fa-database"></i>
                 <span>Data Arsip</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('legal.basis') ? 'active' : '' }}" href="{{route('legal.basis')}}">
+                <i class="fa-solid fa-gavel"></i>
+                <span>Dasar Hukum</span>
             </a>
         </li>
 

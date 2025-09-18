@@ -81,6 +81,9 @@
     <script src="{{ asset('admin/assets/vendor/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ asset('admin/assets/vendor/php-email-form/validate.js') }}"></script>
 
+    <!-- Font Awesome JS -->
+    <script src="https://kit.fontawesome.com/aa5e24c3d7.js" crossorigin="anonymous"></script>
+
     <!-- Load jQuery only once -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     

@@ -21,7 +21,9 @@ use App\Http\Controllers\ArchiveSubTypeController;
 use App\Http\Controllers\ArchiveTypeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ImportArchiveController;
+use App\Http\Controllers\LegalBasisController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MainPageController;
 use App\Http\Controllers\MonitoringUserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -47,7 +49,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('dashboard');
+    return redirect()->route('main.page');
 });
 
 /**
@@ -65,6 +67,8 @@ Route::post('/app/password-reset', [LoginController::class, 'update_password'])-
  * * Dashboard Routes *
  */
 Route::get('/app/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/app/legal-basis', [LegalBasisController::class, 'index'])->name('legal.basis');
+Route::get('/app/main-page', [MainPageController::class, 'index'])->name('main.page');
 
 
 /**
