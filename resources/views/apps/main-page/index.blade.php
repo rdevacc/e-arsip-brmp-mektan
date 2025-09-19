@@ -6,6 +6,12 @@
           rel="stylesheet" 
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" 
           crossorigin="anonymous">
+
+    <style>
+        .min-vh-80 {
+            min-height: 80vh;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -24,7 +30,7 @@
             @endif
 
             <div class="card">
-                <div class="card-body">
+                <div class="card-body min-vh-80 mt-4">
                     <div class="d-flex flex-column mx-auto justify-content-center align-items-center text-center">
                         <img src="{{ asset('admin/assets/img/logo-kementan.png') }}" alt="Logo-Kementan" width="300" eight="300">
                         <div class="d-flex flex-column" style="max-width: 1000px;">

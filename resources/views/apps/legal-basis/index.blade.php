@@ -1,5 +1,13 @@
 @extends('layouts.app')
 
+@push('css')
+    <style>
+        .min-vh-70 {
+            min-height: 70vh;
+        }
+    </style>
+@endpush
+
 @section('content')
     <main id="main" class="main">
         <section class="section quantity-unit">
@@ -19,7 +27,7 @@
                 <div class="card-header fw-bold">
                     DASAR HUKUM PELAKSANAAN PENGELOLAAN KEARSIPAN
                 </div>
-                <div class="card-body">
+                <div class="card-body min-vh-70">
                     <p class="mb-3">
                     Dasar hukum pengelolaan arsip di Balai Besar Perakitan dan Modernisasi Mekanisasi Pertanian, mengikuti dasar hukum sebagai berikut:
                     </p>
