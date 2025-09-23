@@ -33,6 +33,10 @@
     </style>
 @endpush
 
+@section('title')
+    Dashboard Arsip | E-Arsip BRMP Mektan
+@endsection
+
 @section('content')
     <main id="main" class="main">
         <section class="section dashboard">

@@ -16,6 +16,10 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 @endpush
 
+@section('title')
+    Arsip | E-Arsip BRMP Mektan
+@endsection
+
 @section('content')
     <main id="main" class="main">
         <section class="section">

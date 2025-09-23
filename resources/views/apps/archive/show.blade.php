@@ -13,6 +13,9 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 @endpush
 
+@section('title')
+    Arsip | E-Arsip BRMP Mektan
+@endsection
 
 @section('content')
     <main id="main" class="main">

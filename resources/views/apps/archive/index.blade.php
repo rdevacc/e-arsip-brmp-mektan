@@ -35,6 +35,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endpush
 
+@section('title')
+    Arsip | E-Arsip BRMP Mektan
+@endsection
 
 @section('content')
     <main id="main" class="main">

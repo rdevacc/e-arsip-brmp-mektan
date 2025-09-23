@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+    Klasifikasi Tim Kerja | E-Arsip BRMP Mektan
+@endsection
+
 @section('content')
     <main id="main" class="main">
         <section class="section quantity-unit">

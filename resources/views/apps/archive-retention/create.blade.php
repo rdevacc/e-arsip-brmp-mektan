@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+    Retensi Arsip | E-Arsip BRMP Mektan
+@endsection
+
 @push('css')
     <style>
     .no-spinner::-webkit-outer-spin-button,

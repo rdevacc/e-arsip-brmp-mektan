@@ -2,42 +2,46 @@
 @extends('layouts.app')
 
 @push('css')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css" />
 
-<style>
-    .custom-dropzone {
-        border: 3px dashed #8cbfd4;
-        background-color: #f9fcfd;
-        padding: 80px 20px;
-        text-align: center;
-        border-radius: 10px;
-        transition: border-color 0.3s ease, background-color 0.3s ease;
-        cursor: pointer;
-        position: relative;
-    }
+    <style>
+        .custom-dropzone {
+            border: 3px dashed #8cbfd4;
+            background-color: #f9fcfd;
+            padding: 80px 20px;
+            text-align: center;
+            border-radius: 10px;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
 
-    .custom-dropzone:hover {
-        border-color: #4ea0c9;
-        background-color: #f1f7fa;
-    }
+        .custom-dropzone:hover {
+            border-color: #4ea0c9;
+            background-color: #f1f7fa;
+        }
 
-    .dz-message {
-        font-size: 18px;
-        color: #6c757d;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        pointer-events: none;
-    }
+        .dz-message {
+            font-size: 18px;
+            color: #6c757d;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            pointer-events: none;
+        }
 
-    .dz-message i {
-        font-size: 48px;
-        color: #4ea0c9;
-    }
-</style>
-<meta name="csrf-token" content="{{ csrf_token() }}">
+        .dz-message i {
+            font-size: 48px;
+            color: #4ea0c9;
+        }
+    </style>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 @endpush
+
+@section('title')
+    Import Arsip | E-Arsip BRMP Mektan
+@endsection
 
 @section('content')
 <main id="main" class="main">

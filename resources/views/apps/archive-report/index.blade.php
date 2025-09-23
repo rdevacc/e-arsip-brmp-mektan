@@ -17,6 +17,10 @@
     </style>
 @endpush
 
+@section('title')
+    Export Arsip | E-Arsip BRMP Mektan
+@endsection
+
 @section('content')
 <main id="main" class="main">
     <section class="section archive-media">
