@@ -3,26 +3,26 @@
         <li class="nav-heading">Utama</li>
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('main.page') ? 'active' : '' }}" href="{{route('main.page')}}">
-                <i class="fa-solid fa-house"></i>
+                <iconify-icon icon="ant-design:home-outlined" style="font-size: 18px; margin-right: 8px;"></iconify-icon>
                 <span>Halaman Utama</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{route('dashboard')}}">
-                <i class="fa-solid fa-gauge"></i>
+                <iconify-icon icon="material-symbols:dashboard-outline-rounded" style="font-size: 18px; margin-right: 8px;"></iconify-icon>
                 <span>Dashboard</span>
             </a>
         </li>
-
+        
         <li class="nav-item">
             <a class="nav-link {{ request()->segment(2) === 'archive' ? 'active' : '' }}" href="{{route('archive-index')}}">
-                <i class="fa-solid fa-database"></i>
+                <iconify-icon icon="icon-park-outline:data" style="font-size: 18px; margin-right: 8px;"></iconify-icon>
                 <span>Data Arsip</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('legal.basis') ? 'active' : '' }}" href="{{route('legal.basis')}}">
-                <i class="fa-solid fa-gavel"></i>
+                <iconify-icon icon="material-symbols:balance-rounded" style="font-size: 18px; margin-right: 8px;"></iconify-icon>
                 <span>Dasar Hukum</span>
             </a>
         </li>
@@ -31,14 +31,14 @@
         @can('super-admin')
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('archive-report*') ? 'active' : '' }}" href="{{route('archive-report.index')}}">
-                    <i class="bi bi-file-earmark-text"></i>
+                    <iconify-icon icon="lsicon:report-outline" style="font-size: 18px; margin-right: 8px;"></iconify-icon>
                     <span>Cetak Laporan Arsip</span>
                 </a>
             </li>
-
+            
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('import-excel*') ? 'active' : '' }}" href="{{route('import-excel.index')}}">
-                    <i class="bi bi-cloud-upload"></i>
+                    <iconify-icon icon="famicons:cloud-upload-outline" style="font-size: 18px; margin-right: 8px;"></iconify-icon>
                     <span>Import Data Excel</span>
                 </a>
             </li>
