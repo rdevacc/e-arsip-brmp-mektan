@@ -41,7 +41,7 @@
                                             <option selected disabled>Pilih Tempat Penyimpanan Arsip</option>
                                             @foreach ($archiveStoragePlaces as $archiveStoragePlace)
                                                 <option value="{{ $archiveStoragePlace->id }}" @selected(old('archive_storage_place_id') == $archiveStoragePlace->id)>
-                                                    {{ $archiveStoragePlace->name }}</option>
+                                                    {{ $archiveStoragePlace->name }} - {{ $archiveStoragePlace->archive_storage_location->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('archive_storage_place_id')
