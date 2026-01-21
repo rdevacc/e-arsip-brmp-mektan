@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class ArchiveShelfRowController extends Controller
 {
     public function index(){
-        $archiveShelfRows = ArchiveShelfRow::with('archive_storage_place', 'archive_storage_location')->get(['id', 'archive_storage_place_id', 'name']);
+        $archiveShelfRows = ArchiveShelfRow::with('archive_storage_place')->get(['id', 'archive_storage_location_id', 'name']);
         
         return view('apps.archive-shelf-row.index', compact('archiveShelfRows'));
     }
