@@ -50,20 +50,20 @@
 
                 <div class="row mb-3">
                     <div class="col-md-3">
-                        <label for="archive_type" class="form-label">Jenis Arsip</label>
+                        <label for="archive_type" class="form-label">Tipe Arsip</label>
                         <select name="archive_type" id="archive_type" class="form-select">
-                            <option selected value="">Pilih Jenis Arsip</option>
+                            <option selected value="">Pilih Tipe Arsip</option>
                             @foreach($archiveTypeList as $archiveType)
                                 <option value="{{ $archiveType->id }}">{{ $archiveType->name }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="col-md-3">
-                        <label for="archive_subtype" class="form-label">Sub Jenis Arsip</label>
+                        <label for="archive_subtype" class="form-label">Sub Tipe Arsip</label>
                         <select name="archive_subtype" id="archive_subtype" class="form-select">
-                            <option selected value="">Pilih Sub Jenis Arsip</option>
-                            @foreach($archiveTypeList as $archiveType)
-                                <option value="{{ $archiveType->id }}">{{ $archiveType->name }}</option>
+                            <option selected value="">Pilih Sub Tipe Arsip</option>
+                            @foreach($archiveSubTypeList as $archiveSubType)
+                                <option value="{{ $archiveSubType->id }}">{{ $archiveSubType->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -188,7 +188,7 @@
 
         // Fungsi membangun parameter URL dari filter
         function buildExportParams() {
-            return new URLSearchParams({
+            const rawParams = {
                 text_search: $('#text_search').val(),
                 start_date: $('#start_date').val(),
                 end_date: $('#end_date').val(),
@@ -199,7 +199,17 @@
                 period: $('#archive_period').val(),
                 year_period: $('#archive_year_period').val(),
                 lifespan: $('#archive_lifespan').val(),
-            }).toString();
+            };
+
+            const cleanParams = {};
+            Object.keys(rawParams).forEach(key => {
+                const value = rawParams[key];
+                if (value !== null && value !== undefined && value !== '') {
+                    cleanParams[key] = value;
+                }
+            });
+
+            return new URLSearchParams(cleanParams).toString();
         }
 
         // Fungsi utama untuk fetch data dan render DataTable
@@ -270,7 +280,9 @@
                 ],
                 drawCallback: function (settings) {
                     const rowCount = settings.json?.data?.length || 0;
-                    toggleExportButtons(rowCount > 0);
+                    // ✅ PERBAIKAN: Selalu enable tombol export jika ada filter atau loadAll
+                    const totalRecords = settings.json?.recordsFiltered || 0;
+                    toggleExportButtons(totalRecords > 0);
                 }
             });
         }
@@ -280,12 +292,12 @@
             $('#text_search').val('');
             $('#start_date').val('');
             $('#end_date').val('');
-            $('#archive_type').val('');
-            $('#archive_subtype').val('');
-            $('#archive_status').val('');
-            $('#filterWorkTeamClassification').val('');
+            $('#archive_type').val('').trigger('change');
+            $('#archive_subtype').val('').trigger('change');
+            $('#archive_status').val('').trigger('change');
+            $('#filterWorkTeamClassification').val('').trigger('change');
             $('#archive_lifespan').val('');
-            $('#archive_period').val('');
+            $('#archive_period').val('').trigger('change');
             $('#archive_year_period').val('');
 
             // Tampilkan ulang semua data ke DataTable
@@ -305,15 +317,20 @@
         $('#text_search, #start_date, #end_date, #archive_type, #archive_subtype, #archive_status, #filterWorkTeamClassification, #archive_lifespan, #archive_period, #archive_year_period')
             .on('change keyup', fetchLaporan);
 
-        // Tombol Export Excel
+        // ✅ PERBAIKAN UTAMA: Tombol Export Excel
         $('#exportExcel').on('click', function (e) {
             e.preventDefault();
+            
+            const $btn = $(this);
+            $btn.prop('disabled', true);
 
-            // Tampilkan loading SweetAlert
+            // Tampilkan loading SweetAlert dengan waktu lebih lama
             Swal.fire({
                 title: 'Sedang meng-export...',
-                text: 'Mohon tunggu sebentar',
+                html: 'Mohon tunggu, sedang memproses data.<br>Ini mungkin memakan waktu beberapa menit.',
                 allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
                 didOpen: () => {
                     Swal.showLoading();
                 }
@@ -322,31 +339,133 @@
             // Bangun parameter URL
             const params = buildExportParams();
         
-            // Buat <iframe> tersembunyi untuk menangani download (agar tidak mengganggu halaman)
-            const iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            iframe.src = "{{ route('archive-report.export.excel') }}?" + params;
-
-            // Tambahkan iframe ke body
-            document.body.appendChild(iframe);
-
-            // Estimasi waktu proses download selesai (bisa disesuaikan)
-            setTimeout(function () {
+            // Buat <a> tag untuk download (lebih reliable daripada iframe)
+            const downloadUrl = "{{ route('archive-report.export.excel') }}" + (params ? "?" + params : "");
+            
+            // Gunakan XMLHttpRequest untuk tracking progress
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', downloadUrl, true);
+            xhr.responseType = 'blob';
+            
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Sukses - trigger download
+                    const blob = xhr.response;
+                    const link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = 'Laporan-Arsip.xlsx';
+                    link.click();
+                    window.URL.revokeObjectURL(link.href);
+                    
+                    Swal.close();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Export Selesai',
+                        text: 'File berhasil diunduh.',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                } else {
+                    // Error
+                    Swal.close();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Export Gagal',
+                        text: 'Terjadi kesalahan saat export. Silakan coba lagi.',
+                    });
+                }
+                $btn.prop('disabled', false);
+            };
+            
+            xhr.onerror = function() {
                 Swal.close();
                 Swal.fire({
-                    icon: 'success',
-                    title: 'Export Selesai',
-                    text: 'File berhasil diunduh.',
-                    timer: 2000,
-                    showConfirmButton: false
+                    icon: 'error',
+                    title: 'Export Gagal',
+                    text: 'Terjadi kesalahan jaringan. Silakan coba lagi.',
                 });
-            }, 3000);
+                $btn.prop('disabled', false);
+            };
+            
+            xhr.ontimeout = function() {
+                Swal.close();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Export Timeout',
+                    text: 'Proses export memakan waktu terlalu lama. Silakan coba lagi.',
+                });
+                $btn.prop('disabled', false);
+            };
+            
+            // Set timeout ke 10 menit (600000 ms) untuk data besar
+            xhr.timeout = 600000;
+            
+            xhr.send();
         });
 
         // Tombol Export PDF
-        $('#exportPdf').on('click', function () {
+        $('#exportPdf').on('click', function (e) {
+            e.preventDefault();
+            
+            const $btn = $(this);
+            $btn.prop('disabled', true);
+
+            Swal.fire({
+                title: 'Sedang meng-export PDF...',
+                html: 'Mohon tunggu, sedang memproses data.',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
             const params = buildExportParams();
-            window.location.href = `{{ route('archive-report.export.pdf') }}?${params}`;
+            const downloadUrl = `{{ route('archive-report.export.pdf') }}${params ? '?' + params : ''}`;
+            
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', downloadUrl, true);
+            xhr.responseType = 'blob';
+            
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    const blob = xhr.response;
+                    const link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = 'Laporan-Arsip.pdf';
+                    link.click();
+                    window.URL.revokeObjectURL(link.href);
+                    
+                    Swal.close();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Export PDF Selesai',
+                        text: 'File PDF berhasil diunduh.',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                } else {
+                    Swal.close();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Export PDF Gagal',
+                        text: 'Terjadi kesalahan saat export PDF.',
+                    });
+                }
+                $btn.prop('disabled', false);
+            };
+            
+            xhr.onerror = function() {
+                Swal.close();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Export PDF Gagal',
+                    text: 'Terjadi kesalahan jaringan.',
+                });
+                $btn.prop('disabled', false);
+            };
+            
+            xhr.timeout = 600000;
+            xhr.send();
         });
 
         // Tombol Load All Data

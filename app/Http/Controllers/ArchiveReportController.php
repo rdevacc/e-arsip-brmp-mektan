@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\ArchiveExport;
 use App\Models\Archive;
 use Barryvdh\Snappy\Facades\SnappyPdf;
+use Exception;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -34,7 +35,7 @@ class ArchiveReportController extends Controller
             ->values();
 
         // Ambil list archive_type yang punya arsip terkait
-        $archiveTypeList = Archive::with('archive_subtype')
+        $archiveSubTypeList = Archive::with('archive_subtype')
             ->whereNotNull('archive_subtype_id')
             ->get()
             ->pluck('archive_subtype')
@@ -74,7 +75,7 @@ class ArchiveReportController extends Controller
             ->orderByRaw('CAST(archive_lifespan AS UNSIGNED) DESC')
             ->pluck('archive_lifespan');
 
-        return view('apps.archive-report.index', compact('workTeamClassificationList', 'archiveTypeList', 'archiveStatusList', 'lifespanList', 'periodList', 'yearPeriodList'));
+        return view('apps.archive-report.index', compact('workTeamClassificationList', 'archiveTypeList', 'archiveSubTypeList',  'archiveStatusList', 'lifespanList', 'periodList', 'yearPeriodList'));
     }
 
     public function filter(Request $request)
@@ -166,6 +167,9 @@ class ArchiveReportController extends Controller
 
     public function exportExcel(Request $request)
     {
+        set_time_limit(300);
+        ini_set('memory_limit', '512M');
+        
         $filters = $request->only([
             'text_search',
             'start_date',
@@ -179,7 +183,15 @@ class ArchiveReportController extends Controller
             'year_period',
         ]);
 
-        return Excel::download(new ArchiveExport($filters), 'Laporan-Arsip.xlsx');
+        $hasFilters = !empty(array_filter($filters, function($value) {
+            return !is_null($value) && $value !== '';
+        }));
+
+        if ($hasFilters) {
+            return Excel::download(new ArchiveExport($filters), 'Laporan-Arsip.xlsx');
+        } else {
+            return Excel::download(new ArchiveExport(), 'Laporan-Arsip.xlsx');
+        }
     }
 
     public function generatePdf(Request $request)

@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use App\Models\Archive;
 use Maatwebsite\Excel\Concerns\FromQuery;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
@@ -12,13 +13,18 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class ArchiveExport implements FromQuery, WithHeadings, WithStyles, WithEvents, WithMapping
+class ArchiveExport implements FromQuery, WithHeadings, WithStyles, WithEvents, WithMapping, WithChunkReading
 {
     protected $filters;
 
     public function __construct(array $filters = [])
     {
         $this->filters = $filters;
+    }
+
+    public function chunkSize(): int
+    {
+        return 1000;
     }
 
     // PERUBAHAN: gunakan FromQuery, bukan FromCollection
