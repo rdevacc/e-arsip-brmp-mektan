@@ -194,9 +194,11 @@
                                             <th class="text-center align-middle">
                                                 Periode
                                             </th>
+                                            @can('super-admin')
                                             <th class="text-center align-middle">
                                                 File
                                             </th>
+                                            @endcan
                                             @auth
                                             <th class="text-center align-middle" style="width: 100px;">
                                                 Action
@@ -297,7 +299,7 @@
                         </div>
 
                         <small class="text-muted">
-                            Maksimal 10 MB
+                            Maksimal 50 MB
                         </small>
 
                     </div>
