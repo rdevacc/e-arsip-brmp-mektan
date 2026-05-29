@@ -69,25 +69,26 @@ Route::prefix('app')->group(function (){
         */
         Route::get('login', [LoginController::class, 'login'])->middleware('guest')->name('login');
         Route::post('login', [LoginController::class, 'authenticate'])->name('submit-login');
-        Route::post('logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
         Route::get('forgot-password', [LoginController::class, 'forgot_password'])->middleware('guest')->name('password.request');
         Route::post('forgot-password', [LoginController::class, 'send_reset_link'])->name('password.email');
         Route::get('password-reset/{token}', [LoginController::class, 'password_reset'])->middleware('guest')->name('password.reset');
         Route::post('password-reset', [LoginController::class, 'update_password'])->name('password.update');
     });
-
+    
+    
     /**
      * * Public *
-     */
+    */
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('legal-basis', [LegalBasisController::class, 'index'])->name('legal.basis');
     Route::get('main-page', [MainPageController::class, 'index'])->name('main.page');
-
-
+    
+    
     /**
      * * Auth Only Routes *
-     */
+    */
     Route::middleware('auth')->group(function(){
+        Route::post('logout', [LoginController::class, 'logout'])->name('logout');
         /**
          * * Archive Routes *
          */
