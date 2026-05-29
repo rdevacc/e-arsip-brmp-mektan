@@ -44,6 +44,34 @@ return [
             'throw' => false,
         ],
 
+        'nas_public_develop' => [
+            'driver' => 'local',
+            'root' => storage_path('app/nas-public'),
+            'url' => env('APP_URL').'/nas',
+            'visibility' => 'public',
+        ],
+
+        // NAS Public
+        'nas_public' => [
+            'driver' => 'local',
+            'root' => '/mnt/storage/e-arsip/public',
+            'url' => env('APP_URL').'/nas',
+            'visibility' => 'public',
+        ],
+
+         // NAS Private
+        'nas_private' => [
+            'driver' => 'local',
+            'root' => '/mnt/storage/e-arsip/private',
+            'visibility' => 'private',
+        ],
+
+        // NAS Temp
+        'nas_temp' => [
+            'driver' => 'local',
+            'root' => '/mnt/storage/e-arsip/temp',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

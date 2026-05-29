@@ -43,6 +43,7 @@ class Archive extends Model
         'archive_shelf_row_id',
         'archive_box_id',
         'archive_folder_id',
+        'url_upload',
         'created_by',
         'updated_by',
     ];
@@ -67,6 +68,19 @@ class Archive extends Model
             }
         });
     }
+
+
+    public function getFileUrlAttribute()
+    {
+        if (!$this->url_upload) {
+            return null;
+        }
+
+        return config('filesystems.disks.nas_public.url')
+            . '/'
+            . ltrim($this->url_upload, '/');
+    }
+
 
     /**
      * * Relationship from Archive to User*

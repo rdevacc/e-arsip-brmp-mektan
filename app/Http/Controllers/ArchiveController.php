@@ -25,10 +25,15 @@ use App\Models\WorkGroup;
 use App\Models\WorkTeam;
 use App\Models\WorkTeamClassification;
 use App\Models\WorkUnit;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
+
 
 class ArchiveController extends Controller
 {
@@ -218,6 +223,7 @@ class ArchiveController extends Controller
                     $year = $archive->year_period ?? '-';
                     return "{$period} - Tahun {$year}";
                 })
+                ->addColumn('file_upload', fn($archive) => $archive->file_upload ?? '-')
                 ->addColumn('action', function ($archive) use ($statuses) {
                     return view('components.admin.button', compact('archive', 'statuses'))->render();
                 })
@@ -291,6 +297,96 @@ class ArchiveController extends Controller
             'statuses'
         ]));
     }
+
+    public function uploadFile(Request $request, Archive $archive)
+    {
+        $request->validate([
+            'file' => [
+                'required',
+                'file',
+                'mimes:pdf,jpg,jpeg,png',
+                'max:51200' // 50 MB
+            ]
+        ]);
+
+        try {
+
+            if (
+                $archive->url_upload &&
+                Storage::disk('nas_public')->exists($archive->url_upload)
+            ) {
+                Storage::disk('nas_public')
+                    ->delete($archive->url_upload);
+            }
+
+            $file = $request->file('file');
+
+            $filename =
+                now()->format('YmdHis')
+                . '_'
+                . Str::uuid()
+                . '.'
+                . $file->getClientOriginalExtension();
+
+            $path = $file->storeAs(
+                'archive-files',
+                $filename,
+                'nas_public'
+            );
+
+            $archive->update([
+                'url_upload' => $path
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'File berhasil diupload.',
+                'path' => $path
+            ]);
+
+        } catch (Exception $e) {
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+
+        }
+    }
+
+    public function deleteFile(Archive $archive)
+    {
+        try {
+
+            if (
+                $archive->url_upload &&
+                Storage::disk('nas_public')->exists($archive->url_upload)
+            ) {
+                Storage::disk('nas_public')
+                    ->delete($archive->url_upload);
+            }
+
+            $archive->update([
+                'url_upload' => null
+            ]);
+
+
+            return response()->json([
+                'success' => true,
+                'message' => 'File berhasil dihapus.'
+            ]);
+
+        } catch (Exception $e) {
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+
+        }
+    }
+
+
 
     public function show(Archive $archive){
 

@@ -15,6 +15,16 @@
                 data-bs-title="Edit Arsip">
                 <i class="bi bi-pencil"></i>
             </a>
+            <a class="btn btn-dark mx-1 btn-upload-file"
+                href="#"
+                data-archive-id="{{ $archive->id }}"
+                data-upload-url="{{ route('archive-upload', $archive->id) }}"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                data-bs-custom-class="custom-tooltip"
+                data-bs-title="Upload File">
+                <i class="bi bi-upload"></i>
+            </a>
         @endcanany
         @can('super-admin')
         <form action="{{ route('archive-delete', $archive->id) }}" method="POST" class="form-delete">

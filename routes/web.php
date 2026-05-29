@@ -91,6 +91,10 @@ Route::prefix('app')->group(function (){
         /**
          * * Archive Routes *
          */
+
+        Route::post('/archive/{archive}/upload-file', [ArchiveController::class, 'uploadFile'])->name('archive-upload');
+        Route::delete('/archive/{archive}/upload-file', [ArchiveController::class, 'deleteFile'])->name('archive-upload-delete');
+
         Route::resource('/archive', ArchiveController::class)->names([
             'create' => 'archive-create',
             'show' => 'archive-show',

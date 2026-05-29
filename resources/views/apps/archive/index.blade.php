@@ -194,6 +194,9 @@
                                             <th class="text-center align-middle">
                                                 Periode
                                             </th>
+                                            <th class="text-center align-middle">
+                                                File
+                                            </th>
                                             @auth
                                             <th class="text-center align-middle" style="width: 100px;">
                                                 Action
@@ -254,10 +257,65 @@
         </div>
     </div>
     @endcan
+
+    <!-- Modal Upload File -->
+    <div class="modal fade" id="uploadFileModal" tabindex="-1">
+        <div class="modal-dialog">
+            <form id="upload-file-form">
+                @csrf
+
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            Upload File Arsip
+                        </h5>
+
+                        <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal">
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <input type="hidden"
+                            id="archive-id">
+
+                        <input type="hidden"
+                            id="upload-url">
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                File PDF / Gambar
+                            </label>
+
+                            <input type="file"
+                                id="archive-file"
+                                class="form-control"
+                                accept=".pdf,.jpg,.jpeg,.png">
+                        </div>
+
+                        <small class="text-muted">
+                            Maksimal 10 MB
+                        </small>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit"
+                            class="btn btn-primary">
+                            Upload
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
 @endsection
 
-@push('scripts')
-
+@push('scripts')    
     <!-- DataTables -->
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
@@ -310,6 +368,9 @@
                     { data: 'archive_subtype', name: 'archive_subtype_name' },
                     { data: 'archive_status', name: 'archive_status_name' },
                     { data: 'period', name: 'period' },
+                    @can('super-admin')
+                        { data: 'file_upload', name: 'file_upload'},
+                    @endcan
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ]
             });
@@ -590,6 +651,78 @@
             }
         });
 
+    </script>
+
+    <script>
+        $(document).on('click', '.btn-upload-file', function (e) {
+
+            e.preventDefault();
+
+            $('#archive-id').val($(this).data('archive-id'));
+            $('#upload-url').val($(this).data('upload-url'));
+
+            $('#archive-file').val('');
+
+            $('#uploadFileModal').modal('show');
+        });
+
+        $('#upload-file-form').on('submit', function (e) {
+
+            e.preventDefault();
+
+            const file = $('#archive-file')[0].files[0];
+
+            if (!file) {
+                Swal.fire(
+                    'Peringatan',
+                    'Pilih file terlebih dahulu.',
+                    'warning'
+                );
+                return;
+            }
+
+            const formData = new FormData();
+
+            formData.append('file', file);
+
+            $.ajax({
+                url: $('#upload-url').val(),
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN':
+                        $('meta[name="csrf-token"]').attr('content')
+                },
+
+                success: function (response) {
+
+                    $('#uploadFileModal').modal('hide');
+
+                    $('#archives-table')
+                        .DataTable()
+                        .ajax
+                        .reload(null, false);
+
+                    Swal.fire(
+                        'Berhasil',
+                        response.message,
+                        'success'
+                    );
+                },
+
+                error: function (xhr) {
+
+                    Swal.fire(
+                        'Gagal',
+                        xhr.responseJSON?.message ??
+                        'Upload gagal.',
+                        'error'
+                    );
+                }
+            });
+        });
     </script>
 
 @endpush
