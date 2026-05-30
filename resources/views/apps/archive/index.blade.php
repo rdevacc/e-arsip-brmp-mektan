@@ -369,7 +369,7 @@
                     { data: 'archive_status', name: 'archive_status_name' },
                     { data: 'period', name: 'period' },
                     @can('super-admin')
-                        { data: 'file_upload', name: 'file_upload'},
+                        { data: 'url_upload', name: 'url_upload'},
                     @endcan
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ]
