@@ -47,7 +47,7 @@ return [
         'nas_public_develop' => [
             'driver' => 'local',
             'root' => storage_path('app/nas-public'),
-            'url' => env('APP_URL').'/nas',
+            'url' => env('APP_URL').'/nas-public',
             'visibility' => 'public',
         ],
 

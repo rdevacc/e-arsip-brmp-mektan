@@ -48,6 +48,10 @@ class Archive extends Model
         'updated_by',
     ];
 
+    protected $appends = [
+        'file_url',
+    ];
+
     /**
      * * Event untuk otomatis mengisi created_by dan updated_by *
      */
@@ -78,7 +82,7 @@ class Archive extends Model
 
         return config('filesystems.disks.nas_public.url')
             . '/'
-            . ltrim($this->url_upload, '/');
+            . $this->url_upload;
     }
 
 

@@ -364,8 +364,6 @@
                     { data: 'work_team_classification', name: 'work_team_classification_code' },
                     { data: 'archive_description', name: 'archive_description', orderable: false },
                     { data: 'archive_lifespan', name: 'archive_lifespan' },
-                    // { data: 'period_name', name: 'period_name' },
-                    // { data: 'year_period', name: 'year_period_name' },
                     { data: 'archive_type', name: 'archive_type_name' },
                     { data: 'archive_subtype', name: 'archive_subtype_name' },
                     { data: 'archive_status', name: 'archive_status_name' },

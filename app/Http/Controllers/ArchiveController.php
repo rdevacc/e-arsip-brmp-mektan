@@ -213,8 +213,6 @@ class ArchiveController extends Controller
                 ->addColumn('work_team_classification', fn($archive) => $archive->work_team_classification_code ?? '-')
                 ->addColumn('archive_description', fn($archive) => $archive->archive_description ?? '-')
                 ->addColumn('archive_lifespan', fn($archive) => $archive->archive_lifespan ?? '-')
-                // ->addColumn('period_name', fn($archive) => $archive->period_name ?? '-')
-                // ->addColumn('year_period', fn($archive) => $archive->year_period ?? '-')
                 ->addColumn('archive_type', fn($archive) => $archive->archive_type_name ?? '-')
                 ->addColumn('archive_subtype', fn($archive) => $archive->archive_subtype_name ?? '-')
                 ->addColumn('archive_status', fn($archive) => $archive->archive_status_name ?? '-')
@@ -223,7 +221,26 @@ class ArchiveController extends Controller
                     $year = $archive->year_period ?? '-';
                     return "{$period} - Tahun {$year}";
                 })
-                ->addColumn('file_upload', fn($archive) => $archive->file_upload ?? '-')
+               ->addColumn('file_upload', function ($archive) {
+
+                    if (!$archive->url_upload) {
+                        return '<span class="badge bg-secondary">Tidak Ada</span>';
+                    }
+
+                    $ext = strtolower(pathinfo($archive->url_upload, PATHINFO_EXTENSION));
+
+                    $icon = $ext === 'pdf'
+                        ? 'bi-file-earmark-pdf'
+                        : 'bi-image';
+
+                    return '
+                        <a href="' . $archive->file_url . '"
+                            target="_blank"
+                            class="btn btn-success btn-sm"
+                            title="Lihat File">
+                            <i class="bi ' . $icon . '"></i>
+                        </a>';
+                })
                 ->addColumn('action', function ($archive) use ($statuses) {
                     return view('components.admin.button', compact('archive', 'statuses'))->render();
                 })
@@ -235,7 +252,10 @@ class ArchiveController extends Controller
                         });
                     }
                 })
-                ->rawColumns(['action'])
+                ->rawColumns([
+                        'file_upload',
+                        'action'
+                    ])
                 ->make(true);
         }
 
