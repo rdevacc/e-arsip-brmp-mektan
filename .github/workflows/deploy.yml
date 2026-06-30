@@ -1,4 +1,4 @@
-name: Test Runner
+name: Deploy Production
 
 on:
   push:
@@ -6,13 +6,9 @@ on:
       - main
 
 jobs:
-  test:
+  deploy:
     runs-on: self-hosted
 
     steps:
-      - name: Test
-        run: |
-          echo "Runner berhasil!"
-          hostname
-          pwd
-          whoami
+      - name: Jalankan deploy
+        run: /opt/deploy/e-arsip.sh
