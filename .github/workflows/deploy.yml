@@ -5,10 +5,14 @@ on:
     branches:
       - main
 
+concurrency:
+  group: production
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: self-hosted
 
     steps:
-      - name: Jalankan deploy
+      - name: Deploy
         run: /opt/deploy/e-arsip.sh
