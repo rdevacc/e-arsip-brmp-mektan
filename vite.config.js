@@ -8,12 +8,8 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    //  server: {
-    //     host: '0.0.0.0',       // Bisa diakses semua IP
-    //     port: 5173,            // Default port Vite
-    //     strictPort: true,
-    //     hmr: {
-    //         host: '192.168.0.101', // Ganti dengan IP lokal kamu
-    //     },
-    // },
+    server: {
+        host: '127.0.0.1',
+        port: 3000,
+    },
 });
